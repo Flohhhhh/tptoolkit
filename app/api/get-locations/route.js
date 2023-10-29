@@ -7,8 +7,8 @@ export async function GET(request) {
   console.log("in_lat", in_lat);
   console.log("in_lng", in_lng);
 
-  const in_radius_miles = 2;
-  const in_limit = 5;
+  const in_radius_miles = 1;
+  const in_limit = 7;
 
   if (!in_lat || !in_lng) {
     return new Response("Missing lat or lng", { status: 400 });
