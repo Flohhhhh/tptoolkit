@@ -51,17 +51,17 @@ export default function Home() {
   ));
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-24 pointer-events-none'>
+    <main className='flex w-full sm:max-w-2xl sm:mx-auto min-h-screen flex-col items-center justify-center gap-4 p-24 pointer-events-none'>
       <h1 className='text-2xl font-bold'>Try these examples!</h1>
-      <p className='text-zinc-300 w-96'>
+      <p className='text-zinc-300 w-full'>
         38.9623188, -74.9021912{" "}
-        <span className='float-right pointer-events-none'>(MP 0.1)</span>
+        <span className='float-right pointer-events-none '>(MP 0.1)</span>
       </p>
-      <p className='text-zinc-300 w-96'>
+      <p className='text-zinc-300 w-full'>
         39.0910069, -74.8115132{" "}
         <span className='float-right pointer-events-none'>(MP 10.3)</span>
       </p>
-      <p className='text-zinc-300 w-96'>
+      <p className='text-zinc-300 w-full'>
         39.3801998 -74.5782174{" "}
         <span className='float-right pointer-events-none'>(MP 34.5)</span>
       </p>
@@ -70,7 +70,7 @@ export default function Home() {
           type='text'
           name='coordinates'
           id='coordinates'
-          className='block w-96 rounded-md border-0 mt-8 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+          className='block w-full rounded-md border-0 mt-8 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
           placeholder='Coordinates'
           autoComplete='off'
           pattern='^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
