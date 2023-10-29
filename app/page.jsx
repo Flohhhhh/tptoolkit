@@ -51,16 +51,19 @@ export default function Home() {
   ));
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-24'>
+    <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-24 pointer-events-none'>
       <h1 className='text-2xl font-bold'>Try these examples!</h1>
       <p className='text-zinc-300 w-96'>
-        38.9623188 -74.9021912 <span className='float-right'>(MP 0.1)</span>
+        38.9623188, -74.9021912{" "}
+        <span className='float-right pointer-events-none'>(MP 0.1)</span>
       </p>
       <p className='text-zinc-300 w-96'>
-        39.0910069, -74.8115132 <span className='float-right'>(MP 10.3)</span>
+        39.0910069, -74.8115132{" "}
+        <span className='float-right pointer-events-none'>(MP 10.3)</span>
       </p>
       <p className='text-zinc-300 w-96'>
-        39.3801998 -74.5782174 <span className='float-right'>(MP 34.5)</span>
+        39.3801998 -74.5782174{" "}
+        <span className='float-right pointer-events-none'>(MP 34.5)</span>
       </p>
       <form onSubmit={handleSubmit}>
         <input
