@@ -54,7 +54,7 @@ export default function Home() {
     <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-24'>
       <h1 className='text-2xl font-bold'>Try these examples!</h1>
       <p className='text-zinc-300'>
-        38.9623188 -74.9021912
+        38.9623188, -74.9021912
         <span className='float-right opacity-80 pointer-events-none ml-8'>
           (MP 0.1)
         </span>
