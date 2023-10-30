@@ -16,7 +16,8 @@ export default function Home() {
         automatically copied to your clipboard!
       </p>
       <p className='italic text-red-600 dark:text-red-400 mt-4'>
-        * Data is currently incomplete!
+        * Data is currently incomplete! Supported mile markers are GSP NB 0.1 -
+        34.5
       </p>
       <h2 className='text-2xl font-bold mt-10 text-gray-800 dark:text-gray-100'>
         Try these examples!

@@ -27,7 +27,7 @@ const ThemeSwitcher = () => {
       <button
         className={`${
           theme === "dark" ? "bg-gray-700" : "bg-gray-300"
-        } relative inline-flex h-6 w-11 items-center rounded-full transition border border-gray-500`}
+        } relative inline-flex h-6 w-11 items-center rounded-full transition border border-gray-400 dark:border-gray-600`}
       >
         <span
           className={`${
