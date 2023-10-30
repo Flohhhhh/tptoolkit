@@ -51,7 +51,7 @@ export default function Home() {
   ));
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-24'>
+    <main className='flex min-h-screen flex-col items-center justify-center gap-4 mx-8'>
       <h1 className='text-2xl font-bold'>Try these examples!</h1>
       <p className='text-zinc-300'>
         38.9623188, -74.9021912
@@ -66,7 +66,7 @@ export default function Home() {
         </span>
       </p>
       <p className='text-zinc-300'>
-        39.3801998 -74.5782174
+        39.3245285, -74.6163611
         <span className='float-right opacity-80 pointer-events-none ml-8'>
           (MP 34.5)
         </span>
