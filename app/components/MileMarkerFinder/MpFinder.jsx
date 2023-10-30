@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import MileMarker from "./MileMarker";
 
 const MpFinder = () => {
@@ -50,6 +51,9 @@ const MpFinder = () => {
     const text = `@${data.road} ${data.roadway} MP ${data.mp}`;
     console.log(text.toUpperCase());
     navigator.clipboard.writeText(text.toUpperCase());
+    toast.success(`Copied ${text.toUpperCase()} to clipboard`, {
+      position: "bottom-center",
+    });
   };
 
   // map data to MileMarker components
