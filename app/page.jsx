@@ -5,7 +5,7 @@ import MileMarker from "./components/MileMarkerFinder/MileMarker.jsx";
 
 export default function Home() {
   return (
-    <main className='flex min-h-screen max-w-3xl mx-auto flex-col items-center justify-center gap-4 px-8'>
+    <main className='flex max-w-3xl mx-auto flex-col items-center justify-center gap-4 px-8'>
       <h1 className='text-5xl font-bold '>Mile Marker Finder</h1>
       <p>
         This tool is a reverse geocoder for the mile markers on the Garden State
