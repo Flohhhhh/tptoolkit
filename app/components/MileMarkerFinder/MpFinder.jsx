@@ -42,8 +42,14 @@ const MpFinder = () => {
   };
 
   const parseData = (data) => {
-    //
+    copyToClipboard(data[0]);
     setData(data);
+  };
+
+  const copyToClipboard = (data) => {
+    const text = `@${data.road} ${data.roadway} MP ${data.mp}`;
+    console.log(text.toUpperCase());
+    navigator.clipboard.writeText(text.toUpperCase());
   };
 
   // map data to MileMarker components
@@ -52,14 +58,16 @@ const MpFinder = () => {
   ));
 
   return (
-    <div className='w-full bg-gray-800 rounded-lg p-4 border border-gray-700'>
-      <h1 className='text-xl font-bold mb-4'>Mile Post Finder</h1>
+    <div className='w-full bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700'>
+      <h1 className='text-xl font-bold mb-4 text-gray-800 dark:text-gray-300'>
+        Mile Post Finder
+      </h1>
       <form onSubmit={handleSubmit}>
         <input
           type='text'
           name='coordinates'
           id='coordinates'
-          className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+          className='block w-full rounded-md border-0 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6'
           placeholder='Coordinates'
           autoComplete='off'
           pattern='^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
@@ -69,7 +77,7 @@ const MpFinder = () => {
         </label>
         <button
           type='submit'
-          className='bg-gray-700 rounded-md p-2 w-full mt-2 hover:brightness-150 active:scale-95 transition'
+          className='bg-blue-500 rounded-md p-2 w-full mt-2 hover:brightness-125 active:scale-95 transition'
         >
           Find
         </button>

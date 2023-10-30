@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import Providers from "../lib/providers";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${inter.className}`}>
-        <div className='bg-gradient-to-b from-gray-900 to-gray-950'>
-          <Header />
-          {children}
-          <Footer />
+        <div className='bg-gradient-to-b bg-gray-100 dark:from-gray-900 dark:to-gray-950'>
+          <Providers>
+            <Header />
+            {children}
+            <Footer />
+          </Providers>
         </div>
       </body>
     </html>
