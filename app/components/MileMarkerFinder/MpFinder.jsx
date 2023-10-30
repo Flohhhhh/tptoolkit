@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import MileMarker from "./MileMarker";
 
@@ -72,7 +74,7 @@ const MpFinder = () => {
           Find
         </button>
       </form>
-      <div className='h-80 flex items-center overflow-scroll'>
+      <div className='h-80 flex items-center justify-center overflow-scroll'>
         {loading ? (
           // spinner
           <div role='status'>
