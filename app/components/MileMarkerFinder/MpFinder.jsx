@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import MileMarker from "./MileMarker";
+import { Map } from "lucide-react";
 
 const MpFinder = () => {
   const [data, setData] = useState(null);
@@ -67,24 +69,39 @@ const MpFinder = () => {
         Mile Post Finder
       </h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          name='coordinates'
-          id='coordinates'
-          className='block w-full rounded-md border-0 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6'
-          placeholder='Coordinates'
-          autoComplete='off'
-          pattern='^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
-        />
-        <label htmlFor='coordinates' className='sr-only'>
-          Coordinates
-        </label>
-        <button
-          type='submit'
-          className='bg-blue-500 rounded-md p-2 w-full mt-2 hover:brightness-125 active:scale-95 transition'
-        >
-          Find
-        </button>
+        <div className='flex flex-col sm:flex-row gap-2 h-10'>
+          <input
+            type='text'
+            name='coordinates'
+            id='coordinates'
+            className='block w-full rounded-md border-0 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6'
+            placeholder='Coordinates'
+            autoComplete='off'
+            pattern='^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
+          />
+          <label htmlFor='coordinates' className='sr-only'>
+            Coordinates
+          </label>
+          <button
+            type='button'
+            disabled={data ? false : true}
+            onClick={() => {
+              // open google maps with data[0] with router
+              const { lat, lng } = data[0];
+              const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+              window.open(url, "_blank");
+            }}
+            className='flex items-center justify-center h-full aspect-square bg-blue-500 animate-pulse rounded-md enabled:hover:brightness-125 transition disabled:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed'
+          >
+            <Map size={20} />
+          </button>
+          <button
+            type='submit'
+            className='bg-blue-500 basis-1/4 rounded-md p-2 w-full hover:brightness-125 active:scale-95 transition'
+          >
+            Find
+          </button>
+        </div>
       </form>
       <div className='h-80 flex items-center justify-center overflow-scroll'>
         {loading ? (
