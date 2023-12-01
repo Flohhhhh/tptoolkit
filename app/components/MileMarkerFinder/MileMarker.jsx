@@ -6,7 +6,7 @@ const MileMarkerFactory = (props) => {
   let distance = `${(data.distance * 5280).toFixed()} ft`;
 
   const copyToClipboard = () => {
-    const text = `@${data.road} ${data.roadway} MP ${data.mp}`;
+    const text = `@${data.Name}`;
     console.log(text.toUpperCase());
     navigator.clipboard.writeText(text.toUpperCase());
     toast.success(`Copied ${text.toUpperCase()} to clipboard`, {
@@ -26,7 +26,8 @@ const MileMarkerFactory = (props) => {
       className={`px-4 py-2 rounded-md flex justify-between w-full hover:brightness-125 active:scale-95 transition ${bg}`}
     >
       <h1 className=' dark:text-gray-200 uppercase'>
-        {data.road} {data.roadway} MP {data.mp}
+        <span className='opacity-50 text-xs mr-4'>{data.Type}</span>
+        {data.Name}
       </h1>
       <p className='opacity-70'>{distance}</p>
     </button>

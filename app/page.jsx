@@ -8,16 +8,12 @@ export default function Home() {
         Mile Marker Finder
       </h1>
       <p className=' text-gray-800 dark:text-gray-100'>
-        This tool is a reverse geocoder for the mile markers on the Garden State
-        Parkway and New Jersey Turnpike.
+        This tool is a reverse geocoder for the mile markers, exits, and other
+        geography along the Garden State Parkway and New Jersey Turnpike.
         <br /> <br />
         To use the tool enter coordinates in the search box and click find. The
         nearest mile markers will be displayed, and the closest one will be
         automatically copied to your clipboard!
-      </p>
-      <p className='italic text-red-600 dark:text-red-400 mt-4'>
-        * Data is currently incomplete! Supported mile markers are GSP NB 0.1 -
-        67.9
       </p>
       <h2 className='text-2xl font-bold mt-10 text-gray-800 dark:text-gray-100'>
         Try these examples!

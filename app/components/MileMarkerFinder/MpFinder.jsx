@@ -21,10 +21,10 @@ const MpFinder = () => {
     }
 
     const { coordinates } = e.target.elements;
-    const [lat, lng] = coordinates.value.split(",");
+    const [y, x] = coordinates.value.split(",");
     console.log(coordinates.value);
 
-    const res = await fetch(`/api/get-locations?lat=${lat}&lng=${lng}`, {
+    const res = await fetch(`/api/search?x=${x}&y=${y}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const MpFinder = () => {
   };
 
   const copyToClipboard = (data) => {
-    const text = `@${data.road} ${data.roadway} MP ${data.mp}`;
+    const text = `@${data.Name}`;
     console.log(text.toUpperCase());
     navigator.clipboard.writeText(text.toUpperCase());
     toast.success(`Copied ${text.toUpperCase()} to clipboard`, {
@@ -87,8 +87,8 @@ const MpFinder = () => {
             disabled={data ? false : true}
             onClick={() => {
               // open google maps with data[0] with router
-              const { lat, lng } = data[0];
-              const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+              const { x, y } = data[0];
+              const url = `https://www.google.com/maps/search/?api=1&query=${y},${x}`;
               window.open(url, "_blank");
             }}
             className='flex items-center justify-center h-full aspect-square bg-blue-500 animate-pulse rounded-md enabled:hover:brightness-125 transition disabled:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed'
@@ -103,7 +103,7 @@ const MpFinder = () => {
           </button>
         </div>
       </form>
-      <div className='h-80 flex items-center justify-center overflow-scroll'>
+      <div className='min-h-[300px] flex  justify-center'>
         {loading ? (
           // spinner
           <div role='status'>
