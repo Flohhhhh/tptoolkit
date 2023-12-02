@@ -44,8 +44,8 @@ const SaReference = () => {
     const tables = data.map((table, index) => {
         return (
             <div key={index}>
-                <h2 className='my-4 text-xl font-bold text-shark-700  dark:text-shark-100'>{table.title}</h2>
-                <div key={index} className='relative overflow-x-auto rounded-lg border border-shark-200 dark:border-shark-600'>
+                <h2 className='mb-4 text-2xl font-bold text-shark-700  dark:text-shark-300'>{table.title}</h2>
+                <div key={index} className='relative overflow-x-auto rounded-lg border border-shark-200 dark:border-shark-600 mb-4'>
                     <table className='table-auto w-full text-left shadow-lg'>
                         <thead className='text-shark-900 dark:text-shark-200 h-12'>
                             <tr>
@@ -70,7 +70,7 @@ const SaReference = () => {
     })
 
     return(    
-        <div className='w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-500'>
+        <div className='w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
             {tables}
         </div>
     )

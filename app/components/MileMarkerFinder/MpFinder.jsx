@@ -77,7 +77,7 @@ const MpFinder = () => {
   ));
 
   return (
-    <div className='w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-500'>
+    <div className='col-span-3 self-start w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
       {/* TODO add switch for copy to automatic copy-to-clipboard */}
       <h1 className='text-2xl font-bold mb-4 text-shark-800 dark:text-shark-300'>
         Location Lookup
@@ -148,7 +148,8 @@ const MpFinder = () => {
           </div>
         </div>
       </form>
-      <div className='min-h-[300px] flex flex-col items-center justify-center'>
+      <div className='h-[540px] flex flex-col items-center justify-center'>
+        {data === null && !loading ? (<p className="font-bold text-shark-100 dark:text-shark-500">Input coordinates to see nearby markers & landmarks!</p>) : null}
         {errorDisplay? (
           <p className='text-center text-red-400 bg-shark-700 px-4 py-2 rounded-md'>{errorDisplay}</p>
         ) : null}
@@ -174,7 +175,7 @@ const MpFinder = () => {
             <span className='sr-only'>Loading...</span>
           </div>
         ) : (
-          <div className='w-full flex flex-col gap-1 mt-4'>{Locations}</div>
+          (data && <div className='w-full h-full flex flex-col gap-1 mt-4 overflow-y-auto'>{Locations}</div>)
         )}
       </div>
     </div>
