@@ -6,7 +6,7 @@ const Header = () => {
     <header className='flex items-center justify-center bg-white dark:bg-shark-800 h-12 mb-12'>
       <div className='flex  justify-between w-full max-w-7xl py-4 px-8'>
         <h1 className='text-xl font-bold text-shark-700 dark:text-shark-300'>
-          TP Tools
+          TP Toolkit
         </h1>
         <ThemeSwitcher />
       </div>

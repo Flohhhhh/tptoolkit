@@ -17,7 +17,7 @@ const MileMarkerFactory = (props) => {
           t.visible ? 'animate-enter' : 'animate-leave'
         }`}
       >
-        <ClipboardCheck size={20} className="text-emerald-500"/>
+        <ClipboardCheck size={20} className="text-emerald-500 animate-pulse"/>
         <p>Copied {text.toUpperCase()}</p>
       </div>
     ));
@@ -34,7 +34,7 @@ const MileMarkerFactory = (props) => {
       }}
       className={`px-4 py-2 rounded-md flex justify-between w-full hover:brightness-95 dark:hover:brightness-125 active:scale-95 transition ${bg}`}
     >
-      <h1 className=' dark:text-shark-200 uppercase'>
+      <h1 className=' uppercase'>
         <span className="opacity-50 float-left mr-4 pt-[2px]"><TypeIcon type={data.Type}/></span>
         {data.Name}
       </h1>

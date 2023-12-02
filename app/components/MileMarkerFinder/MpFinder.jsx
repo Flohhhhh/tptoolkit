@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import MileMarker from "./MileMarker";
-import { Map, ClipboardCheck } from "lucide-react";
+import { Map, ClipboardCheck, MousePointerClick } from "lucide-react";
 
 const MpFinder = () => {
   const [data, setData] = useState(null);
@@ -18,11 +18,11 @@ const MpFinder = () => {
     setLoading(true);
     setErrorDisplay(null);
 
-    if (!e.target.elements.coordinates.value) {
-      setData(null);
-      setLoading(false);
-      return;
-    }
+    // if (!e.target.elements.coordinates.value) {
+    //   setData(null);
+    //   setLoading(false);
+    //   return;
+    // }
 
     const { coordinates } = e.target.elements;
     const [y, x] = coordinates.value.split(",");
@@ -65,7 +65,7 @@ const MpFinder = () => {
           t.visible ? 'animate-enter' : 'animate-leave'
         }`}
       >
-        <ClipboardCheck size={20} className="text-emerald-500"/>
+        <ClipboardCheck size={20} className="text-emerald-500 animate-pulse"/>
         <p>Copied {text.toUpperCase()}</p>
       </div>
     ));
@@ -79,16 +79,41 @@ const MpFinder = () => {
   return (
     <div className='w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-500'>
       {/* TODO add switch for copy to automatic copy-to-clipboard */}
-      <h1 className='text-xl font-bold mb-4 text-shark-800 dark:text-shark-300'>
-        Mile Post Finder
+      <h1 className='text-2xl font-bold mb-4 text-shark-800 dark:text-shark-300'>
+        Location Lookup
       </h1>
+      <p className='text-xs text-shark-800 dark:text-shark-200 mb-4'>
+        This tool is a reverse geocoder for the mile markers, exits, and other
+        geography along the Garden State Parkway and New Jersey Turnpike.
+        <button className="flex items-center gap-3 px-3 py-2 my-4 bg-shark-100 text-shark-600 dark:text-shark-100 dark:bg-shark-700 rounded-xl hover:brightness-95 dark:hover:brightness-125 active:scale-95 transition select"
+         onClick={() => {
+            let e = {
+             preventDefault: () => {},
+              target: {
+                elements: {
+                  coordinates: {
+                    value: "40.486006, -74.302666",
+                  },
+                },
+              },
+            }
+            handleSubmit(e)
+          }}
+        >
+          <MousePointerClick size={18}/> Try this example! <span className="opacity-50 font-light">40.486006, -74.302666</span>
+        </button>
+        To use the tool enter coordinates in the search box and click find. The
+        nearest mile markers will be displayed, and the closest one will be
+        automatically copied to your clipboard!
+      </p>
+
       <form onSubmit={handleSubmit}>
-        <div className='flex flex-col sm:flex-row gap-2 h-10'>
+        <div className='flex flex-col sm:flex-row gap-2'>
           <input
             type='text'
             name='coordinates'
             id='coordinates'
-            className='block w-full rounded-md border-0 py-1.5 bg-shark-100 dark:bg-shark-700 text-shark-900 dark:text-shark-50 shadow-sm ring-1 ring-inset ring-shark-300 dark:ring-shark-600 placeholder:text-shark-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6'
+            className='block w-full rounded-md border-0 py-1.5 bg-shark-50 dark:bg-shark-700 text-shark-900 dark:text-shark-50 shadow-sm ring-1 ring-inset ring-shark-300 ring:blue-500 placeholder:text-shark-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6'
             placeholder='Coordinates'
             autoComplete='off'
             pattern='^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
@@ -101,24 +126,26 @@ const MpFinder = () => {
           <label htmlFor='coordinates' className='sr-only'>
             Coordinates
           </label>
-          <button
-            type='button'
-            disabled={x && y ? false : true}
-            onClick={() => {
-              // open google maps with data[0] with router
-              const url = `https://www.google.com/maps/search/?api=1&query=${y},${x}`;
-              window.open(url, "_blank");
-            }}
-            className='flex items-center justify-center h-full aspect-square bg-blue-500 animate-pulse rounded-md enabled:hover:brightness-125 transition disabled:bg-shark-500 disabled:opacity-50 disabled:cursor-not-allowed'
-          >
-            <Map size={20} />
-          </button>
-          <button
-            type='submit'
-            className='bg-blue-500 basis-1/4 rounded-md p-2 w-full hover:brightness-125 active:scale-95 transition'
-          >
-            Find
-          </button>
+          <div className="flex gap-2 grow">
+            <button
+              type='button'
+              disabled={x && y ? false : true}
+              onClick={() => {
+                // open google maps with data[0] with router
+                const url = `https://www.google.com/maps/search/?api=1&query=${y},${x}`;
+                window.open(url, "_blank");
+              }}
+              className='flex items-center justify-center p-3 h-full aspect-square bg-blue-500 animate-pulse rounded-md enabled:hover:brightness-125 transition disabled:bg-shark-500 disabled:opacity-50 disabled:cursor-not-allowed'
+            >
+              <Map size={20} />
+            </button>
+            <button
+              type='submit'
+              className='bg-blue-500 rounded-md px-12 py-2 w-full hover:brightness-125 active:scale-95 transition'
+            >
+              Find
+            </button>
+          </div>
         </div>
       </form>
       <div className='min-h-[300px] flex flex-col items-center justify-center'>

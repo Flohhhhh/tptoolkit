@@ -5,7 +5,7 @@ export async function GET(request) {
   const in_x = searchParams.get("x");
   const in_y = searchParams.get("y");
   const max = 12;
-  const maxDistance = 500; // half mile in feet
+  const maxDistance = 2; // half mile in feet
 
   console.log("in_x", in_x);
   console.log("in_y", in_y);
@@ -33,11 +33,33 @@ export async function GET(request) {
   }
 
 
+  function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+
 
   // function to calculate distance between two sets of coordinates in feet
   function distance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
   }
+
+  function haversineDistance(lat1, lon1, lat2, lon2) {
+    const R = 3958.8; // Earth's radius in miles
+  
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+  
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  
+    const distance = R * c;
+    return distance; //miles
+  }
+  
 
   // x greater than -75.64 less than -73.84
   // y greater than 38.91 less than 41.36
@@ -46,7 +68,8 @@ export async function GET(request) {
   function findClosest(x, y) {
     let closest = [];
     for (let i = 0; i < data.length; i++) {
-      let dist = distance(x, y, data[i].x, data[i].y);
+      let dist = haversineDistance(x, y, data[i].x, data[i].y);
+      
       if (dist < maxDistance) {
         // add the location to the array if it is within the max distance and add distance to the object
         let obj = data[i];
@@ -56,7 +79,7 @@ export async function GET(request) {
     }
     // order the array by distance
     closest.sort((a, b) => {
-      return distance(x, y, a.x, a.y) - distance(x, y, b.x, b.y);
+      return a.distance - b.distance;
     });
 
     return closest.slice(0, max);

@@ -11,7 +11,7 @@ import Footer from "./components/layout/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "TPA Tools",
+  title: "TP Toolkit",
   description: "Reverse geo-coder and other geographical tools for the Garden State Parkway and New Jersey Turnpike",
 };
 

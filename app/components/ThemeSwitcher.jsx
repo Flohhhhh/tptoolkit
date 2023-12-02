@@ -26,7 +26,7 @@ const ThemeSwitcher = () => {
     >
       <div
         className={`${
-          theme === "dark" ? "bg-shark-700" : "bg-shark-300"
+          theme === "dark" ? "bg-shark-700" : "bg-shark-100"
         } relative inline-flex h-6 w-11 items-center rounded-full transition border border-shark-400 dark:border-shark-600`}
       >
         <span
