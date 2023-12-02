@@ -4,15 +4,19 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import MileMarker from "./MileMarker";
-import { Map } from "lucide-react";
+import { Map, ClipboardCheck } from "lucide-react";
 
 const MpFinder = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errorDisplay, setErrorDisplay] = useState(null);
+  const [x, setX] = useState(null);
+  const [y, setY] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrorDisplay(null);
 
     if (!e.target.elements.coordinates.value) {
       setData(null);
@@ -24,23 +28,22 @@ const MpFinder = () => {
     const [y, x] = coordinates.value.split(",");
     console.log("Searching near", coordinates.value);
 
-    const res = await fetch(`/api/search?x=${x}&y=${y}`, {
+    const res = await fetch(`/api/search?y=${y}&x=${x}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
+    const data = await res.json();
+    
     if (res.ok) {
-      if (res.statusText === "No matches found") {
-        setData(null);
-        setLoading(false);
-      } else {
-        const data = await res.json();
-        console.log(data);
-        parseData(data);
-        setLoading(false);
-      }
+      parseData(data);
+      setLoading(false);
+    } else {
+      setData(null)
+      setErrorDisplay(data);
+      setLoading(false);
     }
   };
 
@@ -53,9 +56,19 @@ const MpFinder = () => {
     const text = `@${data.Name}`;
     console.log(text.toUpperCase());
     navigator.clipboard.writeText(text.toUpperCase());
-    toast.success(`Copied ${text.toUpperCase()} to clipboard`, {
-      position: "bottom-center",
-    });
+    // toast.success(`Copied ${text.toUpperCase()} to clipboard`, {
+    //   position: "bottom-center",
+    // });
+    toast.custom((t) => (
+      <div
+        className={`flex gap-4 bg-white dark:bg-shark-700 text-shark-800 dark:text-shark-100 px-6 py-2 rounded-xl border border-shark-300 dark:border-shark-600 shadow-lg ${
+          t.visible ? 'animate-enter' : 'animate-leave'
+        }`}
+      >
+        <ClipboardCheck size={20} className="text-emerald-500"/>
+        <p>Copied {text.toUpperCase()}</p>
+      </div>
+    ));
   };
 
   // map data to MileMarker components
@@ -79,16 +92,20 @@ const MpFinder = () => {
             placeholder='Coordinates'
             autoComplete='off'
             pattern='^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
+            onChange={(e) => {
+              setErrorDisplay(null);
+              setX(e.target.value.split(",")[1]);
+              setY(e.target.value.split(",")[0]);
+            }}
           />
           <label htmlFor='coordinates' className='sr-only'>
             Coordinates
           </label>
           <button
             type='button'
-            disabled={data ? false : true}
+            disabled={x && y ? false : true}
             onClick={() => {
               // open google maps with data[0] with router
-              const { x, y } = data[0];
               const url = `https://www.google.com/maps/search/?api=1&query=${y},${x}`;
               window.open(url, "_blank");
             }}
@@ -104,10 +121,13 @@ const MpFinder = () => {
           </button>
         </div>
       </form>
-      <div className='min-h-[300px] flex justify-center'>
+      <div className='min-h-[300px] flex flex-col items-center justify-center'>
+        {errorDisplay? (
+          <p className='text-center text-red-400 bg-shark-700 px-4 py-2 rounded-md'>{errorDisplay}</p>
+        ) : null}
         {loading ? (
           // spinner
-          <div role='status' className="self-center">
+          <div role='status'>
             <svg
               aria-hidden='true'
               className='w-8 h-8 mr-2 text-shark-200 animate-spin dark:text-shark-600 fill-shark-100'

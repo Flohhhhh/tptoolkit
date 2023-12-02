@@ -9,6 +9,32 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        "enter": "enter 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)   both",
+        "leave": "leave 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)   both"
+      },
+      keyframes: {
+          "enter": {
+              "0%": {
+                  transform: "translateY(50px)",
+                  opacity: "0"
+              },
+              to: {
+                  transform: "translateY(0)",
+                  opacity: "1"
+              }
+          },
+          "leave": {
+            "0%": {
+                transform: "translateY(0)",
+                opacity: "1"
+            },
+            to: {
+                transform: "translateY(-50px)",
+                opacity: "0"
+            }
+        }
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
