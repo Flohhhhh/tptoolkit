@@ -1,6 +1,6 @@
 // import { supabase } from "@/utils/supabase/client";
 
-// export async function GET(request) {
+export async function GET(request) {
 //   const searchParams = new URL(request.nextUrl).searchParams;
 //   const in_lat = searchParams.get("lat");
 //   const in_lng = searchParams.get("lng");
@@ -45,4 +45,9 @@
 //     status: 200,
 //     headers: { "content-type": "application/json" },
 //   });
-// }
+  return new Response("This endpoint not in use.", {
+    status: 200,
+    headers: { "content-type": "application/json" },
+});
+    
+}
