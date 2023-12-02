@@ -4,7 +4,10 @@ import MpFinder from "./components/MileMarkerFinder/MpFinder.jsx";
 export default function Home() {
   return (
     <div className='min-h-screen max-w-3xl mx-auto gap-4 px-8 mb-12'>
-      <h1 className='text-5xl font-bold text-gray-800 dark:text-gray-100 mb-8'>
+
+      <MpFinder />
+
+      <h1 className='text-5xl font-bold text-gray-800 dark:text-gray-100 mt-8'>
         Mile Marker Finder
       </h1>
       <p className=' text-gray-800 dark:text-gray-100'>
@@ -19,9 +22,9 @@ export default function Home() {
         Try these examples!
       </h2>
       <p className='text-gray-500 dark:text-gray-300 mt-4'>
-        38.9623188, -74.9021912
+        40.486006, -74.302666
         <span className='float-right opacity-80 pointer-events-none ml-8'>
-          (MP 0.1)
+          (GSP Near Raritan Tolls)
         </span>
       </p>
       <p className='text-gray-500 dark:text-gray-300 mt-4'>
@@ -31,13 +34,13 @@ export default function Home() {
         </span>
       </p>
       <p className='text-gray-500 dark:text-gray-300 mt-4 mb-12'>
-        39.3245285, -74.6163611
+      40.729232, -74.127451
         <span className='float-right opacity-80 pointer-events-none ml-8'>
-          (MP 34.5)
+          (Turnpike Near Interchange 15E)
         </span>
       </p>
 
-      <MpFinder />
+      
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import toast from "react-hot-toast";
+import TypeIcon from "./TypeIcon"
 
 const MileMarkerFactory = (props) => {
   const { data, closest } = props;
@@ -19,18 +20,18 @@ const MileMarkerFactory = (props) => {
     : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300";
 
   return (
-    <button
+    <div
       onClick={() => {
         copyToClipboard();
       }}
       className={`px-4 py-2 rounded-md flex justify-between w-full hover:brightness-125 active:scale-95 transition ${bg}`}
     >
       <h1 className=' dark:text-gray-200 uppercase'>
-        <span className='opacity-50 text-xs mr-4'>{data.Type}</span>
+        <span className="opacity-50 float-left mr-4 pt-[2px]"><TypeIcon type={data.Type}/></span>
         {data.Name}
       </h1>
       <p className='opacity-70'>{distance}</p>
-    </button>
+    </div>
   );
 };
 

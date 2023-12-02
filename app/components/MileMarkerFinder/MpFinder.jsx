@@ -22,7 +22,7 @@ const MpFinder = () => {
 
     const { coordinates } = e.target.elements;
     const [y, x] = coordinates.value.split(",");
-    console.log(coordinates.value);
+    console.log("Searching near", coordinates.value);
 
     const res = await fetch(`/api/search?x=${x}&y=${y}`, {
       method: "GET",
@@ -65,6 +65,7 @@ const MpFinder = () => {
 
   return (
     <div className='w-full bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700'>
+      {/* TODO add switch for copy to automatic copy-to-clipboard */}
       <h1 className='text-xl font-bold mb-4 text-gray-800 dark:text-gray-300'>
         Mile Post Finder
       </h1>
@@ -103,10 +104,10 @@ const MpFinder = () => {
           </button>
         </div>
       </form>
-      <div className='min-h-[300px] flex  justify-center'>
+      <div className='min-h-[300px] flex justify-center'>
         {loading ? (
           // spinner
-          <div role='status'>
+          <div role='status' className="self-center">
             <svg
               aria-hidden='true'
               className='w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-100'

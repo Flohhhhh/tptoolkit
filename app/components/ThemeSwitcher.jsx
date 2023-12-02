@@ -24,7 +24,7 @@ const ThemeSwitcher = () => {
         setTheme(theme === "dark" ? "light" : "dark");
       }}
     >
-      <button
+      <div
         className={`${
           theme === "dark" ? "bg-gray-700" : "bg-gray-300"
         } relative inline-flex h-6 w-11 items-center rounded-full transition border border-gray-400 dark:border-gray-600`}
@@ -36,7 +36,7 @@ const ThemeSwitcher = () => {
         >
           {theme === "dark" ? <Moon size={10} /> : <SunMedium size={10} />}
         </span>
-      </button>
+      </div>
     </Switch>
   );
 };
