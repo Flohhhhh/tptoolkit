@@ -17,16 +17,16 @@ const MileMarkerFactory = (props) => {
 
   const bg = closest
     ? "bg-blue-500 text-white animate-pulse"
-    : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300";
+    : "bg-shark-50 dark:bg-shark-700 text-shark-600 dark:text-shark-300";
 
   return (
     <div
       onClick={() => {
         copyToClipboard();
       }}
-      className={`px-4 py-2 rounded-md flex justify-between w-full hover:brightness-125 active:scale-95 transition ${bg}`}
+      className={`px-4 py-2 rounded-md flex justify-between w-full hover:brightness-95 dark:hover:brightness-125 active:scale-95 transition ${bg}`}
     >
-      <h1 className=' dark:text-gray-200 uppercase'>
+      <h1 className=' dark:text-shark-200 uppercase'>
         <span className="opacity-50 float-left mr-4 pt-[2px]"><TypeIcon type={data.Type}/></span>
         {data.Name}
       </h1>

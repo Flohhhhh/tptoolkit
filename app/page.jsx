@@ -7,10 +7,10 @@ export default function Home() {
 
       <MpFinder />
 
-      <h1 className='text-5xl font-bold text-gray-800 dark:text-gray-100 mt-8'>
+      <h1 className='text-5xl font-bold text-shark-800 dark:text-shark-100 mt-8'>
         Mile Marker Finder
       </h1>
-      <p className=' text-gray-800 dark:text-gray-100'>
+      <p className=' text-shark-800 dark:text-shark-100'>
         This tool is a reverse geocoder for the mile markers, exits, and other
         geography along the Garden State Parkway and New Jersey Turnpike.
         <br /> <br />
@@ -18,22 +18,22 @@ export default function Home() {
         nearest mile markers will be displayed, and the closest one will be
         automatically copied to your clipboard!
       </p>
-      <h2 className='text-2xl font-bold mt-10 text-gray-800 dark:text-gray-100'>
+      <h2 className='text-2xl font-bold mt-10 text-shark-800 dark:text-shark-100'>
         Try these examples!
       </h2>
-      <p className='text-gray-500 dark:text-gray-300 mt-4'>
+      <p className='text-shark-500 dark:text-shark-300 mt-4'>
         40.486006, -74.302666
         <span className='float-right opacity-80 pointer-events-none ml-8'>
           (GSP Near Raritan Tolls)
         </span>
       </p>
-      <p className='text-gray-500 dark:text-gray-300 mt-4'>
+      <p className='text-shark-500 dark:text-shark-300 mt-4'>
         39.0910069, -74.8115132
         <span className='float-right opacity-80 pointer-events-none ml-8'>
           (MP 10.3)
         </span>
       </p>
-      <p className='text-gray-500 dark:text-gray-300 mt-4 mb-12'>
+      <p className='text-shark-500 dark:text-shark-300 mt-4 mb-12'>
       40.729232, -74.127451
         <span className='float-right opacity-80 pointer-events-none ml-8'>
           (Turnpike Near Interchange 15E)

@@ -64,9 +64,9 @@ const MpFinder = () => {
   ));
 
   return (
-    <div className='w-full bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700'>
+    <div className='w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-500'>
       {/* TODO add switch for copy to automatic copy-to-clipboard */}
-      <h1 className='text-xl font-bold mb-4 text-gray-800 dark:text-gray-300'>
+      <h1 className='text-xl font-bold mb-4 text-shark-800 dark:text-shark-300'>
         Mile Post Finder
       </h1>
       <form onSubmit={handleSubmit}>
@@ -75,7 +75,7 @@ const MpFinder = () => {
             type='text'
             name='coordinates'
             id='coordinates'
-            className='block w-full rounded-md border-0 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6'
+            className='block w-full rounded-md border-0 py-1.5 bg-shark-100 dark:bg-shark-700 text-shark-900 dark:text-shark-50 shadow-sm ring-1 ring-inset ring-shark-300 dark:ring-shark-600 placeholder:text-shark-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6'
             placeholder='Coordinates'
             autoComplete='off'
             pattern='^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
@@ -92,7 +92,7 @@ const MpFinder = () => {
               const url = `https://www.google.com/maps/search/?api=1&query=${y},${x}`;
               window.open(url, "_blank");
             }}
-            className='flex items-center justify-center h-full aspect-square bg-blue-500 animate-pulse rounded-md enabled:hover:brightness-125 transition disabled:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed'
+            className='flex items-center justify-center h-full aspect-square bg-blue-500 animate-pulse rounded-md enabled:hover:brightness-125 transition disabled:bg-shark-500 disabled:opacity-50 disabled:cursor-not-allowed'
           >
             <Map size={20} />
           </button>
@@ -110,7 +110,7 @@ const MpFinder = () => {
           <div role='status' className="self-center">
             <svg
               aria-hidden='true'
-              className='w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-100'
+              className='w-8 h-8 mr-2 text-shark-200 animate-spin dark:text-shark-600 fill-shark-100'
               viewBox='0 0 100 101'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
