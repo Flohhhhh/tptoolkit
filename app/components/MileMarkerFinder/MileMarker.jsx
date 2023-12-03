@@ -8,7 +8,7 @@ const MileMarkerFactory = (props) => {
   let distance = `${(data.distance * 5280).toFixed()} ft`;
 
   const copyToClipboard = () => {
-    const text = `@${data.Name}`;
+    const text = `@${data.name}`;
     console.log(text.toUpperCase());
     navigator.clipboard.writeText(text.toUpperCase());
     toast.custom((t) => (
@@ -35,8 +35,8 @@ const MileMarkerFactory = (props) => {
       className={`px-4 py-2 rounded-md flex justify-between w-full hover:brightness-95 dark:hover:brightness-125 active:scale-95 transition ${bg}`}
     >
       <h1 className=' uppercase'>
-        <span className="opacity-50 float-left mr-4 pt-[2px]"><TypeIcon type={data.Type}/></span>
-        {data.Name}
+        <span className="opacity-50 float-left mr-4 pt-[2px]"><TypeIcon type={data.type}/></span>
+        {data.name}
       </h1>
       <p className='opacity-70'>{distance}</p>
     </div>

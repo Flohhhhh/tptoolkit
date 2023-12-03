@@ -1,4 +1,4 @@
-import { ArrowUpRightSquare, ArrowUpLeftSquare, Fuel, HelpCircle, GitCommitVertical, Merge, Receipt, UndoDot } from 'lucide-react';
+import { ArrowUpRightSquare, ArrowUpLeftSquare, Fuel, HelpCircle, GitCommitVertical, Merge, Receipt, UndoDot, ParkingSquare, TrafficCone } from 'lucide-react';
 
 const TypeIcon = (props) => {
     const { type } = props;
@@ -18,6 +18,10 @@ const TypeIcon = (props) => {
         case "CUT":
         case "U-TURN":
             return <UndoDot size={20} />
+        case "PARKING":
+            return <ParkingSquare size={20} />
+        case "MAINTENANCE":
+            return <TrafficCone size={20} />
         default:
             return <HelpCircle size={20} />
     }

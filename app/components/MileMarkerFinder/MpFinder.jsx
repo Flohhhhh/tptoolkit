@@ -53,7 +53,7 @@ const MpFinder = () => {
   };
 
   const copyToClipboard = (data) => {
-    const text = `@${data.Name}`;
+    const text = `@${data.name}`;
     console.log(text.toUpperCase());
     navigator.clipboard.writeText(text.toUpperCase());
     // toast.success(`Copied ${text.toUpperCase()} to clipboard`, {
