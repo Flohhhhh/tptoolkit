@@ -6,12 +6,17 @@ import toast from "react-hot-toast";
 import MileMarker from "./MileMarker";
 import { Map, ClipboardCheck, MousePointerClick } from "lucide-react";
 
+import { turnpikeData, parkwayData } from "@/lib/parsedData.js"
+
 const MpFinder = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorDisplay, setErrorDisplay] = useState(null);
   const [x, setX] = useState(null);
   const [y, setY] = useState(null);
+
+  console.log(turnpikeData)
+  console.log(parkwayData)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
