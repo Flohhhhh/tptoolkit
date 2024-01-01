@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import MileMarker from "./MileMarker";
 import { Map, ClipboardCheck, MousePointerClick } from "lucide-react";
@@ -22,12 +21,6 @@ const MpFinder = () => {
     e.preventDefault();
     setLoading(true);
     setErrorDisplay(null);
-
-    // if (!e.target.elements.coordinates.value) {
-    //   setData(null);
-    //   setLoading(false);
-    //   return;
-    // }
 
     const { coordinates } = e.target.elements;
     const [y, x] = coordinates.value.split(",");
