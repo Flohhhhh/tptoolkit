@@ -70,7 +70,7 @@ const SaReference = () => {
     })
 
     return(    
-        <div className='w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
+        <div className='z-10 w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
             {tables}
         </div>
     )

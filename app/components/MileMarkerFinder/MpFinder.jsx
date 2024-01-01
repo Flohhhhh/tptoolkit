@@ -14,8 +14,8 @@ const MpFinder = () => {
   const [x, setX] = useState(null);
   const [y, setY] = useState(null);
 
-  console.log(turnpikeData)
-  console.log(parkwayData)
+  // console.log(turnpikeData)
+  // console.log(parkwayData)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ const MpFinder = () => {
     const [y, x] = coordinates.value.split(",");
     console.log("Searching near", coordinates.value);
 
-    const res = await fetch(`/api/search?y=${y}&x=${x}`, {
+    const res = await fetch(`/api/search/coords?y=${y}&x=${x}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const MpFinder = () => {
   ));
 
   return (
-    <div className='col-span-3 self-start w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
+    <div className='z-10 col-span-3 self-start w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
       {/* TODO add switch for copy to automatic copy-to-clipboard */}
       <h1 className='text-2xl font-bold mb-4 text-shark-800 dark:text-shark-300'>
         Location Lookup
