@@ -28,7 +28,7 @@ export function MapRenderer(props) {
       projection: "globe",
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN,
       center: [-74.2986829372431, 40.53355347618958],
-      zoom: 17,
+      zoom: 15,
       doubleClickZoom: false,
       hash: false, //syncs map location with url
     });
@@ -36,9 +36,9 @@ export function MapRenderer(props) {
     mapboxMap.on("style.load", () => {
       console.log("Map reading theme", theme);
       if (theme === "dark") {
-        mapboxMap.setConfigProperty("basemap", "lightPreset", "dusk");
+        mapboxMap.setConfigProperty("basemap", "lightPreset", "night");
       } else {
-        mapboxMap.setConfigProperty("basemap", "lightPreset", "dawn");
+        mapboxMap.setConfigProperty("basemap", "lightPreset", "day");
       }
     });
 
@@ -93,9 +93,9 @@ export function MapRenderer(props) {
     console.log();
     console.log("Map reading theme", theme);
     if (theme === "dark") {
-      map.setConfigProperty("basemap", "lightPreset", "dusk");
+      map.setConfigProperty("basemap", "lightPreset", "night");
     } else {
-      map.setConfigProperty("basemap", "lightPreset", "dawn");
+      map.setConfigProperty("basemap", "lightPreset", "day");
     }
   }, [theme]);
 

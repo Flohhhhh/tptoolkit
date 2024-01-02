@@ -7,6 +7,7 @@ import MileMarker from "./MileMarker";
 import { Map, ClipboardCheck, MousePointerClick } from "lucide-react";
 
 import { turnpikeData, parkwayData } from "@/lib/parsedData.js";
+import { create } from "domain";
 
 const MpFinder = () => {
   const [data, setData] = useState(null);
@@ -14,7 +15,7 @@ const MpFinder = () => {
   const [errorDisplay, setErrorDisplay] = useState(null);
   const [x, setX] = useState(null);
   const [y, setY] = useState(null);
-  const { flyTo } = useMap();
+  const { flyTo, createMarker } = useMap();
 
   // console.log(turnpikeData)
   // console.log(parkwayData)
@@ -50,6 +51,7 @@ const MpFinder = () => {
   const parseData = (data) => {
     copyToClipboard(data[0]);
     flyTo(data[0].y, data[0].x);
+    createMarker(data[0].y, data[0].x);
     setData(data);
   };
 
