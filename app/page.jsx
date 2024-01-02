@@ -1,15 +1,13 @@
-import Map from "./components/Map/Map.jsx";
+import Map from "./components/map/Map.jsx";
 import MpFinder from "./components/MileMarkerFinder/MpFinder";
 import SaReference from "./components/ServiceAreaReference/SaReference";
 
 export default function Home() {
   return (
-    <div>
+    <div className='absolute top-10 bottom-0 w-full'>
       <MpFinder />
       <SaReference />
-      <div className='fixed top-12 left-0 right-0 bottom-0'>
-        <Map />
-      </div>
+      <Map />
     </div>
   );
 }
