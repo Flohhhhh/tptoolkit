@@ -11,17 +11,16 @@ const ThemeSwitcher = () => {
 
   useEffect(() => {
     setMounted(true);
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      setTheme("dark");
+    }
   }, []);
 
   if (!mounted) {
     return null;
-  }
-
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    setTheme("dark");
   }
 
   return (
