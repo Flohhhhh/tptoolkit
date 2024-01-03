@@ -80,8 +80,8 @@ const MpFinder = () => {
   ));
 
   return (
-    <div className='absolute top-12 p-2 w-96 z-10'>
-      <div className='shadow-lg shadow-black/20 dark:shadow-shark-800/75 col-span-3 self-start w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
+    <div className='absolute top-12 bottom-0 p-2 w-96 z-10'>
+      <div className='h-full shadow-lg shadow-black/20 dark:shadow-shark-800/75 col-span-3 self-start w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
         {/* TODO add switch for copy to automatic copy-to-clipboard */}
         <h1 className='text-2xl font-bold mb-4 text-shark-800 dark:text-shark-300'>
           Location Lookup
