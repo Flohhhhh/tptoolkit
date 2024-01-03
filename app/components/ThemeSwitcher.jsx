@@ -17,6 +17,13 @@ const ThemeSwitcher = () => {
     return null;
   }
 
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    setTheme("dark");
+  }
+
   return (
     <Switch
       checked={theme === "dark"}
