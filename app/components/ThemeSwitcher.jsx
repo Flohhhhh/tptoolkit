@@ -11,14 +11,14 @@ const ThemeSwitcher = () => {
 
   useEffect(() => {
     setMounted(true);
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
+    // if (
+    //   window.matchMedia &&
+    //   window.matchMedia("(prefers-color-scheme: dark)").matches
+    // ) {
+    //   setTheme("dark");
+    // } else {
+    //   setTheme("light");
+    // }
   }, []);
 
   if (!mounted) {
