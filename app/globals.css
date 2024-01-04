@@ -16,10 +16,10 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
-.mapboxgl-ctrl-bottom-right {
+/* .mapboxgl-ctrl-bottom-right {
   margin-right: 32rem;
 }
 
 .mapboxgl-ctrl-bottom-left {
   margin-left: 24rem;
-}
+} */

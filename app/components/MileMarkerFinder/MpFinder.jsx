@@ -15,7 +15,7 @@ const MpFinder = () => {
   const [errorDisplay, setErrorDisplay] = useState(null);
   const [x, setX] = useState(null);
   const [y, setY] = useState(null);
-  const { flyTo, createMarker } = useMap();
+  const { flyTo, updateCoordsMarker, updateSelected } = useMap();
 
   // console.log(turnpikeData)
   // console.log(parkwayData)
@@ -27,6 +27,8 @@ const MpFinder = () => {
 
     const { coordinates } = e.target.elements;
     const [y, x] = coordinates.value.split(",");
+    updateCoordsMarker(y, x);
+    flyTo(y, x);
     console.log("Searching near", coordinates.value);
 
     const res = await fetch(`/api/search/coords?y=${y}&x=${x}`, {
@@ -49,9 +51,9 @@ const MpFinder = () => {
   };
 
   const parseData = (data) => {
-    copyToClipboard(data[0]);
-    flyTo(data[0].y, data[0].x);
-    createMarker(data[0].y, data[0].x);
+    console.log(data);
+    updateSelected()
+    // copyToClipboard(data[0]);
     setData(data);
   };
 
@@ -80,13 +82,13 @@ const MpFinder = () => {
   ));
 
   return (
-    <div className='absolute top-12 bottom-0 p-2 w-96 z-10'>
-      <div className='h-full shadow-lg shadow-black/20 dark:shadow-shark-800/75 col-span-3 self-start w-full bg-white dark:bg-shark-800 rounded-lg p-4 border border-shark-200 dark:border-shark-600'>
+    <div className='absolute top-10 bottom-0 w-[320px] z-10'>
+      <div className='h-full col-span-3 self-start w-full bg-white dark:bg-shark-800 rounded-lg p-4'>
         {/* TODO add switch for copy to automatic copy-to-clipboard */}
-        <h1 className='text-2xl font-bold mb-4 text-shark-800 dark:text-shark-300'>
+        <h1 className='text-xl font-semibold mb-4 text-shark-800 dark:text-shark-300'>
           Location Lookup
         </h1>
-        <p className='text-xs text-shark-800 dark:text-shark-200 mb-4'>
+        {/* <p className='text-xs text-shark-800 dark:text-shark-200 mb-4'>
           This tool is a reverse geocoder for the mile markers, exits, and other
           geography along the Garden State Parkway and New Jersey Turnpike.
           <button
@@ -111,10 +113,10 @@ const MpFinder = () => {
           To use the tool enter coordinates in the search box and click find.
           The nearest mile markers will be displayed, and the closest one will
           be automatically copied to your clipboard!
-        </p>
+        </p> */}
 
         <form onSubmit={handleSubmit}>
-          <div className='flex flex-col sm:flex-row gap-2'>
+          <div className='flex flex-col gap-2'>
             <input
               type='text'
               name='coordinates'
@@ -133,7 +135,7 @@ const MpFinder = () => {
               Coordinates
             </label>
             <div className='flex gap-2 grow'>
-              <button
+              {/* <button
                 type='button'
                 disabled={x && y ? false : true}
                 onClick={() => {
@@ -144,19 +146,19 @@ const MpFinder = () => {
                 className='flex items-center justify-center p-3 h-full aspect-square bg-blue-500 animate-pulse rounded-md enabled:hover:brightness-125 transition disabled:bg-shark-500 disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 <Map size={20} />
-              </button>
+              </button> */}
               <button
                 type='submit'
-                className='bg-blue-500 rounded-md px-12 py-2 w-full hover:brightness-125 active:scale-95 transition'
+                className='bg-blue-500 rounded-md px-12 py-1.5 w-full hover:brightness-125 active:scale-95 transition'
               >
                 Find
               </button>
             </div>
           </div>
         </form>
-        <div className='h-[540px] flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center '>
           {data === null && !loading ? (
-            <p className='font-bold text-shark-100 dark:text-shark-500'>
+            <p className='text-shark-200 dark:text-shark-500 mt-8'>
               Input coordinates to see nearby markers & landmarks!
             </p>
           ) : null}

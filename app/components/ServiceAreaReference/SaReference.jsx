@@ -1,6 +1,10 @@
-import React from "react";
+"use client"
+
+import { useState } from "react";
+import { Transition } from "@headlessui/react"
 
 const SaReference = () => {
+  const [ isOpen, setIsOpen ] = useState(false)
   const data = [
     {
       title: "Parkway Service Areas",
@@ -87,11 +91,27 @@ const SaReference = () => {
   });
 
   return (
-    <div className='z-10 absolute top-12 right-0 bottom-0 overflow-y-scroll p-2'>
-      <div className=' bg-white dark:bg-shark-800 rounded-lg border border-shark-200 dark:border-shark-600'>
-        {tables}
-      </div>
-    </div>
+    <>
+      <button
+        className="z-10 absolute top-2 left-2 px-4 py-1 text-sm text-shark-700 dark:text-shark-100 bg-white dark:bg-shark-800 rounded-xl border border-shark-500 hover:brightness-90 dark:hover:brightness-125 transition shadow"
+        onClick={() => {
+          setIsOpen(!isOpen)
+        }}
+      >
+        Service Area Reference
+      </button>
+
+      <Transition 
+        className='z-10 absolute top-12 right-0 bottom-0 left-0 pointer-events-none'
+        show={isOpen}
+        as="div"
+      >
+        <div className='w-[800px] h-[800px] overflow-scroll mx-auto bg-white dark:bg-shark-800 rounded-lg border border-shark-200 dark:border-shark-600 pointer-events-auto shadow-lg'>
+          {tables}
+        </div>
+      </Transition>
+    </>
+
   );
 };
 
