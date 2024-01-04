@@ -6,7 +6,6 @@ import { MapRenderer } from "./MapRenderer";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const Map = (props) => {
-  const { viewTarget } = props;
   const mapNode = useRef(null);
   const { map, setMap } = useMap();
 
