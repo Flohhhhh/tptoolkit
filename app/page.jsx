@@ -1,13 +1,19 @@
-import React from "react";
-import MpFinder from "./components/MileMarkerFinder/MpFinder.jsx";
-import SaReference from "./components/ServiceAreaReference/SaReference.jsx";
+import Map from "./components/Map/Map.jsx";
+import MpFinder from "./components/MileMarkerFinder/MpFinder";
+import DetailsPanel from "./components/DetailsPanel/DetailsPanel"
+import SaReference from "./components/ServiceAreaReference/SaReference";
 
 export default function Home() {
+  // https://dribbble.com/shots/3264304-Industrial-Analytics-Dashboard-Map-View-Interface-Animation
+  
   return (
-    <div className='min-h-screen max-w-3xl mx-auto gap-4 px-8 mb-12'>
-      <div className="flex flex-col gap-4">
-        <MpFinder />
+    <div className='h-screen bg-white dark:bg-shark-800'>
+      <MpFinder />
+      
+      <DetailsPanel />
+      <div className='fixed top-10 left-[320px] right-0 bottom-1 rounded-l-3xl overflow-hidden'>
         <SaReference />
+        <Map />
       </div>
     </div>
   );

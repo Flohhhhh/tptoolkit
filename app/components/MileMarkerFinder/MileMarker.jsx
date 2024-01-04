@@ -1,11 +1,15 @@
 import React from "react";
 import toast from "react-hot-toast";
-import { ClipboardCheck } from 'lucide-react'
+import { ClipboardCheck, ClipboardCopy } from 'lucide-react'
+import { useMap } from "@/app/context/mapContext";
 import TypeIcon from "./TypeIcon"
 
 const MileMarkerFactory = (props) => {
   const { data, closest } = props;
+  const { selected, updateHoverMarker, updateSelected } = useMap()
   let distance = `${(data.distance * 5280).toFixed()} ft`;
+
+  // set selected function
 
   const copyToClipboard = () => {
     const text = `@${data.name}`;
@@ -23,22 +27,42 @@ const MileMarkerFactory = (props) => {
     ));
   };
 
-  const bg = closest
+  const bg = selected === data
     ? "bg-blue-500 text-white animate-pulse"
     : "bg-shark-50 dark:bg-shark-700 text-shark-600 dark:text-shark-300";
 
   return (
     <div
       onClick={() => {
-        copyToClipboard();
+        updateSelected(data);
+        // maybe fly to it?
       }}
-      className={`px-4 py-2 rounded-md flex justify-between w-full hover:brightness-95 dark:hover:brightness-125 active:scale-95 transition ${bg}`}
+      // buggy, they stick on screen during fly or something? also maybe when mouse moves off map?
+      // onMouseEnter={() => {
+      //   updateHoverMarker(data.y, data.x)
+      // }}
+      // onMouseExit={() => {
+      //   updateHoverMarker()
+      // }}
+      className={`pl-3 pr-2 py-1 rounded-md flex justify-between gap-2 items-center w-full hover:cursor-pointer hover:brightness-95 dark:hover:brightness-125 transition ${bg}`}
     >
-      <h1 className=' uppercase'>
-        <span className="opacity-50 float-left mr-4 pt-[2px]"><TypeIcon type={data.type}/></span>
-        {data.name}
-      </h1>
-      <p className='opacity-70'>{distance}</p>
+      <div className="flex">
+        <span className="w-6 opacity-50 mr-2 my-auto"><TypeIcon type={data.type}/></span>
+        <div className="flex flex-col">
+          <h2 className='text-sm uppercase select-none line-clamp-1'>
+            {data.name}
+          </h2>
+          <p className='opacity-70 text-xs select-none'>{distance}</p>
+        </div>
+      </div>
+      <button 
+        className="text-shark-500 dark:text-shark-300 bg-white dark:bg-shark-800 w-8 h-8 flex items-center justify-center rounded shrink-0 hover:brightness-90 dark:hover:brightness-125 transition"
+        onClick={() => {
+          copyToClipboard();
+        }}
+      >
+        <ClipboardCopy size={18}/>
+      </button>
     </div>
   );
 };
