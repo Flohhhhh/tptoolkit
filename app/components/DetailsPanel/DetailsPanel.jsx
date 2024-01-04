@@ -36,7 +36,10 @@ const DetailsPanel = () => {
                             if (entry[0] == "commonName") return null;
                             if (entry[1] === '0.0') return null;
                             return (
-                                <div className="grid grid-cols-2 text-sm px-2 py-1 text-shark-700 dark:text-shark-200 odd:bg-shark-50 dark:odd:bg-shark-700/80 border-b border-shark-200 dark:border-shark-600">
+                                <div
+                                    key={selected.name}
+                                    className="grid grid-cols-2 text-sm px-2 py-1 text-shark-700 dark:text-shark-200 odd:bg-shark-50 dark:odd:bg-shark-700/80 border-b border-shark-200 dark:border-shark-600"
+                                >
                                     <span className="opacity-75 capitalize">{entry[0]}: </span>
                                     <span className="ml-2 col-start-2">{entry[1]}</span>
                                 </div>
