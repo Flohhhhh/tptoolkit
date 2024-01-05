@@ -7,9 +7,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 const Map = (props) => {
   const mapNode = useRef(null);
-  const { map, setMap } = useMap();
 
-  return <MapRenderer ref={mapNode} map={map} setMap={setMap} />;
+  return <MapRenderer ref={mapNode}/>;
 };
 
 export default Map;

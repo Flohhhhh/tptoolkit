@@ -5,11 +5,15 @@ import { useTheme } from "next-themes";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { CopyToClipboard } from "@/lib/CopyToClipboard"
+import { useSearch } from "@/app/context/searchContext"
+import { useMap } from "@/app/context/mapContext"
 
 export function MapRenderer(props) {
   const { theme } = useTheme();
-  const { map, setMap, onMapLoad, onMapRemoved } = props;
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const { onMapLoad, onMapRemoved } = props;
+  const { searchCoords, setEnteredCoords } = useSearch();
+  const { map, setMap } = useMap();
+  const [ mapLoaded, setMapLoaded ] = useState(false);
 
   // React ref to store a reference to the DOM node that will be used
   // as a required parameter `container` when initializing the mapbox-gl
@@ -62,8 +66,15 @@ export function MapRenderer(props) {
       // console.log(e);
       // log lat long
       // console.log("Lat:", e.lngLat.lat, "Long:", e.lngLat.lng);
-      CopyToClipboard(`${e.lngLat.lng.toFixed(6)}, ${e.lngLat.lat.toFixed(6)}`)
+      CopyToClipboard(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`)
     });
+
+    mapboxMap.on('dblclick', (e) => {
+      console.log(e)
+      e.preventDefault();
+      console.log(`Searching at ${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed}`)
+      setEnteredCoords(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`)
+    })
 
     // save the map object to useState
     setMap(mapboxMap);

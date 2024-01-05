@@ -28,7 +28,9 @@ export const MapProvider = ({ children }) => {
   };
 
   const updateCoordsMarker = (lat, lng) => {
+    console.log("Map", map)
     if (!map) return;
+    console.log("Updaing marker to", lat, lng)
     if (coordsMarker) coordsMarker.remove();
     setCoordsMarker(new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map));
   };
