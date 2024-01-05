@@ -1,16 +1,10 @@
 "use client"
-import { useEffect } from "react"
+
 import { Transition } from "@headlessui/react"
 import { useMap } from "@/app/context/mapContext";
 
 const DetailsPanel = () => {
     const { selected } = useMap();
-
-    useEffect(() => {
-        if (!selected) return;
-        console.log(Object.entries(selected))
-    }, [selected])
-
 
     return (
         // TODO add x button that will clear selection
@@ -37,7 +31,7 @@ const DetailsPanel = () => {
                             if (entry[1] === '0.0') return null;
                             return (
                                 <div
-                                    key={selected.name}
+                                    key={`${entry.name}_${index}`}
                                     className="grid grid-cols-2 text-sm px-2 py-1 text-shark-700 dark:text-shark-200 odd:bg-shark-50 dark:odd:bg-shark-700/80 border-b border-shark-200 dark:border-shark-600"
                                 >
                                     <span className="opacity-75 capitalize">{entry[0]}: </span>
