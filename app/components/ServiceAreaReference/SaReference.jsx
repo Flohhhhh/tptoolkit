@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Transition } from "@headlessui/react"
+import { X } from "lucide-react"
 
 const SaReference = () => {
   const [ isOpen, setIsOpen ] = useState(false)
@@ -93,7 +94,7 @@ const SaReference = () => {
   return (
     <>
       <button
-        className="z-10 absolute top-2 left-2 px-4 py-1 text-sm text-shark-700 dark:text-shark-100 bg-white dark:bg-shark-800 rounded-xl border border-shark-500 hover:brightness-90 dark:hover:brightness-125 transition shadow"
+        className="z-10 absolute top-3 left-3 px-4 py-2 text-sm text-shark-700 dark:text-shark-100 bg-white dark:bg-shark-800 rounded-xl border border-shark-500 hover:brightness-90 dark:hover:brightness-125 transition shadow active:translate-y-1"
         onClick={() => {
           setIsOpen(!isOpen)
         }}
@@ -106,9 +107,22 @@ const SaReference = () => {
         show={isOpen}
         as="div"
       >
-        <div className='w-[800px] h-[800px] overflow-scroll mx-auto bg-white dark:bg-shark-800 rounded-lg border border-shark-200 dark:border-shark-600 pointer-events-auto shadow-lg'>
+        <div className="w-[800px] mx-auto bg-white dark:bg-shark-800 rounded-lg border border-shark-200 dark:border-shark-600 pointer-events-auto shadow-lg">
+        <div className="w-full px-2">
+          <button 
+            className="float-right w-7 h-7 m-2 rounded-lg text-shark-800 dark:text-shark-100 hover:bg-red-500/50 flex items-center justify-center"
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            <X size={16}/>
+          </button>
+        </div>  
+        <div className='w-full h-[800px] overflow-y-scroll'>
           {tables}
         </div>
+          </div>
+        
       </Transition>
     </>
 
