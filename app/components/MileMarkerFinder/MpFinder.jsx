@@ -27,8 +27,10 @@ const MpFinder = () => {
 
     const { coordinates } = e.target.elements;
     const [y, x] = coordinates.value.split(",");
-    updateCoordsMarker(y, x);
-    flyTo(y, x);
+    if (!!y || !!x) {
+      updateCoordsMarker(y, x);
+      flyTo(y, x);
+    }
     console.log("Searching near", coordinates.value);
 
     const res = await fetch(`/api/search/coords?y=${y}&x=${x}`, {
@@ -157,19 +159,19 @@ const MpFinder = () => {
           </div>
         </form>
         <div className='flex flex-col items-center justify-center '>
-          {data === null && !loading ? (
+          {data === null && !loading && !errorDisplay ? (
             <p className='text-shark-200 dark:text-shark-500 mt-8'>
               Input coordinates to see nearby markers & landmarks!
             </p>
           ) : null}
           {errorDisplay ? (
-            <p className='text-center text-red-400 bg-shark-700 px-4 py-2 rounded-md'>
+            <p className='mt-12 text-center text-red-400 bg-shark-700 px-4 py-2 rounded-md'>
               {errorDisplay}
             </p>
           ) : null}
           {loading ? (
             // spinner
-            <div role='status'>
+            <div role='status' className="mt-12">
               <svg
                 aria-hidden='true'
                 className='w-8 h-8 mr-2 text-shark-200 animate-spin dark:text-shark-600 fill-shark-100'
