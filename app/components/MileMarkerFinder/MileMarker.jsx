@@ -1,7 +1,6 @@
-import React from "react";
-import toast from "react-hot-toast";
-import { ClipboardCheck, ClipboardCopy } from 'lucide-react'
+
 import { useMap } from "@/app/context/mapContext";
+import { CopyToClipboard } from '@/lib/CopyToClipboard'
 import TypeIcon from "./TypeIcon"
 
 const MileMarkerFactory = (props) => {
@@ -11,21 +10,6 @@ const MileMarkerFactory = (props) => {
 
   // set selected function
 
-  const copyToClipboard = () => {
-    const text = `@${data.name}`;
-    console.log(text.toUpperCase());
-    navigator.clipboard.writeText(text.toUpperCase());
-    toast.custom((t) => (
-      <div
-        className={`flex gap-4 bg-white dark:bg-shark-700 text-shark-800 dark:text-shark-100 px-6 py-2 rounded-xl border border-shark-300 dark:border-shark-600 shadow-lg ${
-          t.visible ? 'animate-enter' : 'animate-leave'
-        }`}
-      >
-        <ClipboardCheck size={20} className="text-emerald-500 animate-pulse"/>
-        <p>Copied {text.toUpperCase()}</p>
-      </div>
-    ));
-  };
 
   const bg = selected === data
     ? "bg-blue-500 text-white animate-pulse"
@@ -35,7 +19,8 @@ const MileMarkerFactory = (props) => {
     <div
       onClick={() => {
         updateSelected(data);
-        copyToClipboard(data);
+        const text = `@${data.name}`;
+        CopyToClipboard(text);
         // maybe fly to it?
       }}
       // buggy, they stick on screen during fly or something? also maybe when mouse moves off map?
