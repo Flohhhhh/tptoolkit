@@ -35,6 +35,7 @@ const MileMarkerFactory = (props) => {
     <div
       onClick={() => {
         updateSelected(data);
+        copyToClipboard(data);
         // maybe fly to it?
       }}
       // buggy, they stick on screen during fly or something? also maybe when mouse moves off map?
@@ -55,14 +56,6 @@ const MileMarkerFactory = (props) => {
           <p className='opacity-70 text-xs select-none'>{distance}</p>
         </div>
       </div>
-      <button 
-        className="text-shark-500 dark:text-shark-300 bg-white dark:bg-shark-800 w-8 h-8 flex items-center justify-center rounded shrink-0 hover:brightness-90 dark:hover:brightness-125 transition"
-        onClick={() => {
-          copyToClipboard();
-        }}
-      >
-        <ClipboardCopy size={18}/>
-      </button>
     </div>
   );
 };
