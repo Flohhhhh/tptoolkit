@@ -1,14 +1,19 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTheme } from "next-themes";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { CopyToClipboard } from "@/lib/CopyToClipboard"
+import { useSearch } from "@/app/context/searchContext"
+import { useMap } from "@/app/context/mapContext"
 
 export function MapRenderer(props) {
   const { theme } = useTheme();
-  const { map, setMap, onMapLoad, onMapRemoved } = props;
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const { onMapLoad, onMapRemoved } = props;
+  const { searchCoords, setEnteredCoords } = useSearch();
+  const { map, setMap } = useMap();
+  const [ mapLoaded, setMapLoaded ] = useState(false);
 
   // React ref to store a reference to the DOM node that will be used
   // as a required parameter `container` when initializing the mapbox-gl
@@ -57,21 +62,19 @@ export function MapRenderer(props) {
 
     // add click event listener
     // https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/
-    mapboxMap.on("click", (e) => {
-      console.log(e);
+    mapboxMap.on("contextmenu", (e) => {
+      // console.log(e);
       // log lat long
-      console.log("Lat:", e.lngLat.lat, "Long:", e.lngLat.lng);
-      // const layers = mapboxMap.getStyle().layers;
-      // //   console.log('Layers', layers)
-      // const features = mapboxMap.queryRenderedFeatures(e.point, {
-      //   layers: ["poi-label"],
-      // });
-      //   console.log(features)
-      // new mapboxgl.Popup()
-      //   .setLngLat(e.lngLat)
-      //   .setHTML('you clicked here: <br/>' + features[0].properties.name)
-      //   .addTo(mapboxMap)
+      // console.log("Lat:", e.lngLat.lat, "Long:", e.lngLat.lng);
+      CopyToClipboard(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`)
     });
+
+    mapboxMap.on('dblclick', (e) => {
+      console.log(e)
+      e.preventDefault();
+      console.log(`Searching at ${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed}`)
+      setEnteredCoords(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`)
+    })
 
     // save the map object to useState
     setMap(mapboxMap);
