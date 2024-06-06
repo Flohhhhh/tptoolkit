@@ -35,6 +35,7 @@ const SaReference = () => {
               {table.rows.map((row, index) => {
                 return (
                   <SaItem
+                    key={`row-${index}`}
                     table={table}
                     item={row}
                     index={index}
