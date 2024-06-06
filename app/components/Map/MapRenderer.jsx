@@ -4,16 +4,16 @@ import { useEffect, useState, useRef } from "react";
 import { useTheme } from "next-themes";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { CopyToClipboard } from "@/lib/CopyToClipboard"
-import { useSearch } from "@/app/context/searchContext"
-import { useMap } from "@/app/context/mapContext"
+import { CopyToClipboard } from "@/lib/CopyToClipboard";
+import { useSearch } from "@/app/context/searchContext";
+import { useMap } from "@/app/context/mapContext";
 
 export function MapRenderer(props) {
   const { theme } = useTheme();
   const { onMapLoad, onMapRemoved } = props;
   const { searchCoords, setEnteredCoords } = useSearch();
   const { map, setMap } = useMap();
-  const [ mapLoaded, setMapLoaded ] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   // React ref to store a reference to the DOM node that will be used
   // as a required parameter `container` when initializing the mapbox-gl
@@ -66,15 +66,17 @@ export function MapRenderer(props) {
       // console.log(e);
       // log lat long
       // console.log("Lat:", e.lngLat.lat, "Long:", e.lngLat.lng);
-      CopyToClipboard(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`)
+      CopyToClipboard(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`);
     });
 
-    mapboxMap.on('dblclick', (e) => {
-      console.log(e)
+    mapboxMap.on("dblclick", (e) => {
+      // console.log(e)
       e.preventDefault();
-      console.log(`Searching at ${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed}`)
-      setEnteredCoords(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`)
-    })
+      // console.log(`Searching at ${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed}`)
+      setEnteredCoords(
+        `${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`
+      );
+    });
 
     // save the map object to useState
     setMap(mapboxMap);
@@ -91,9 +93,9 @@ export function MapRenderer(props) {
   }, []);
 
   useEffect(() => {
-    console.log(map);
+    // console.log(map);
     if (!map) return;
-    console.log();
+    // console.log();
     console.log("Map reading theme", theme);
     if (theme === "dark") {
       map.setConfigProperty("basemap", "lightPreset", "night");
@@ -102,5 +104,5 @@ export function MapRenderer(props) {
     }
   }, [theme]);
 
-  return <div ref={mapNode} className='w-full h-full' />;
+  return <div ref={mapNode} className="w-full h-full" />;
 }

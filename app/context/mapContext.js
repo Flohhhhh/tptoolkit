@@ -24,13 +24,13 @@ export const MapProvider = ({ children }) => {
 
   const flyTo = (lat, lng) => {
     if (!map) return;
-    map.flyTo({ center: [lng, lat], zoom: 15, duration: 3000 });
+    map.flyTo({ center: [lng, lat], zoom: 15, duration: 2000 });
   };
 
   const updateCoordsMarker = (lat, lng) => {
-    console.log("Map", map)
+    // console.log("Map", map);
     if (!map) return;
-    console.log("Updaing marker to", lat, lng)
+    // console.log("Updaing marker to", lat, lng);
     if (coordsMarker) coordsMarker.remove();
     setCoordsMarker(new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map));
   };
@@ -38,33 +38,49 @@ export const MapProvider = ({ children }) => {
   const updateSelectedMarker = (lat, lng) => {
     if (!map) return;
     if (selectedMarker) selectedMarker.remove();
-    setSelectedMarker(new mapboxgl.Marker({color: 'red'}).setLngLat([lng, lat]).addTo(map))
-  }
+    setSelectedMarker(
+      new mapboxgl.Marker({ color: "red" }).setLngLat([lng, lat]).addTo(map)
+    );
+  };
 
   const updateHoverMarker = (lat, lng) => {
     if (!lat || !lng) {
       if (hoverMarker) hoverMarker.remove();
-      return
+      return;
     }
     if (!map) return;
     if (hoverMarker) hoverMarker.remove();
-    setHoverMarker(new mapboxgl.Marker({color: 'grey'}).setLngLat([lng,lat]).addTo(map));
-  }
+    setHoverMarker(
+      new mapboxgl.Marker({ color: "grey" }).setLngLat([lng, lat]).addTo(map)
+    );
+  };
 
   const updateSelected = (newItem) => {
-    if (!newItem || newItem == selected){ 
+    if (!newItem || newItem == selected) {
       setSelected(null);
       if (!selectedMarker) return;
       selectedMarker.remove();
       return;
     }
-    setSelected(newItem)
-    updateSelectedMarker(newItem.y, newItem.x)
-    setHistory([...history, newItem.name])
-  }
+    setSelected(newItem);
+    updateSelectedMarker(newItem.y, newItem.x);
+    setHistory([...history, newItem.name]);
+  };
 
   return (
-    <MapContext.Provider value={{ map, setMap, flyTo, selected, updateSelected, updateCoordsMarker, updateHoverMarker, history, setHistory }}>
+    <MapContext.Provider
+      value={{
+        map,
+        setMap,
+        flyTo,
+        selected,
+        updateSelected,
+        updateCoordsMarker,
+        updateHoverMarker,
+        history,
+        setHistory,
+      }}
+    >
       {children}
     </MapContext.Provider>
   );
