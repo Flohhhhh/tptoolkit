@@ -157,8 +157,12 @@ const MpFinder = () => {
             </div>
           ) : (
             results && (
-              <div className="w-full h-full flex flex-col gap-1 mt-4 overflow-y-auto">
+              <div className="w-full h-full flex flex-col gap-1 mt-4  ">
                 {Locations}
+                <p className="text-sm text-shark-200 dark:text-shark-500 mt-4 animate-in-2">
+                  These results are only approximate suggestions! Verify the
+                  roadway and location with the caller!
+                </p>
               </div>
             )
           )}
