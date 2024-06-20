@@ -23,3 +23,38 @@ body {
 .mapboxgl-ctrl-bottom-left {
   margin-left: 24rem;
 } */
+
+.animate-in {
+  animation: animateIn 0.3s ease 0.15s both;
+}
+
+.animate-in-1 {
+  animation: animateIn 0.3s ease 0.2s both;
+}
+
+.animate-in-2 {
+  animation: animateIn 0.3s ease 0.25s both;
+}
+
+.animate-in-3 {
+  animation: animateIn 0.3s ease 0.3s both;
+}
+
+.animate-in-4 {
+  animation: animateIn 0.3s ease 0.35s both;
+}
+
+.animate-in-5 {
+  animation: animateIn 0.3s ease 0.4s both;
+}
+
+@keyframes animateIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

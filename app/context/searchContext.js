@@ -24,6 +24,7 @@ export const SearchProvider = ({ children }) => {
 
   const searchCoords = async (x, y) => {
     setSearching(true);
+    setSearchError(null);
 
     if (!!y && !!x) {
       // console.log("Updating marker")

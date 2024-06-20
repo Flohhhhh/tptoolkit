@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearch } from "@/app/context/searchContext";
 import { useDebounce } from "@/lib/hooks/useDebounce";
+import { ClipboardPaste } from "lucide-react";
 import MileMarker from "./MileMarker";
 
 import { turnpikeData, parkwayData } from "@/lib/parsedData.js";
@@ -25,9 +26,9 @@ const MpFinder = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { coordinates } = e.target.elements;
-    const [y, x] = coordinates.value.split(",");
-    searchCoords(x, y);
+    // const { coordinates } = e.target.elements;
+    // const [y, x] = coordinates.value.split(",");
+    // searchCoords(x, y);
   };
 
   // map data to MileMarker components
@@ -110,28 +111,32 @@ const MpFinder = () => {
                 <Map size={20} />
               </button> */}
               <button
-                type="submit"
-                className="text-white bg-blue-500 rounded-md px-12 py-1.5 w-full hover:brightness-125 active:scale-95 transition border-t border-blue-400"
+                onClick={() => {
+                  navigator.clipboard.readText().then((text) => {
+                    setEnteredCoords(text);
+                  });
+                }}
+                className="flex items-center justify-center gap-2 text-white bg-blue-500 rounded-md  py-1.5 w-full hover:brightness-125 active:scale-95 transition border-t border-blue-400"
               >
-                Find
+                Paste & Go <ClipboardPaste size={18} />
               </button>
             </div>
           </div>
         </form>
         <div className="flex flex-col items-center justify-center ">
           {results === null && !searching && !searchError ? (
-            <p className="text-shark-200 dark:text-shark-500 mt-8">
+            <p className="text-shark-200 dark:text-shark-500 mt-4 animate-in">
               Input coordinates to see nearby markers & landmarks!
             </p>
           ) : null}
           {searchError ? (
-            <p className="mt-12 text-center text-red-400 bg-shark-700 px-4 py-2 rounded-md">
+            <p className="mt-4 text-center text-red-400 bg-shark-700 px-4 py-2 rounded-md animate-in">
               {searchError}
             </p>
           ) : null}
           {searching ? (
             // spinner
-            <div role="status" className="mt-12">
+            <div role="status" className="mt-12 animate-in">
               <svg
                 aria-hidden="true"
                 className="w-8 h-8 mr-2 text-shark-200 animate-spin dark:text-shark-600 fill-shark-100"
