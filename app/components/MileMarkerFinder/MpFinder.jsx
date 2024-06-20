@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearch } from "@/app/context/searchContext";
+import { useDebounce } from "@/lib/hooks/useDebounce";
 import MileMarker from "./MileMarker";
 
 import { turnpikeData, parkwayData } from "@/lib/parsedData.js";
@@ -16,6 +17,8 @@ const MpFinder = () => {
     setSearchError,
     searching,
   } = useSearch();
+
+  const query = useDebounce(enteredCoords, 500);
 
   // console.log(turnpikeData)
   // console.log(parkwayData)
@@ -35,10 +38,10 @@ const MpFinder = () => {
   // this is a hacky fix since MapRenderer.jsx couldn't call searchCoords properly on it's own (map was always null in mapContext), but it can call enteredCoords
   // if we're doing this, we might as well just put this code in search context and always search by setting the entered coords, but not now
   useEffect(() => {
-    if (!enteredCoords) return;
-    const [y, x] = enteredCoords.split(",");
+    if (!query) return;
+    const [y, x] = query.split(",");
     searchCoords(x, y);
-  }, [enteredCoords]);
+  }, [query]);
 
   return (
     <div className="absolute top-10 bottom-0 w-[320px] z-10">
