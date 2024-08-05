@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { MapContext } from "@/app/context/mapContext";
+import { MapContext } from "@/lib/context/mapContext";
 
 export default function SaItem(props: {
   table: any;

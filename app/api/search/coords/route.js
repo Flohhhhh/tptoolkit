@@ -5,7 +5,7 @@ export async function GET(request) {
   const in_x = searchParams.get("x");
   const in_y = searchParams.get("y");
   const max = 12;
-  const maxDistance = 0.35; //max distance in miles
+  const maxDistance = 0.2; //max distance in miles
 
   // console.log("in_x", in_x);
   // console.log("in_y", in_y);

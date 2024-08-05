@@ -5,8 +5,8 @@ import { useTheme } from "next-themes";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { CopyToClipboard } from "@/lib/CopyToClipboard";
-import { useSearch } from "@/app/context/searchContext";
-import { useMap } from "@/app/context/mapContext";
+import { useSearch } from "@/lib/context/searchContext";
+import { useMap } from "@/lib/context/mapContext";
 
 export function MapRenderer(props) {
   const { theme } = useTheme();

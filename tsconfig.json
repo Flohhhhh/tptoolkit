@@ -30,8 +30,8 @@
     "app/page.jsx",
     "lib/providers.js",
     "app/components/Map/Map.jsx",
-    "app/context/mapContext.js",
-    "app/context/providers.js"
+    "lib/context/mapContext.js",
+    "lib/context/providers.js"
   ],
   "exclude": ["node_modules"]
 }

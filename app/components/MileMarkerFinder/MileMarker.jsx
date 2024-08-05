@@ -1,4 +1,4 @@
-import { useMap } from "@/app/context/mapContext";
+import { useMap } from "@/lib/context/mapContext";
 import { CopyToClipboard } from "@/lib/CopyToClipboard";
 import TypeIcon from "./TypeIcon";
 
