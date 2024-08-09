@@ -18,11 +18,13 @@ export async function GET(request) {
   // remove @ from the query
   const cleanedQuery = query.replace("@", "");
 
-  // find the entry in data where common name matches the query
-  let result = data.find((entry) => entry.commonName === cleanedQuery);
+  // if query contains "exit" change it to "ext"
+
+  // find the entry in data where common name contains the query
+  let result = data.find((entry) => entry.commonName.includes(cleanedQuery));
 
   if (!result) {
-    result = await data.find((entry) => entry.name === cleanedQuery);
+    result = await data.find((entry) => entry.name.includes(cleanedQuery));
   }
 
   if (!result) {

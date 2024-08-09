@@ -118,19 +118,32 @@ export default function PaletteModal() {
   };
 
   const suggestionBlocks = suggestions.map((suggestion) => (
-    <div
+    <button
       key={suggestion}
-      className="animate-in text-xs rounded-md border border-shark-100 dark:border-shark-600 px-2 bg-shark-50 dark:bg-shark-700 py-1"
+      disabled={
+        loading ||
+        suggestion === "Enter a mile marker" ||
+        suggestion === "Enter an exit number" ||
+        suggestion === "..."
+      }
+      className="animate-in text-xs rounded-md border border-shark-100 dark:border-shark-600 px-2 bg-shark-50 dark:bg-shark-700 py-1 enabled:hover:brightness-95 enabled:dark:hover:brightness-125 transition duration-50"
+      onClick={() => {
+        if (suggestion === "...") return;
+        if (suggestion === "Enter a mile marker") return;
+        if (suggestion === "Enter an exit number") return;
+
+        setInput(`${input}${suggestion} `);
+      }}
     >
       <span>{suggestion}</span>
-    </div>
+    </button>
   ));
 
   return (
     <div className="text-shark-700 dark:text-shark-200">
       <form
         onSubmit={(e) => handleSubmit(e, input)}
-        className="flex justify-between items-center -m-2 rounded-t-xl px-3 py-1 mb-1 bg-shark-900"
+        className="flex justify-between items-center -m-2 rounded-t-xl px-3 py-1 mb-1 bg-shark-50 dark:bg-shark-900"
       >
         <input
           type="text"
@@ -144,7 +157,7 @@ export default function PaletteModal() {
             }
             setInput(e.target.value);
           }}
-          className="bg-shark-900 disabled:opacity-50 transition text-sm border-none w-full rounded-md active:ring-0 focus:ring-0 focus:outline-none px-0 py-2 m-0"
+          className="bg-shark-50 dark:bg-shark-900 disabled:opacity-50 transition text-sm border-none w-full rounded-md active:ring-0 focus:ring-0 focus:outline-none px-0 py-2 m-0"
           placeholder="@"
           disabled={loading}
         />
