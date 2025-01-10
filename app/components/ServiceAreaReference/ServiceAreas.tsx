@@ -113,7 +113,7 @@ export const data = [
         coords: [39.980724401, -74.890117905],
       },
       {
-        name: "John Stockton",
+        name: "Richard Stockton",
         id: "6S",
         mp: "58.7",
         station: "D020",
