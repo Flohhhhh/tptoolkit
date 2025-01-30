@@ -25,7 +25,7 @@ const MpFinder = () => {
   // const { openModal } = useContext(ModalContext);
   const openPalette = () => {
     console.log("Opening palette");
-    pushModal(<PaletteModal />);
+    pushModal("PaletteDialog");
   };
 
   const query = useDebounce(enteredCoords, 500);

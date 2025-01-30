@@ -2,7 +2,7 @@
 
 import * as Dynamic from "../responsive";
 
-export default function YourModal() {
+export default function ServiceAreasDialog() {
   return (
     <Dynamic.default.Content>
       Drawer in mobile and dialog on desktop 🤘

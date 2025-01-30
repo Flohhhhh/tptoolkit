@@ -1,7 +1,7 @@
 import Map from "./components/Map/Map.jsx";
-import MpFinder from "./components/MileMarkerFinder/MpFinder";
-import DetailsPanel from "./components/DetailsPanel/DetailsPanel";
-import SaReference from "./components/ServiceAreaReference/SaReference";
+import MpFinder from "./components/MileMarkerFinder/MpFinder.jsx";
+import DetailsPanel from "./components/DetailsPanel/DetailsPanel.jsx";
+import SaReference from "./components/ServiceAreaReference/SaReference.jsx";
 import PaletteHandler from "@/app/components/Modals/Palette/PaletteHandler";
 import Modal from "@/app/components/Modals/Modal";
 
