@@ -4,13 +4,12 @@ import { useContext } from "react";
 import { ModalContext } from "@/lib/context/modalContext";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import PaletteModal from "./PaletteModal";
+import { pushModal, replaceWithModal } from "@/components/dialogs";
 
 export default function PaletteHandler() {
-  const { openModal } = useContext(ModalContext);
-
   const openPalette = () => {
     console.log("Opening palette");
-    openModal(<PaletteModal />);
+    replaceWithModal("ServiceAreasReference", { foo: "bar" });
   };
 
   useHotkeys("/", openPalette);

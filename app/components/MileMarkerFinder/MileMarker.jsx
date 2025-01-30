@@ -12,7 +12,7 @@ const MileMarkerFactory = (props) => {
   const bg =
     selected === data
       ? "bg-blue-500 text-white animate-pulse"
-      : "bg-shark-50 dark:bg-shark-700 text-shark-600 dark:text-shark-300";
+      : "bg-zinc-50 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300";
 
   return (
     <div

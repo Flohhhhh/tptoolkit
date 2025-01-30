@@ -29,7 +29,7 @@ export default function Modal() {
       {/* Full-screen container to center the panel */}
       <div className="z-50 animate-in fixed inset-0 flex w-screen items-center justify-center p-4 pr-8 ">
         {/* The actual dialog panel  */}
-        <Dialog.Panel className="mx-auto w-full max-w-lg bg-white dark:bg-shark-800 p-2 rounded-xl border border-shark-100 dark:border-shark-600 shadow-lg shadow-shark-800/50">
+        <Dialog.Panel className="mx-auto w-full max-w-lg bg-white dark:bg-zinc-800 p-2 rounded-xl border border-zinc-100 dark:border-zinc-600 shadow-lg shadow-zinc-800/50">
           {modalContent}
           {/* ... */}
         </Dialog.Panel>

@@ -34,13 +34,13 @@ const ThemeSwitcher = () => {
     >
       <div
         className={`${
-          theme === "dark" ? "bg-shark-700" : "bg-shark-100"
-        } relative inline-flex h-6 w-11 items-center rounded-full transition border border-shark-400 dark:border-shark-600`}
+          theme === "dark" ? "bg-zinc-700" : "bg-zinc-100"
+        } relative inline-flex h-6 w-11 items-center rounded-full transition border border-zinc-400 dark:border-zinc-600`}
       >
         <span
           className={`${
             theme === "dark" ? "translate-x-6" : "translate-x-1"
-          }  h-4 w-4 transform rounded-full bg-white dark:bg-shark-800 transition ease-out text-shark-800 dark:text-shark-200 flex items-center justify-center`}
+          }  h-4 w-4 transform rounded-full bg-white dark:bg-zinc-800 transition ease-out text-zinc-800 dark:text-zinc-200 flex items-center justify-center`}
         >
           {theme === "dark" ? <Moon size={10} /> : <SunMedium size={10} />}
         </span>
