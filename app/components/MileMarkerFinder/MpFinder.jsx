@@ -63,37 +63,47 @@ const MpFinder = () => {
             Location Lookup
           </h1>
 
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-2">
-              <input
-                type="text"
-                name="coordinates"
-                id="coordinates"
-                className="block w-full rounded-md border-0 py-2 bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm ring-1 ring-inset ring-zinc-200  dark:ring-zinc-500 placeholder:text-zinc-300 dark:placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:focus:ring-blue-500 sm:text-sm sm:leading-6"
-                placeholder="Coordinates"
-                autoComplete="off"
-                pattern="^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$"
-                value={enteredCoords}
-                onChange={(e) => {
-                  setEnteredCoords(e.target.value);
-                  setSearchError(null);
+          <div className="flex flex-col gap-2">
+            <input
+              type="text"
+              name="coordinates"
+              id="coordinates"
+              className="block w-full rounded-md border-0 py-2 bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm ring-1 ring-inset ring-zinc-200  dark:ring-zinc-500 placeholder:text-zinc-300 dark:placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:focus:ring-blue-500 sm:text-sm sm:leading-6"
+              placeholder="Coordinates"
+              autoComplete="off"
+              pattern="^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$"
+              value={enteredCoords}
+              onChange={(e) => {
+                setEnteredCoords(e.target.value);
+                setSearchError(null);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                }
+              }}
+            />
+            <label htmlFor="coordinates" className="sr-only">
+              Coordinates
+            </label>
+            <div className="flex gap-2 grow">
+              <button
+                onClick={async () => {
+                  try {
+                    const text = await navigator.clipboard.readText();
+                    setEnteredCoords(text);
+                  } catch (error) {
+                    // Handle the error gracefully
+                    setSearchError(
+                      "Please allow clipboard access or paste coordinates manually."
+                    );
+                  }
                 }}
-              />
-              <label htmlFor="coordinates" className="sr-only">
-                Coordinates
-              </label>
-              <div className="flex gap-2 grow">
-                <button
-                  onClick={() => {
-                    navigator.clipboard.readText().then((text) => {
-                      setEnteredCoords(text);
-                    });
-                  }}
-                  className="flex items-center justify-center gap-2 text-white bg-blue-500 rounded-md  py-1.5 w-full hover:brightness-125 active:scale-95 transition border-t border-blue-400"
-                >
-                  Paste & Go <ClipboardPaste size={18} />
-                </button>
-                {/* <button
+                className="flex items-center justify-center gap-2 text-white bg-blue-500 rounded-md  py-1.5 w-full hover:brightness-125 active:scale-95 transition border-t border-blue-400"
+              >
+                Paste & Go <ClipboardPaste size={18} />
+              </button>
+              {/* <button
                 type="button"
                 disabled={coords.x && coords.y ? false : true}
                 onClick={() => {
@@ -105,9 +115,8 @@ const MpFinder = () => {
               >
                 <Map size={20} />
               </button> */}
-              </div>
             </div>
-          </form>
+          </div>
           <div className="flex flex-col items-center justify-center ">
             {results === null && !searching && !searchError ? (
               <p className="text-zinc-200 dark:text-zinc-500 mt-4 custom-animate-in">
