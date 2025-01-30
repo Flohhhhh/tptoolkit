@@ -153,7 +153,7 @@ const MpFinder = () => {
             )}
           </div>
         </div>
-        <div>
+        {/* <div>
           <button
             onClick={openPalette}
             className="w-full py-1.5 justify-between px-4 hover:brightness-95 transition duration-50 dark:hover:brightness-125 flex items-center gap-2 bg-zinc-50   dark:bg-zinc-700 rounded-md border border-zinc-100 dark:border-zinc-600 text-zinc-500 dark:text-zinc-200"
@@ -163,7 +163,7 @@ const MpFinder = () => {
               /
             </span>
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
