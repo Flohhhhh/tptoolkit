@@ -126,7 +126,7 @@ export default function PaletteModal() {
         suggestion === "Enter an exit number" ||
         suggestion === "..."
       }
-      className="custom-animate-in text-xs rounded-md border border-shark-100 dark:border-shark-600 px-2 bg-shark-50 dark:bg-shark-700 py-1 enabled:hover:brightness-95 enabled:dark:hover:brightness-125 transition duration-50"
+      className="custom-animate-in text-xs rounded-md border border-zinc-100 dark:border-zinc-600 px-2 bg-zinc-50 dark:bg-zinc-700 py-1 enabled:hover:brightness-95 enabled:dark:hover:brightness-125 transition duration-50"
       onClick={() => {
         if (suggestion === "...") return;
         if (suggestion === "Enter a mile marker") return;
@@ -140,10 +140,10 @@ export default function PaletteModal() {
   ));
 
   return (
-    <div className="text-shark-700 dark:text-shark-200">
+    <div className="text-zinc-700 dark:text-zinc-200">
       <form
         onSubmit={(e) => handleSubmit(e, input)}
-        className="flex justify-between items-center -m-2 rounded-t-xl px-3 py-1 mb-1 bg-shark-50 dark:bg-shark-900"
+        className="flex justify-between items-center -m-2 rounded-t-xl px-3 py-1 mb-1 bg-zinc-50 dark:bg-zinc-900"
       >
         <input
           type="text"
@@ -157,13 +157,13 @@ export default function PaletteModal() {
             }
             setInput(e.target.value);
           }}
-          className="bg-shark-50 dark:bg-shark-900 disabled:opacity-50 transition text-sm border-none w-full rounded-md active:ring-0 focus:ring-0 focus:outline-none px-0 py-2 m-0"
+          className="bg-zinc-50 dark:bg-zinc-900 disabled:opacity-50 transition text-sm border-none w-full rounded-md active:ring-0 focus:ring-0 focus:outline-none px-0 py-2 m-0"
           placeholder="@"
           disabled={loading}
         />
         <button
           disabled={loading || input === "@"}
-          className="text-shark-500 disabled:opacity-50 dark:text-shark-300 bg-shark-50 rounded-md p-[6px] dark:bg-shark-700 enabled:hover:brightness-95 enabled:dark:hover:brightness-125 border border-shark-100 dark:border-shark-600 transition duration-50"
+          className="text-zinc-500 disabled:opacity-50 dark:text-zinc-300 bg-zinc-50 rounded-md p-[6px] dark:bg-zinc-700 enabled:hover:brightness-95 enabled:dark:hover:brightness-125 border border-zinc-100 dark:border-zinc-600 transition duration-50"
         >
           <SendHorizontal size={14} />
         </button>
@@ -174,7 +174,7 @@ export default function PaletteModal() {
         {error ? (
           <p className="pl-1 text-xs text-red-500 dark:text-red-400">{error}</p>
         ) : (
-          <p className="pl-1 text-xs text-shark-300 dark:text-shark-400">
+          <p className="pl-1 text-xs text-zinc-300 dark:text-zinc-400">
             Enter a location to view details.
           </p>
         )}

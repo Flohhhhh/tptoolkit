@@ -13,15 +13,15 @@ const SaReference = () => {
   const tables = data.map((table, index) => {
     return (
       <div className="p-4" key={index}>
-        <h2 className="mb-4 text-2xl font-bold text-shark-700  dark:text-shark-300">
+        <h2 className="mb-4 text-2xl font-bold text-zinc-700  dark:text-zinc-300">
           {table.title}
         </h2>
         <div
           key={index}
-          className="relative overflow-x-auto rounded-lg border border-shark-200 dark:border-shark-600 mb-4"
+          className="relative overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-600 mb-4"
         >
           <table className="table-auto w-full text-left shadow-lg">
-            <thead className="text-shark-900 dark:text-shark-200 h-12">
+            <thead className="text-zinc-900 dark:text-zinc-200 h-12">
               <tr>
                 {table.headings.map((heading, index) => {
                   return (
@@ -54,7 +54,7 @@ const SaReference = () => {
   return (
     <>
       <button
-        className="z-10 absolute top-3 left-3 px-4 py-2 text-sm text-shark-700 dark:text-shark-100 bg-white dark:bg-shark-800 rounded-xl border border-shark-500 hover:brightness-90 dark:hover:brightness-125 transition shadow active:translate-y-1"
+        className="z-10 absolute top-3 left-3 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-100 bg-white dark:bg-zinc-800 rounded-xl border border-zinc-500 hover:brightness-90 dark:hover:brightness-125 transition shadow active:translate-y-1"
         onClick={() => {
           pushModal("ServiceAreasReference");
         }}
@@ -67,10 +67,10 @@ const SaReference = () => {
         show={isOpen}
         as="div"
       >
-        <div className="w-[800px] mx-auto bg-white dark:bg-shark-800 rounded-lg border border-shark-200 dark:border-shark-600 pointer-events-auto shadow-lg">
+        <div className="w-[800px] mx-auto bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-600 pointer-events-auto shadow-lg">
           <div className="w-full px-2">
             <button
-              className="float-right w-7 h-7 m-2 rounded-lg text-shark-800 dark:text-shark-100 hover:bg-red-500/50 flex items-center justify-center"
+              className="float-right w-7 h-7 m-2 rounded-lg text-zinc-800 dark:text-zinc-100 hover:bg-red-500/50 flex items-center justify-center"
               onClick={() => {
                 setIsOpen(false);
               }}

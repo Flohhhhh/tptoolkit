@@ -9,7 +9,7 @@ export default function Home() {
   // https://dribbble.com/shots/3264304-Industrial-Analytics-Dashboard-Map-View-Interface-Animation
 
   return (
-    <div className="h-screen bg-white dark:bg-shark-800">
+    <div className="h-screen bg-white dark:bg-zinc-800">
       {/* <Modal /> */}
       <MpFinder />
       <PaletteHandler />
