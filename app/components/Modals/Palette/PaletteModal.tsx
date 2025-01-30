@@ -126,7 +126,7 @@ export default function PaletteModal() {
         suggestion === "Enter an exit number" ||
         suggestion === "..."
       }
-      className="animate-in text-xs rounded-md border border-shark-100 dark:border-shark-600 px-2 bg-shark-50 dark:bg-shark-700 py-1 enabled:hover:brightness-95 enabled:dark:hover:brightness-125 transition duration-50"
+      className="custom-animate-in text-xs rounded-md border border-shark-100 dark:border-shark-600 px-2 bg-shark-50 dark:bg-shark-700 py-1 enabled:hover:brightness-95 enabled:dark:hover:brightness-125 transition duration-50"
       onClick={() => {
         if (suggestion === "...") return;
         if (suggestion === "Enter a mile marker") return;

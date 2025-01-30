@@ -110,18 +110,18 @@ const MpFinder = () => {
           </form>
           <div className="flex flex-col items-center justify-center ">
             {results === null && !searching && !searchError ? (
-              <p className="text-shark-200 dark:text-shark-500 mt-4 animate-in">
+              <p className="text-shark-200 dark:text-shark-500 mt-4 custom-animate-in">
                 Input coordinates to see nearby markers & landmarks!
               </p>
             ) : null}
             {searchError ? (
-              <p className="mt-4 text-center text-red-400 bg-shark-50 dark:bg-shark-700 px-4 py-2 rounded-md animate-in">
+              <p className="mt-4 text-center text-red-400 bg-shark-50 dark:bg-shark-700 px-4 py-2 rounded-md custom-animate-in">
                 {searchError}
               </p>
             ) : null}
             {searching ? (
               // spinner
-              <div role="status" className="mt-12 animate-in">
+              <div role="status" className="mt-12 custom-animate-in">
                 <svg
                   aria-hidden="true"
                   className="w-8 h-8 mr-2 text-shark-200 animate-spin dark:text-shark-600 fill-shark-100"
@@ -144,7 +144,7 @@ const MpFinder = () => {
               results && (
                 <div className="w-full h-full flex flex-col gap-1 mt-4  ">
                   {Locations}
-                  <p className="text-sm text-shark-200 dark:text-shark-500 mt-4 animate-in-2">
+                  <p className="text-sm text-shark-200 dark:text-shark-500 mt-4 custom-animate-in-2">
                     These results are only approximate suggestions! Verify the
                     roadway and location with the caller!
                   </p>

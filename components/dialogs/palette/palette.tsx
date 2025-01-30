@@ -1,7 +1,12 @@
 "use client";
 
-import * as Dynamic from "../responsive";
+import { DialogContent } from "@/components/ui/dialog";
+import PaletteModal from "@/app/components/Modals/Palette/PaletteModal";
 
 export default function PaletteDialog() {
-  return <Dynamic.default.Content>PaletteDialog</Dynamic.default.Content>;
+  return (
+    <DialogContent className="sm:max-w-[425px]">
+      <PaletteModal />
+    </DialogContent>
+  );
 }
