@@ -29,9 +29,10 @@ export default function RootLayout({
             <Header />
             {children}
             {/* <Footer /> */}
+            <ModalProvider />
           </Providers>
         </div>
-        <ModalProvider />
+
         <Toaster position="bottom-right" />
       </body>
     </html>

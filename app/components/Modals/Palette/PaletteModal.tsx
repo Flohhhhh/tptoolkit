@@ -5,10 +5,11 @@ import { ModalContext } from "@/lib/context/modalContext";
 import { turnpikeData } from "@/lib/parsedData";
 import { useMap } from "@/lib/context/mapContext";
 import { SendHorizontal } from "lucide-react";
+import { popModal } from "@/components/dialogs";
 
 export default function PaletteModal() {
   const { updateCoordsMarker, updateSelected, flyTo } = useMap();
-  const { setModalOpen } = useContext(ModalContext);
+  // const { setModalOpen } = useContext(ModalContext);
   const [input, setInput] = useState("@");
   const [suggestions, setSuggestions] = useState(["TP", "GSP"]);
   const [loading, setLoading] = useState(false);
@@ -114,7 +115,8 @@ export default function PaletteModal() {
     updateCoordsMarker(data.y, data.x);
     flyTo(data.y, data.x);
     setLoading(false);
-    setModalOpen(false);
+    popModal();
+    // setModalOpen(false);
   };
 
   const suggestionBlocks = suggestions.map((suggestion) => (

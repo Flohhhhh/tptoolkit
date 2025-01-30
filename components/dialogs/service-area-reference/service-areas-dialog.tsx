@@ -1,11 +1,12 @@
 "use client";
 
 import * as Dynamic from "../responsive";
+import SaReference from "@/app/components/ServiceAreaReference/SaReference";
 
 export default function ServiceAreasDialog() {
   return (
     <Dynamic.default.Content>
-      Drawer in mobile and dialog on desktop 🤘
+      <SaReference />
     </Dynamic.default.Content>
   );
 }
