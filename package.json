@@ -10,15 +10,22 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@radix-ui/react-dialog": "^1.1.5",
     "@supabase/ssr": "^0.0.4",
     "@supabase/supabase-js": "^2.38.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.290.0",
     "mapbox-gl": "^3.0.1",
     "next": "13.5.6",
     "next-themes": "^0.2.1",
+    "pushmodal": "^1.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.6",

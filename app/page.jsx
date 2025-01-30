@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <div className="h-screen bg-white dark:bg-shark-800">
-      <Modal />
+      {/* <Modal /> */}
       <MpFinder />
       <PaletteHandler />
       <DetailsPanel />

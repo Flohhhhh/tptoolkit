@@ -8,6 +8,7 @@ import { ClipboardPaste, Map, Rocket } from "lucide-react";
 import MileMarker from "./MileMarker";
 // TODO put palette into a context so it can be re-used
 import PaletteModal from "@/app/components/Modals/Palette/PaletteModal";
+import { pushModal } from "@/components/dialogs";
 
 import { turnpikeData, parkwayData } from "@/lib/parsedData.js";
 
@@ -21,10 +22,10 @@ const MpFinder = () => {
     setSearchError,
     searching,
   } = useSearch();
-  const { openModal } = useContext(ModalContext);
+  // const { openModal } = useContext(ModalContext);
   const openPalette = () => {
     console.log("Opening palette");
-    openModal(<PaletteModal />);
+    pushModal(<PaletteModal />);
   };
 
   const query = useDebounce(enteredCoords, 500);
