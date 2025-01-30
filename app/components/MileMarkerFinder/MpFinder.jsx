@@ -28,7 +28,7 @@ const MpFinder = () => {
     pushModal("PaletteDialog");
   };
 
-  const query = useDebounce(enteredCoords, 500);
+  const query = useDebounce(enteredCoords, 1000);
   const [coords, setCoords] = useState({ x: null, y: null });
   // console.log(turnpikeData)
   // console.log(parkwayData)
