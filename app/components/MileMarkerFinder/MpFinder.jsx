@@ -124,7 +124,7 @@ const MpFinder = () => {
               </p>
             ) : null}
             {searchError ? (
-              <p className="mt-4 text-center text-red-400 bg-zinc-50 dark:bg-zinc-700 px-4 py-2 rounded-md custom-animate-in">
+              <p className="mt-4 text-sm text-center text-red-400 bg-zinc-50 dark:bg-zinc-700 px-4 py-2 rounded-md custom-animate-in">
                 {searchError}
               </p>
             ) : null}
