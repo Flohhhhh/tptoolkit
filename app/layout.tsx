@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import Providers from "../lib/providers";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/sonner";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { ModalProvider } from "@/components/dialogs";
@@ -30,10 +30,9 @@ export default function RootLayout({
             {children}
             {/* <Footer /> */}
             <ModalProvider />
+            <Toaster />
           </Providers>
         </div>
-
-        <Toaster position="bottom-right" />
       </body>
     </html>
   );
