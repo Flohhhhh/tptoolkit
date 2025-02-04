@@ -63,16 +63,18 @@ export default function ServiceAreasDialog() {
                 }}
               >
                 {/* Name column is always present */}
-                <TableCell>{row.name}</TableCell>
+                <TableCell className="min-w-fit">{row.name}</TableCell>
 
                 {/* For Parkway Service Areas */}
                 {table.headings.includes("Old Name") && (
-                  <TableCell>{row.oldName || ""}</TableCell>
+                  <TableCell className="min-w-fit">
+                    {row.oldName || ""}
+                  </TableCell>
                 )}
 
                 {/* For Turnpike Service Areas */}
                 {table.headings.includes("ID") && (
-                  <TableCell>{row.id || ""}</TableCell>
+                  <TableCell className="min-w-fit">{row.id || ""}</TableCell>
                 )}
 
                 {/* MP and Station are always present */}
