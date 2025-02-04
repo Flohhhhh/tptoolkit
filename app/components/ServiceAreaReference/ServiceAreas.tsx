@@ -4,7 +4,7 @@ export const data = [
     headings: ["Name", "Old Name", "MP", "Station"],
     rows: [
       {
-        name: "Toni Morrison",
+        name: "Bruce Willis",
         oldName: "Ocean View",
         mp: "18.3",
         station: "E030",
