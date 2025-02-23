@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
-    "@radix-ui/react-dialog": "^1.1.5",
+    "@radix-ui/react-dialog": "^1.1.6",
     "@supabase/ssr": "^0.0.4",
     "@supabase/supabase-js": "^2.38.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
     "lucide-react": "^0.290.0",
     "mapbox-gl": "^3.0.1",
     "next": "13.5.6",
