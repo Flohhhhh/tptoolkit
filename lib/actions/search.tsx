@@ -44,3 +44,23 @@ export const getNearestLocations = async (
   // Return the data retrieved from the function
   return { data, error: null };
 };
+
+export const searchLocationsByName = async (
+  name: string,
+  limit: number = 10
+) => {
+  const supabase = await createClient();
+
+  // Call the get_locations_by_name_old function using RPC
+  const { data, error } = await supabase.rpc("get_locations_by_name_old", {
+    p_search_text: name,
+    p_result_limit: limit,
+  });
+
+  if (error) {
+    console.error("Error searching locations:", error);
+    return { data: null, error };
+  }
+
+  return { data, error: null };
+};

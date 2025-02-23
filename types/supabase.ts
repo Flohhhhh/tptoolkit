@@ -454,6 +454,41 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      get_locations_by_name_old: {
+        Args: {
+          p_search_text: string;
+          p_result_limit?: number;
+        };
+        Returns: {
+          id: string;
+          name: string;
+          location: unknown;
+          created_at: string;
+          station_area: string;
+          type: Database["public"]["Enums"]["location_type_old"];
+          road: string;
+          roadway: string;
+          milepost: number;
+          direction: Database["public"]["Enums"]["directions_old"];
+          city_name: string;
+          county_name: string;
+          zip_code: string;
+          common_name: string;
+          name_1: string;
+          name_2: string;
+          name_3: string;
+          name_4: string;
+          mun_code: string;
+          station_old: string;
+          ft_pt: string;
+          troop_old: string;
+          unit_old: string;
+          exit_num: string;
+          x_old: number;
+          y_old: number;
+          rank: number;
+        }[];
+      };
       get_nearest_locations_old: {
         Args: {
           p_lng: number;
@@ -464,6 +499,30 @@ export type Database = {
         Returns: {
           id: string;
           name: string;
+          location: unknown;
+          created_at: string;
+          station_area: string;
+          type: Database["public"]["Enums"]["location_type_old"];
+          road: string;
+          roadway: string;
+          milepost: number;
+          direction: Database["public"]["Enums"]["directions_old"];
+          city_name: string;
+          county_name: string;
+          zip_code: string;
+          common_name: string;
+          name_1: string;
+          name_2: string;
+          name_3: string;
+          name_4: string;
+          mun_code: string;
+          station_old: string;
+          ft_pt: string;
+          troop_old: string;
+          unit_old: string;
+          exit_num: string;
+          x_old: number;
+          y_old: number;
           distance: number;
         }[];
       };
@@ -483,7 +542,8 @@ export type Database = {
         | "underpass"
         | "overpass"
         | "rest_area"
-        | "bridge";
+        | "bridge"
+        | "school";
       troop_identifier: "A" | "B" | "C" | "D";
     };
     CompositeTypes: {

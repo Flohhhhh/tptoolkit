@@ -80,7 +80,13 @@ const MpFinder = () => {
                 }}
                 className="flex items-center justify-center gap-2 text-white bg-blue-500 rounded-md py-1.5 w-full hover:brightness-125 active:scale-95 transition border-t border-blue-400"
               >
-                Paste & Go <ClipboardPaste size={18} />
+                {enteredCoords.match(/^-?\d+\.?\d*,\s*-?\d+\.?\d*$/) ? (
+                  <>Go</>
+                ) : (
+                  <>
+                    Paste & Go <ClipboardPaste size={18} />
+                  </>
+                )}
               </button>
             </div>
           </div>
