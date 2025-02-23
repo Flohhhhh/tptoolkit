@@ -1,15 +1,9 @@
 "use client";
 
-import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { replaceWithModal } from "@/components/dialogs";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 
 export default function PaletteHandler() {
-  const openPalette = () => {
-    console.log("Opening palette");
-    replaceWithModal("PaletteDialog", { foo: "bar" });
-  };
-
-  useHotkeys("k", openPalette);
-
+  useHotkeys("k", () => replaceWithModal("PaletteDialog", { foo: "bar" }));
   return null;
 }
