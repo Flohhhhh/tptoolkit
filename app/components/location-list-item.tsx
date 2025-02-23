@@ -65,7 +65,7 @@ export default function LocationListItem(props: {
         </span>
         <div className="flex flex-col items-start">
           <h2 className="text-sm uppercase select-none line-clamp-1">
-            {location.name}
+            {location.common_name}
           </h2>
           {altText() && (
             <p className="opacity-60 text-xs select-none capitalize">
