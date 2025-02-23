@@ -11,7 +11,7 @@ import { useSearchStore } from "@/lib/store/searchStore";
 export function MapRenderer(props) {
   const { theme } = useTheme();
   const { onMapLoad, onMapRemoved } = props;
-  const { setEnteredCoords, currentCoords } = useSearchStore();
+  const { setEnteredCoords, currentCoords, searchCoords } = useSearchStore();
   const { map, setMap } = useMap();
   const [mapLoaded, setMapLoaded] = useState(false);
   const [marker, setMarker] = useState(null);
@@ -95,9 +95,10 @@ export function MapRenderer(props) {
 
     mapboxMap.on("dblclick", (e) => {
       e.preventDefault();
-      setEnteredCoords(
-        `${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`
-      );
+      const lat = e.lngLat.lat;
+      const lng = e.lngLat.lng;
+      setEnteredCoords(`${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+      searchCoords(lng, lat);
     });
 
     // save the map object to useState
