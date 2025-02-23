@@ -5,20 +5,44 @@ import { useTheme } from "next-themes";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { CopyToClipboard } from "@/lib/CopyToClipboard";
-import { useSearch } from "@/lib/context/searchContext";
 import { useMap } from "@/lib/context/mapContext";
+import { useSearchStore } from "@/lib/store/searchStore";
 
 export function MapRenderer(props) {
   const { theme } = useTheme();
   const { onMapLoad, onMapRemoved } = props;
-  const { searchCoords, setEnteredCoords } = useSearch();
+  const { setEnteredCoords, currentCoords } = useSearchStore();
   const { map, setMap } = useMap();
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [marker, setMarker] = useState(null);
 
   // React ref to store a reference to the DOM node that will be used
   // as a required parameter `container` when initializing the mapbox-gl
   // will contain `null` by default
   const mapNode = useRef(null);
+
+  // Effect to handle marker updates and flying to location
+  useEffect(() => {
+    if (!map || !currentCoords.lat || !currentCoords.lng) return;
+
+    // Remove existing marker if it exists
+    if (marker) {
+      marker.remove();
+    }
+
+    // Create new marker
+    const newMarker = new mapboxgl.Marker()
+      .setLngLat([currentCoords.lng, currentCoords.lat])
+      .addTo(map);
+    setMarker(newMarker);
+
+    // Fly to location
+    map.flyTo({
+      center: [currentCoords.lng, currentCoords.lat],
+      zoom: 15,
+      essential: true,
+    });
+  }, [currentCoords, map]);
 
   useEffect(() => {
     const node = mapNode.current;
@@ -70,9 +94,7 @@ export function MapRenderer(props) {
     });
 
     mapboxMap.on("dblclick", (e) => {
-      // console.log(e)
       e.preventDefault();
-      // console.log(`Searching at ${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed}`)
       setEnteredCoords(
         `${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`
       );

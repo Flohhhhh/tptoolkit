@@ -3,10 +3,17 @@ import { useEffect } from "react";
 
 type HotkeyCallback = (event: KeyboardEvent) => void;
 
-export const useHotkeys = (key: string, callback: HotkeyCallback) => {
+export const useHotkeys = (
+  key: string,
+  callback: HotkeyCallback,
+  requireCtrl: boolean = false
+) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === key) {
+      if (
+        event.key.toLowerCase() === key.toLowerCase() &&
+        (!requireCtrl || (requireCtrl && event.ctrlKey))
+      ) {
         event.preventDefault();
         callback(event);
       }
@@ -17,5 +24,5 @@ export const useHotkeys = (key: string, callback: HotkeyCallback) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [key, callback]);
+  }, [key, callback, requireCtrl]);
 };
