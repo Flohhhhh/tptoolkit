@@ -1,29 +1,16 @@
 import { useMap } from "@/lib/context/mapContext";
 import { CopyToClipboard } from "@/lib/CopyToClipboard";
-import TypeIcon from "./TypeIcon";
+import LocationTypeIcon from "../location-type-icon";
+import { parseMetersToString } from "@/lib/helpers/conversions";
 
 interface MileMarkerProps {
   data: TPLocation & { distance?: number };
   closest?: boolean;
 }
 
-const METERS_TO_FEET = 3.28084;
-
-const formatDistance = (meters: number): string => {
-  const feet = meters * METERS_TO_FEET;
-
-  if (feet < 1000) {
-    return `${Math.round(feet)} ft`;
-  }
-
-  // For distances over 1000ft, show in miles with 2 decimal places
-  const miles = feet / 5280;
-  return `${miles.toFixed(2)} mi`;
-};
-
 const MileMarker = ({ data, closest }: MileMarkerProps) => {
   const { selected, updateSelected } = useMap();
-  const distance = data.distance ? formatDistance(data.distance) : null;
+  const distance = data.distance ? parseMetersToString(data.distance) : null;
 
   const bg =
     selected === data
@@ -43,7 +30,7 @@ const MileMarker = ({ data, closest }: MileMarkerProps) => {
     >
       <div className="flex">
         <span className="w-6 opacity-50 mr-2 my-auto">
-          <TypeIcon type={data.type ?? null} />
+          <LocationTypeIcon type={data.type ?? null} />
         </span>
         <div className="flex flex-col">
           <h2 className="text-sm uppercase select-none line-clamp-1">

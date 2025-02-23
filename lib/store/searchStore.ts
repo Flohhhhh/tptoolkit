@@ -10,6 +10,8 @@ interface SearchState {
   setSearchError: (error: string | null) => void;
   searchCoords: (x: number, y: number) => Promise<void>;
   updateCoordsMarker: (lat: number, lng: number) => void;
+  startSearch: () => void;
+  clearResults: () => void;
 }
 
 export const useSearchStore = create<SearchState>((set) => ({
@@ -20,7 +22,12 @@ export const useSearchStore = create<SearchState>((set) => ({
   currentCoords: { lat: null, lng: null },
 
   setEnteredCoords: (coords) => set({ enteredCoords: coords }),
-  setSearchError: (error) => set({ searchError: error }),
+
+  clearResults: () => set({ results: null, searchError: null }),
+
+  startSearch: () => set({ searching: true, searchError: null }),
+
+  setSearchError: (error) => set({ searchError: error, searching: false }),
 
   updateCoordsMarker: (lat, lng) => {
     set({ currentCoords: { lat, lng } });

@@ -2,10 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { useDebounce } from "@/lib/hooks/useDebounce";
-import { ClipboardPaste } from "lucide-react";
+import { Search } from "lucide-react";
 import MileMarker from "./MileMarker";
 import { pushModal } from "@/components/dialogs";
 import { useSearchStore } from "@/lib/store/searchStore";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { PasteGoButton } from "./paste-go-button";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import type { ControllerRenderProps } from "react-hook-form";
+import LocationListItem from "../location-list-item";
+
+const coordsSchema = z.object({
+  coords: z.string().regex(/^-?\d+\.?\d*,\s*-?\d+\.?\d*$/, {
+    message: "Invalid coordinate format. Expected: lat, lng",
+  }),
+});
+
+type CoordsForm = z.infer<typeof coordsSchema>;
 
 const MpFinder = () => {
   const {
@@ -16,80 +33,84 @@ const MpFinder = () => {
     searchError,
     setSearchError,
     searching,
+    startSearch,
+    clearResults,
   } = useSearchStore();
 
-  const query = useDebounce(enteredCoords, 1000);
-  const [coords, setCoords] = useState<{ x: number | null; y: number | null }>({
-    x: null,
-    y: null,
+  const form = useForm<CoordsForm>({
+    resolver: zodResolver(coordsSchema),
+    defaultValues: {
+      coords: enteredCoords,
+    },
   });
 
+  const handleSearch = async (values: CoordsForm) => {
+    startSearch();
+    const [y, x] = values.coords.split(",").map(Number);
+    if (isNaN(x) || isNaN(y)) {
+      setSearchError("Invalid coordinates");
+      return;
+    }
+    await searchCoords(x, y);
+  };
+
   const openPalette = () => {
-    console.log("Opening palette");
     pushModal("PaletteDialog");
   };
 
-  useEffect(() => {
-    if (!query) return;
-    const [y, x] = query.split(",").map(Number);
-    if (isNaN(x) || isNaN(y)) return;
-
-    setCoords({ x, y });
-    searchCoords(x, y);
-  }, [query, searchCoords]);
-
   return (
     <div className="absolute top-10 bottom-0 w-[320px] z-10">
-      <div className="h-full col-span-3 flex flex-col justify-between self-start w-full bg-white dark:bg-zinc-800 rounded-lg p-4">
+      <div className="h-full col-span-3 flex flex-col justify-between self-start w-full rounded-lg p-4">
         <div>
           <h1 className="text-xl font-semibold mb-4 text-zinc-700 dark:text-zinc-200">
             Location Lookup
           </h1>
 
-          <div className="flex flex-col gap-2">
-            <input
-              type="text"
-              name="coordinates"
-              id="coordinates"
-              className="block w-full rounded-md border-0 py-2 bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm ring-1 ring-inset ring-zinc-200 dark:ring-zinc-500 placeholder:text-zinc-300 dark:placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:focus:ring-blue-500 sm:text-sm sm:leading-6"
-              placeholder="Coordinates"
-              autoComplete="off"
-              pattern="^\s*-?([1-8]?\d(\.\d+)?|90(\.0+)?)\s*,\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$"
-              value={enteredCoords}
-              onChange={(e) => {
-                setEnteredCoords(e.target.value);
-                setSearchError(null);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                }
-              }}
-            />
-            <div className="flex gap-2 grow">
-              <button
-                onClick={async () => {
-                  try {
-                    const text = await navigator.clipboard.readText();
-                    setEnteredCoords(text);
-                  } catch (error) {
-                    setSearchError(
-                      "Please allow clipboard access or paste coordinates manually."
-                    );
-                  }
-                }}
-                className="flex items-center justify-center gap-2 text-white bg-blue-500 rounded-md py-1.5 w-full hover:brightness-125 active:scale-95 transition border-t border-blue-400"
-              >
-                {enteredCoords.match(/^-?\d+\.?\d*,\s*-?\d+\.?\d*$/) ? (
-                  <>Go</>
-                ) : (
-                  <>
-                    Paste & Go <ClipboardPaste size={18} />
-                  </>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleSearch)}
+              className="flex flex-col gap-2"
+            >
+              <FormField
+                control={form.control}
+                name="coords"
+                render={({
+                  field,
+                }: {
+                  field: ControllerRenderProps<CoordsForm, "coords">;
+                }) => (
+                  <FormItem>
+                    <div className="relative">
+                      <FormControl>
+                        <Input
+                          placeholder="Coordinates"
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            setEnteredCoords(e.target.value);
+                            clearResults();
+                          }}
+                        />
+                      </FormControl>
+                      <Button
+                        type="submit"
+                        size="icon"
+                        variant="ghost"
+                        className="absolute right-0 top-0 h-full px-3"
+                        disabled={searching}
+                      >
+                        <Search className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </FormItem>
                 )}
-              </button>
-            </div>
-          </div>
+              />
+              <PasteGoButton
+                onPaste={(text) => form.setValue("coords", text)}
+              />
+            </form>
+          </Form>
+
           <div className="flex flex-col items-center justify-center">
             {results === null && !searching && !searchError ? (
               <p className="text-zinc-200 dark:text-zinc-500 mt-4 custom-animate-in">
@@ -124,14 +145,24 @@ const MpFinder = () => {
             ) : (
               results && (
                 <div className="w-full h-full flex flex-col gap-1 mt-4">
-                  {results.map((result, index) => (
-                    <MileMarker
-                      key={result.id}
-                      data={result}
-                      closest={index === 0}
-                    />
-                  ))}
-                  <p className="text-sm text-zinc-200 dark:text-zinc-500 mt-4 custom-animate-in-2">
+                  {results
+                    .filter(
+                      (result): result is TPLocation & { distance: number } => {
+                        if (!result.distance) {
+                          console.error(`null distance for ${result.name}`);
+                          return false;
+                        }
+                        return true;
+                      }
+                    )
+                    .map((result) => (
+                      <LocationListItem
+                        key={result.id}
+                        location={result}
+                        distance={result.distance}
+                      />
+                    ))}
+                  <p className="text-sm text-muted-foreground mt-4 custom-animate-in-2">
                     These results are only approximate suggestions! Verify the
                     roadway and location with the caller!
                   </p>
