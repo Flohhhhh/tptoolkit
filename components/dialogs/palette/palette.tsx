@@ -57,7 +57,7 @@ export default function PaletteDialog() {
           />
         </div>
         <div className="h-[300px] overflow-hidden relative">
-          <CommandList className="absolute inset-0 [text-rendering:geometricPrecision]">
+          <CommandList className="absolute inset-0">
             <CommandEmpty className="py-6 text-center text-sm">
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center gap-2">
