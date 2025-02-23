@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface SearchState {
   enteredCoords: string;
-  results: Location[] | null;
+  results: TPLocation[] | null;
   searching: boolean;
   searchError: string | null;
   currentCoords: { lat: number | null; lng: number | null };

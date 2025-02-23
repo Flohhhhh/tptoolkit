@@ -3,5 +3,5 @@ import { Tables } from "./supabase";
 export {};
 
 declare global {
-  type Location = Tables<"locations_old">;
+  type TPLocation = Tables<"locations_old">;
 }

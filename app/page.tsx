@@ -1,4 +1,4 @@
-import Map from "./components/Map/Map.jsx";
+import Map from "./components/Map/Map";
 import MpFinder from "./components/MileMarkerFinder/MpFinder";
 import DetailsPanel from "./components/DetailsPanel/DetailsPanel";
 import SaReference from "./components/ServiceAreaReference/SaReference";

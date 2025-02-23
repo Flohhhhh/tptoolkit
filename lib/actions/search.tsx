@@ -9,7 +9,7 @@ export const getNearestLocations = async (
   limit: number = 10,
   maxDistance: number = 1000 // in meters
 ): Promise<{
-  data: Location[] | null;
+  data: TPLocation[] | null;
   error: PostgrestError | Error | null;
 }> => {
   console.log(
