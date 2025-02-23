@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { ModalProvider } from "@/components/dialogs";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <Toaster />
+        <Analytics />
         <div className="bg-linear-to-b bg-zinc-50 dark:bg-zinc-900 custom-animate-in">
           <Providers>
             <Header />
