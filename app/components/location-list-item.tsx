@@ -64,7 +64,7 @@ export default function LocationListItem(props: {
           <LocationTypeIcon type={location.type ?? null} />
         </span>
         <div className="flex flex-col items-start">
-          <h2 className="text-sm uppercase select-none line-clamp-1">
+          <h2 className="text-sm uppercase select-none line-clamp-1 text-left">
             {location.common_name}
           </h2>
           {altText() && (
