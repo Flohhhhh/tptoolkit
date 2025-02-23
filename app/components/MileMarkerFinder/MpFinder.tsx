@@ -62,7 +62,7 @@ const MpFinder = () => {
     <div className="absolute top-10 bottom-0 w-[320px] z-10">
       <div className="h-full col-span-3 flex flex-col justify-between self-start w-full rounded-lg p-4">
         <div>
-          <h1 className="text-xl font-semibold mb-4 text-zinc-700 dark:text-zinc-200">
+          <h1 className="text-xl font-semibold mb-4 text-foreground">
             Location Lookup
           </h1>
 
@@ -85,6 +85,7 @@ const MpFinder = () => {
                         <Input
                           placeholder="Coordinates"
                           {...field}
+                          className="pr-10"
                           onChange={(e) => {
                             field.onChange(e);
                             setEnteredCoords(e.target.value);
@@ -96,10 +97,10 @@ const MpFinder = () => {
                         type="submit"
                         size="icon"
                         variant="secondary"
-                        className="absolute right-1 top-1 bottom-1 aspect-square px-3"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
                         disabled={searching}
                       >
-                        <Search className="w-3 h-3" />
+                        <Search className="h-3 w-3" />
                       </Button>
                     </div>
                   </FormItem>
@@ -113,7 +114,7 @@ const MpFinder = () => {
 
           <div className="flex flex-col items-center justify-center">
             {results === null && !searching && !searchError ? (
-              <p className="text-zinc-200 dark:text-zinc-500 mt-4 custom-animate-in">
+              <p className="text-muted-foreground mt-4 custom-animate-in text-sm">
                 Input coordinates to see nearby markers & landmarks!
               </p>
             ) : null}
@@ -162,7 +163,7 @@ const MpFinder = () => {
                         distance={result.distance}
                       />
                     ))}
-                  <p className="text-sm text-muted-foreground mt-4 custom-animate-in-2">
+                  <p className="select-none text-sm text-muted-foreground mt-4 custom-animate-in-2">
                     These results are only approximate suggestions! Verify the
                     roadway and location with the caller!
                   </p>
@@ -172,15 +173,21 @@ const MpFinder = () => {
           </div>
         </div>
         <div>
-          <button
+          <Button
             onClick={openPalette}
-            className="w-full py-1.5 justify-between px-4 hover:brightness-95 transition duration-50 dark:hover:brightness-125 flex items-center gap-2 bg-zinc-50 dark:bg-zinc-700 rounded-md border border-zinc-100 dark:border-zinc-600 text-zinc-500 dark:text-zinc-200"
+            variant="secondary"
+            className="w-full justify-between px-2"
+            icon={
+              <div className="flex items-center gap-2">
+                <Search className="w-4 h-4" />
+                <span className="text-xs">Name search </span>
+              </div>
+            }
           >
-            <span className="text-sm">Lookup by name </span>
-            <span className="text-xs px-3 py-1 rounded border text-zinc-500 dark:text-zinc-200 bg-white dark:bg-zinc-800 border-zinc-100 dark:border-zinc-600">
-              /
+            <span className="justify-self-end text-xs px-3 py-1 rounded border bg-background/50 text-muted-foreground border-muted-foreground/20">
+              K
             </span>
-          </button>
+          </Button>
         </div>
       </div>
     </div>

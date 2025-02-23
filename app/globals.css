@@ -1,18 +1,187 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-}
+@custom-variant dark (&:is(.dark *));
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
+@theme {
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-in: in 0.2s ease-out;
+  --animate-out: out 0.2s ease-in;
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-fade-out: fade-out 0.2s ease-in;
+  --animate-zoom-in: zoom-in 0.2s ease-out;
+  --animate-zoom-out: zoom-out 0.2s ease-in;
+  --animate-slide-in-from-top: slide-in-from-top 0.2s ease-out;
+  --animate-slide-out-to-top: slide-out-to-top 0.2s ease-in;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+
+  --color-shark-50: #eeeff2;
+  --color-shark-100: #d3d8e4;
+  --color-shark-200: #b7bdcf;
+  --color-shark-300: #9da6b9;
+  --color-shark-400: #80899e;
+  --color-shark-500: #626a7c;
+  --color-shark-600: #464d5b;
+  --color-shark-700: #2f343e;
+  --color-shark-800: #20242a;
+  --color-shark-900: #16181c;
+  --color-shark-950: #0c0e10;
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes zoom-in {
+    from {
+      transform: scale(0.95);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  @keyframes zoom-out {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(0.95);
+    }
+  }
+  @keyframes slide-in-from-top {
+    from {
+      transform: translateY(-48%);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+  @keyframes slide-out-to-top {
+    from {
+      transform: translateY(-50%);
+    }
+    to {
+      transform: translateY(-48%);
+    }
   }
 }
 
-/* .mapboxgl-ctrl-bottom-right {
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer utilities {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --foreground-rgb: 255, 255, 255;
+    }
+  }
+
+  /* .mapboxgl-ctrl-bottom-right {
   margin-right: 32rem;
 }
 
@@ -20,38 +189,39 @@
   margin-left: 24rem;
 } */
 
-.custom-animate-in {
-  animation: customAnimateIn 0.3s ease 0.15s both;
-}
-
-.custom-animate-in-1 {
-  animation: customAnimateIn 0.3s ease 0.2s both;
-}
-
-.custom-animate-in-2 {
-  animation: customAnimateIn 0.3s ease 0.25s both;
-}
-
-.custom-animate-in-3 {
-  animation: customAnimateIn 0.3s ease 0.3s both;
-}
-
-.custom-animate-in-4 {
-  animation: customAnimateIn 0.3s ease 0.35s both;
-}
-
-.custom-animate-in-5 {
-  animation: customAnimateIn 0.3s ease 0.4s both;
-}
-
-@keyframes customAnimateIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  .custom-animate-in {
+    animation: customAnimateIn 0.3s ease 0.15s both;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .custom-animate-in-1 {
+    animation: customAnimateIn 0.3s ease 0.2s both;
+  }
+
+  .custom-animate-in-2 {
+    animation: customAnimateIn 0.3s ease 0.25s both;
+  }
+
+  .custom-animate-in-3 {
+    animation: customAnimateIn 0.3s ease 0.3s both;
+  }
+
+  .custom-animate-in-4 {
+    animation: customAnimateIn 0.3s ease 0.35s both;
+  }
+
+  .custom-animate-in-5 {
+    animation: customAnimateIn 0.3s ease 0.4s both;
+  }
+
+  @keyframes customAnimateIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 

@@ -9,8 +9,10 @@ import { pushModal, replaceWithModal } from "@/components/dialogs";
 export default function PaletteHandler() {
   const openPalette = () => {
     console.log("Opening palette");
-    replaceWithModal("ServiceAreasReference", { foo: "bar" });
+    replaceWithModal("PaletteDialog", { foo: "bar" });
   };
 
-  useHotkeys("/", openPalette);
+  useHotkeys("k", openPalette);
+
+  return null;
 }

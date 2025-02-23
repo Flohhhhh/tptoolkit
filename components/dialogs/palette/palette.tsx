@@ -91,7 +91,7 @@ export default function PaletteDialog() {
               </CommandGroup>
             )}
           </CommandList>
-          <div className="pointer-events-none absolute bottom-0 h-24 w-full bg-gradient-to-t from-background to-transparent" />
+          <div className="pointer-events-none absolute bottom-0 h-24 w-full bg-linear-to-t from-background to-transparent" />
         </div>
       </Command>
     </DialogContent>

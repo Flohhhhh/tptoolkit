@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <div className="bg-gradient-to-b bg-zinc-50 dark:bg-zinc-900">
+        <div className="bg-linear-to-b bg-zinc-50 dark:bg-zinc-900">
           <Providers>
             <Header />
             {children}
