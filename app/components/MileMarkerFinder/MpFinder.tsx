@@ -95,11 +95,11 @@ const MpFinder = () => {
                       <Button
                         type="submit"
                         size="icon"
-                        variant="ghost"
-                        className="absolute right-0 top-0 h-full px-3"
+                        variant="secondary"
+                        className="absolute right-1 top-1 bottom-1 aspect-square px-3"
                         disabled={searching}
                       >
-                        <Search className="h-4 w-4" />
+                        <Search className="w-3 h-3" />
                       </Button>
                     </div>
                   </FormItem>
