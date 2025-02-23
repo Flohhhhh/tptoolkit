@@ -3,7 +3,8 @@
 import { Transition } from "@headlessui/react";
 import { useMap } from "@/lib/context/mapContext";
 import { directionToRoadDirection } from "@/lib/helpers/conversions";
-
+import { useMemo } from "react";
+import { CopyToClipboard } from "@/lib/CopyToClipboard";
 // Define field display configuration
 const FIELD_CONFIG: Record<string, { label: string; show: boolean }> = {
   name: { label: "Name", show: true },
@@ -16,8 +17,8 @@ const FIELD_CONFIG: Record<string, { label: string; show: boolean }> = {
   county_name: { label: "County", show: true },
   station_area: { label: "Station Area", show: true },
   distance: { label: "Distance", show: false },
-  x_old: { label: "X", show: true },
-  y_old: { label: "Y", show: true },
+  x_old: { label: "X", show: false },
+  y_old: { label: "Y", show: false },
   cityAbv: { label: "City Abbreviation", show: false },
   commonName: { label: "Common Name", show: false },
   created_at: { label: "Created At", show: false },
@@ -43,6 +44,7 @@ const formatValue = (value: any, key: keyof TPLocation): string => {
   if (key === "direction") {
     return directionToRoadDirection(value);
   }
+
   if (value === null || value === undefined) return "";
   if (typeof value === "number") return value.toString();
   if (typeof value === "string") {
@@ -57,6 +59,10 @@ const formatValue = (value: any, key: keyof TPLocation): string => {
 
 const DetailsPanel = () => {
   const { selected } = useMap();
+
+  const coordinates = useMemo(() => {
+    return selected?.y_old + ", " + selected?.x_old;
+  }, [selected]);
 
   const renderField = (key: keyof TPLocation, value: any) => {
     const config = FIELD_CONFIG[key];
@@ -94,6 +100,17 @@ const DetailsPanel = () => {
             Object.entries(selected).map(([key, value]) =>
               renderField(key as keyof TPLocation, value)
             )}
+          {coordinates && (
+            <button
+              onClick={() => {
+                CopyToClipboard(coordinates);
+              }}
+              className="grid grid-cols-2 text-sm px-2 py-1 text-left hover:cursor-pointer hover:bg-accent text-muted-foreground odd:bg-muted/50 border-b border-accent"
+            >
+              <span className="opacity-75">Coordinates: </span>
+              <span className="ml-2 col-start-2">{coordinates}</span>
+            </button>
+          )}
         </div>
       </div>
     </Transition>
