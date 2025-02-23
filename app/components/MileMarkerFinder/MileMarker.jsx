@@ -7,21 +7,20 @@ const MileMarkerFactory = (props) => {
   const { selected, updateHoverMarker, updateSelected } = useMap();
   let distance = `${(data.distance * 5280).toFixed()} ft`;
 
-  // set selected function
-
   const bg =
     selected === data
       ? "bg-blue-500 text-white animate-pulse"
       : "bg-zinc-50 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300";
 
+  const handleClick = () => {
+    updateSelected(data);
+    const text = `@${data.name}`;
+    CopyToClipboard(text);
+  };
+
   return (
     <div
-      onClick={() => {
-        updateSelected(data);
-        const text = `@${data.name}`;
-        CopyToClipboard(text);
-        // maybe fly to it?
-      }}
+      onClick={handleClick}
       // buggy, they stick on screen during fly or something? also maybe when mouse moves off map?
       // onMouseEnter={() => {
       //   updateHoverMarker(data.y, data.x)

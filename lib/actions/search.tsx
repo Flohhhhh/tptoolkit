@@ -37,7 +37,9 @@ export const getNearestLocations = async (
     return { data: null, error: new Error("No data found") };
   }
 
-  console.log(`[lib/actions/search/getNearestLocations()] data`, data);
+  console.log(
+    `[lib/actions/search/getNearestLocations()] Successfully fetched ${data.length} locations`
+  );
 
   // Return the data retrieved from the function
   return { data, error: null };

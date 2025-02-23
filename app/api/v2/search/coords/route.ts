@@ -51,8 +51,8 @@ export async function GET(request: Request) {
     maxDistance
   );
 
-  console.log("data", data);
-  console.log("error", error);
+  // console.log("data", data);
+  // console.log("error", error);
 
   if (error) {
     return new Response(JSON.stringify(error.message), {

@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
-import { useSearch } from "@/lib/context/searchContext";
-import { ModalContext } from "@/lib/context/modalContext";
+import { useState, useEffect } from "react";
 import { useDebounce } from "@/lib/hooks/useDebounce";
-import { ClipboardPaste, Map, Rocket } from "lucide-react";
+import { ClipboardPaste, Map } from "lucide-react";
 import MileMarker from "./MileMarker";
 // TODO put palette into a context so it can be re-used
 import PaletteModal from "@/app/components/Modals/Palette/PaletteModal";
 import { pushModal } from "@/components/dialogs";
+import { useSearchStore } from "@/lib/store/searchStore";
 
 import { turnpikeData, parkwayData } from "@/lib/parsedData.js";
 
@@ -21,7 +20,7 @@ const MpFinder = () => {
     searchError,
     setSearchError,
     searching,
-  } = useSearch();
+  } = useSearchStore();
   // const { openModal } = useContext(ModalContext);
   const openPalette = () => {
     console.log("Opening palette");
@@ -51,8 +50,8 @@ const MpFinder = () => {
     if (!query) return;
     const [y, x] = query.split(",");
     setCoords({ x: x, y: y });
-    searchCoords(x, y);
-  }, [query]);
+    searchCoords(Number(x), Number(y));
+  }, [query, searchCoords]);
 
   return (
     <div className="absolute top-10 bottom-0 w-[320px] z-10">
