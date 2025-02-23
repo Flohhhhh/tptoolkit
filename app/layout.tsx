@@ -24,13 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
+        <Toaster />
         <div className="bg-linear-to-b bg-zinc-50 dark:bg-zinc-900 custom-animate-in">
           <Providers>
             <Header />
             {children}
             {/* <Footer /> */}
             <ModalProvider />
-            <Toaster />
           </Providers>
         </div>
       </body>
