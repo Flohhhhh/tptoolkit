@@ -51,8 +51,11 @@ export async function GET(request: Request) {
     maxDistance
   );
 
+  console.log("data", data);
+  console.log("error", error);
+
   if (error) {
-    return new Response(JSON.stringify(error), {
+    return new Response(JSON.stringify(error.message), {
       status: 500,
       headers: {
         "content-type": "application/json",

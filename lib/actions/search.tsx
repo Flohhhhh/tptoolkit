@@ -8,7 +8,10 @@ export const getNearestLocations = async (
   y: number, // Latitude
   limit: number = 10,
   maxDistance: number = 1000 // in meters
-): Promise<{ data: Location[] | null; error: PostgrestError | null }> => {
+): Promise<{
+  data: Location[] | null;
+  error: PostgrestError | Error | null;
+}> => {
   console.log(
     `[lib/actions/search/getNearestLocations(${x}, ${y}, ${limit}, ${maxDistance})]`
   );
@@ -27,6 +30,11 @@ export const getNearestLocations = async (
   if (error) {
     console.error("Error fetching nearest locations:", error);
     return { data: null, error: error };
+  }
+
+  if (!data || data.length === 0) {
+    console.error("No data found");
+    return { data: null, error: new Error("No data found") };
   }
 
   console.log(`[lib/actions/search/getNearestLocations()] data`, data);
