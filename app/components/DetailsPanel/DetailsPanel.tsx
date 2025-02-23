@@ -2,6 +2,7 @@
 
 import { Transition } from "@headlessui/react";
 import { useMap } from "@/lib/context/mapContext";
+import { directionToRoadDirection } from "@/lib/helpers/conversions";
 
 // Define field display configuration
 const FIELD_CONFIG: Record<string, { label: string; show: boolean }> = {
@@ -14,10 +15,9 @@ const FIELD_CONFIG: Record<string, { label: string; show: boolean }> = {
   city_name: { label: "City", show: true },
   county_name: { label: "County", show: true },
   station_area: { label: "Station Area", show: true },
-  // Fields to hide
   distance: { label: "Distance", show: false },
-  x_old: { label: "X", show: false },
-  y_old: { label: "Y", show: false },
+  x_old: { label: "X", show: true },
+  y_old: { label: "Y", show: true },
   cityAbv: { label: "City Abbreviation", show: false },
   commonName: { label: "Common Name", show: false },
   created_at: { label: "Created At", show: false },
@@ -32,11 +32,17 @@ const FIELD_CONFIG: Record<string, { label: string; show: boolean }> = {
   road: { label: "Road", show: false },
   station_old: { label: "Old Station", show: false },
   troop_old: { label: "Old Troop", show: false },
-  unit_old: { label: "Old Unit", show: false },
-  zip_code: { label: "ZIP Code", show: false },
+  unit_old: { label: "Zone", show: true },
+  zip_code: { label: "ZIP Code", show: true },
 };
 
-const formatValue = (value: any): string => {
+const formatValue = (value: any, key: keyof TPLocation): string => {
+  if (key === "common_name" || key === "name") {
+    return value.toString().toUpperCase();
+  }
+  if (key === "direction") {
+    return directionToRoadDirection(value);
+  }
   if (value === null || value === undefined) return "";
   if (typeof value === "number") return value.toString();
   if (typeof value === "string") {
@@ -52,17 +58,17 @@ const formatValue = (value: any): string => {
 const DetailsPanel = () => {
   const { selected } = useMap();
 
-  const renderField = (key: keyof Location, value: any) => {
+  const renderField = (key: keyof TPLocation, value: any) => {
     const config = FIELD_CONFIG[key];
     if (!config?.show || !value) return null;
 
     return (
       <div
         key={key}
-        className="grid grid-cols-2 text-sm px-2 py-1 text-zinc-700 dark:text-zinc-200 odd:bg-zinc-50 dark:odd:bg-zinc-700/80 border-b border-zinc-200 dark:border-zinc-600"
+        className="grid grid-cols-2 text-sm px-2 py-1 text-muted-foreground odd:bg-muted/50 border-b border-accent"
       >
         <span className="opacity-75">{config.label}: </span>
-        <span className="ml-2 col-start-2">{formatValue(value)}</span>
+        <span className="ml-2 col-start-2">{formatValue(value, key)}</span>
       </div>
     );
   };
@@ -70,7 +76,7 @@ const DetailsPanel = () => {
   return (
     <Transition
       as="div"
-      className="z-10 absolute top-12 right-2 w-80 p-4 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-600 shadow-lg"
+      className="z-10 absolute top-12 right-2 w-96 p-4 rounded-xl bg-background border border-accent shadow-lg"
       show={!!selected}
       enter="ease-out duration-100"
       enterFrom="opacity-0 scale-95"
@@ -80,13 +86,13 @@ const DetailsPanel = () => {
       leaveTo="opacity-0 scale-95"
     >
       <div>
-        <h1 className="text-zinc-800 dark:text-zinc-100 font-semibold">
+        <h1 className="text-muted-foreground font-semibold">
           Location Details
         </h1>
-        <div className="flex flex-col my-2 py-1 rounded">
+        <div className="flex flex-col my-2 py-1 rounded ">
           {selected &&
             Object.entries(selected).map(([key, value]) =>
-              renderField(key as keyof Location, value)
+              renderField(key as keyof TPLocation, value)
             )}
         </div>
       </div>

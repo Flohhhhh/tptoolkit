@@ -8,3 +8,13 @@ export const parseMetersToString = (meters: number, short?: boolean) => {
 
   return `${miles.toFixed(2)} ${short ? "mi" : "miles"}`;
 };
+
+export const directionToRoadDirection = (direction: string) => {
+  const compass = {
+    N: "NB",
+    S: "SB",
+    E: "EB",
+    W: "WB",
+  };
+  return compass[direction as keyof typeof compass];
+};

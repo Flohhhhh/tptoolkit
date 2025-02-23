@@ -34,17 +34,17 @@ export default function ServiceAreasDialog() {
 
   const tables = data.map((table: ServiceAreaTable, index) => (
     <div className="p-4" key={index}>
-      <h2 className="mb-4 text-2xl font-bold text-zinc-700 dark:text-zinc-300">
+      <h2 className="mb-4 text-2xl font-bold text-muted-foreground">
         {table.title}
       </h2>
-      <div className="rounded-lg border border-zinc-200 dark:border-zinc-600 mb-4 overflow-hidden">
+      <div className="rounded-lg border border-accent mb-4 overflow-hidden">
         <Table>
-          <TableHeader className="bg-zinc-100 dark:bg-zinc-800">
-            <TableRow className="hover:bg-zinc-100 dark:hover:bg-zinc-800">
+          <TableHeader className="bg-muted">
+            <TableRow className="">
               {table.headings.map((heading, index) => (
                 <TableHead
                   key={index}
-                  className="font-semibold text-zinc-900 dark:text-zinc-100"
+                  className="font-semibold text-muted-foreground"
                 >
                   {heading}
                 </TableHead>
@@ -55,7 +55,7 @@ export default function ServiceAreasDialog() {
             {table.rows.map((row, index) => (
               <TableRow
                 key={`row-${index}`}
-                className="cursor-pointer even:bg-zinc-50 dark:even:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-700/70 transition-colors"
+                className="cursor-pointer even:bg-muted/40 hover:bg-muted transition-colors"
                 onClick={() => {
                   updateCoordsMarker(row.coords[0], row.coords[1]);
                   flyTo(row.coords[0], row.coords[1]);
