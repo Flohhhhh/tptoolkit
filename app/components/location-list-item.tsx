@@ -7,26 +7,54 @@ import LocationTypeIcon from "./location-type-icon";
 import { parseMetersToString } from "@/lib/helpers/conversions";
 export default function LocationListItem(props: {
   location: TPLocation;
-  distance: number;
+  distance?: number;
+  onClick?: () => void;
+  showSelected?: boolean;
+  className?: string;
+  altTextType?: "distance" | "type" | "station";
 }) {
-  const { location, distance } = props;
+  const {
+    location,
+    distance,
+    onClick,
+    showSelected = true,
+    className,
+    altTextType = "distance",
+  } = props;
   const { selected, updateSelected } = useMap();
-  const onClick = () => {
-    updateSelected(location);
-    if (selected !== location) {
-      const text = `@${location.name}`;
-      CopyToClipboard(text);
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else {
+      updateSelected(location);
+      if (selected !== location) {
+        const text = `@${location.name}`;
+        CopyToClipboard(text);
+      }
     }
   };
 
   const distanceText = distance ? parseMetersToString(distance, true) : null;
 
+  const altText = () => {
+    if (altTextType === "distance") {
+      return distanceText;
+    }
+    if (altTextType === "type") {
+      return location.type;
+    }
+    if (altTextType === "station") {
+      return location.name;
+    }
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={cn(
-        "pl-3 pr-2 py-1 rounded-md flex justify-between gap-2 items-center w-full hover:cursor-pointer hover:brightness-95 dark:hover:brightness-125 transition custom-animate-in",
-        selected === location
+        "min-h-12 pl-3 pr-2 py-1 rounded-md flex justify-between gap-2 items-center w-full hover:cursor-pointer hover:brightness-95 dark:hover:brightness-125 transition custom-animate-in",
+        className,
+        showSelected && selected === location
           ? "bg-red-500 text-white"
           : "bg-muted text-muted-foreground "
       )}
@@ -39,8 +67,10 @@ export default function LocationListItem(props: {
           <h2 className="text-sm uppercase select-none line-clamp-1">
             {location.name}
           </h2>
-          {distanceText && (
-            <p className="opacity-60 text-xs select-none">{distanceText}</p>
+          {altText() && (
+            <p className="opacity-60 text-xs select-none capitalize">
+              {altText()}
+            </p>
           )}
         </div>
       </div>

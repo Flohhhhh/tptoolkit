@@ -14,8 +14,11 @@ import { useMap } from "@/lib/context/mapContext";
 import useSWR from "swr";
 import { searchLocationsByName } from "@/lib/actions/search";
 import { popModal } from "@/components/dialogs";
-import { Loader2 } from "lucide-react";
+import { CircleSlash, Loader2 } from "lucide-react";
 import { useSearchStore } from "@/lib/store/searchStore";
+import { Button } from "@/components/ui/button";
+import { MapPin } from "lucide-react";
+import LocationListItem from "@/app/components/location-list-item";
 
 const fetcher = (name: string) => searchLocationsByName(name, 10);
 
@@ -58,40 +61,55 @@ export default function PaletteDialog() {
             <CommandEmpty className="py-6 text-center text-sm">
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="size-8 animate-spin text-muted-foreground" />
                   <p className="text-sm text-muted-foreground">
                     Searching locations...
                   </p>
                 </div>
               ) : search.length > 0 ? (
-                "No locations found."
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <CircleSlash className="size-10 text-muted-foreground/50" />
+                  <p className="text-sm text-muted-foreground">
+                    No locations matched your search.
+                  </p>
+                  {/* <p className="text-sm text-muted-foreground/50">
+                    Try a different search or check the map for locations.
+                  </p> */}
+                </div>
               ) : (
-                "Type to search locations..."
+                <p className="text-sm text-muted-foreground">
+                  Type to search locations...
+                </p>
               )}
             </CommandEmpty>
             {data?.data && (
-              <CommandGroup>
+              <CommandGroup className="px-3 h-full">
                 {data.data.map((location: TPLocation) => (
                   <CommandItem
                     key={location.id}
                     value={location.name}
                     onSelect={() => handleSelect(location)}
-                    className="px-4 py-2"
+                    className="my-1 p-0"
                   >
-                    <div className="flex flex-col">
-                      <span className="font-medium">{location.name}</span>
-                      {location.type && (
-                        <span className="text-sm text-muted-foreground">
-                          {location.type.replace(/_/g, " ")}
-                        </span>
-                      )}
-                    </div>
+                    <LocationListItem
+                      location={location}
+                      onClick={() => handleSelect(location)}
+                      showSelected={false}
+                      className="w-full"
+                      altTextType="type"
+                    />
                   </CommandItem>
                 ))}
               </CommandGroup>
             )}
           </CommandList>
           <div className="pointer-events-none absolute bottom-0 h-24 w-full bg-linear-to-t from-background to-transparent" />
+        </div>
+        <div className="px-3 pb-3">
+          {/* <Button variant="outline" className="w-full">
+            <MapPin className="w-4 h-4" />
+            Service Area Reference
+          </Button> */}
         </div>
       </Command>
     </DialogContent>
