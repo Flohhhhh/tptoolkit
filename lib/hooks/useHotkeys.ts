@@ -13,6 +13,10 @@ const isInputElement = (element: HTMLElement): boolean => {
   );
 };
 
+const isMac =
+  typeof window !== "undefined" &&
+  navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+
 export const useHotkeys = (
   key: string,
   callback: HotkeyCallback,
@@ -21,10 +25,11 @@ export const useHotkeys = (
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement;
+      const hasModifier = isMac ? event.metaKey : event.ctrlKey;
 
       if (
         event.key.toLowerCase() === key.toLowerCase() &&
-        (!requireCtrl || (requireCtrl && event.ctrlKey)) &&
+        (!requireCtrl || (requireCtrl && hasModifier)) &&
         !isInputElement(target)
       ) {
         event.preventDefault();

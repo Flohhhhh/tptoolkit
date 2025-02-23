@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useDebounce } from "@/lib/hooks/useDebounce";
-import { Search, X } from "lucide-react";
+import { Search, X, Command } from "lucide-react";
 import MileMarker from "./MileMarker";
 import { pushModal } from "@/components/dialogs";
 import { useSearchStore } from "@/lib/store/searchStore";
@@ -23,6 +23,10 @@ const coordsSchema = z.object({
 });
 
 type CoordsForm = z.infer<typeof coordsSchema>;
+
+const isMac =
+  typeof window !== "undefined" &&
+  navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 
 const MpFinder = () => {
   const {
@@ -192,8 +196,14 @@ const MpFinder = () => {
               </div>
             }
           >
-            <span className="justify-self-end text-xs px-3 py-1 rounded border bg-background/50 text-muted-foreground border-muted-foreground/20">
-              K
+            <span className="justify-self-end text-xs px-3 py-1 rounded border bg-background/50 text-muted-foreground border-muted-foreground/20 flex items-center gap-1">
+              {isMac ? (
+                <>
+                  <Command className="size-3" />K
+                </>
+              ) : (
+                "Ctrl+K"
+              )}
             </span>
           </Button>
         </div>
