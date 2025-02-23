@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useDebounce } from "@/lib/hooks/useDebounce";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import MileMarker from "./MileMarker";
 import { pushModal } from "@/components/dialogs";
 import { useSearchStore } from "@/lib/store/searchStore";
@@ -59,7 +59,7 @@ const MpFinder = () => {
   };
 
   return (
-    <div className="absolute top-10 bottom-0 w-[320px] z-10">
+    <div className="absolute top-10 bottom-0 w-[320px] z-10 ">
       <div className="h-full col-span-3 flex flex-col justify-between self-start w-full rounded-lg p-4">
         <div>
           <h1 className="text-xl font-semibold mb-4 text-foreground">
@@ -163,7 +163,15 @@ const MpFinder = () => {
                         distance={result.distance}
                       />
                     ))}
-                  <p className="select-none text-sm text-muted-foreground mt-4 custom-animate-in-2">
+                  <Button
+                    variant="outline"
+                    onClick={clearResults}
+                    className="justify-start gap-3 custom-animate-in-2"
+                    icon={<X className="size-4" />}
+                  >
+                    Clear results
+                  </Button>
+                  <p className="select-none text-sm text-muted-foreground mt-4 custom-animate-in-3">
                     These results are only approximate suggestions! Verify the
                     roadway and location with the caller!
                   </p>
@@ -172,7 +180,7 @@ const MpFinder = () => {
             )}
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-1">
           <Button
             onClick={openPalette}
             variant="secondary"

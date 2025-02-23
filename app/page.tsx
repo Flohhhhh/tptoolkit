@@ -15,7 +15,7 @@ export default function Home() {
       <MpFinder />
       <PaletteHandler />
       <DetailsPanel />
-      <div className="fixed top-10 left-[320px] right-0 bottom-1 rounded-l-3xl overflow-hidden">
+      <div className="fixed top-10 left-[320px] right-0 bottom-1 rounded-l-3xl overflow-hidden ">
         <SaReference />
         <Map />
       </div>
