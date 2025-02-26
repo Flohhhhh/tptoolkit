@@ -8,6 +8,7 @@ import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { ModalProvider } from "@/components/dialogs";
 import { Analytics } from "@vercel/analytics/react";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,16 +26,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <Toaster />
-        <Analytics />
-        <div className="bg-linear-to-b bg-zinc-50 dark:bg-zinc-900 custom-animate-in">
-          <Providers>
-            <Header />
-            {children}
-            {/* <Footer /> */}
-            <ModalProvider />
-          </Providers>
-        </div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Analytics />
+          <Toaster />
+          <div className="bg-linear-to-b bg-background custom-animate-in">
+            <Providers>
+              <Header />
+              {children}
+              {/* <Footer /> */}
+              <ModalProvider />
+            </Providers>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
