@@ -64,7 +64,7 @@ export async function GET(request: Request) {
     });
   }
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return new Response(JSON.stringify("No data found"), {
       status: 404,
       headers: {

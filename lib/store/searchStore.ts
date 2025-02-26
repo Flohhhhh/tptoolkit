@@ -31,6 +31,7 @@ export const useSearchStore = create<SearchState>((set) => ({
   },
 
   searchCoords: async (x, y) => {
+    console.log("[lib/store/searchStore] searchCoords", x, y);
     set({ searching: true, searchError: null });
     set({ currentCoords: { lat: y, lng: x } });
 
@@ -50,6 +51,7 @@ export const useSearchStore = create<SearchState>((set) => ({
 
       set({ results: data, searching: false });
     } catch (error) {
+      console.error("[lib/store/searchStore] searchCoords error", error);
       set({
         results: null,
         searchError:

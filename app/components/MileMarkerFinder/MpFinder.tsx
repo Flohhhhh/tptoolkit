@@ -109,7 +109,7 @@ const MpFinder = () => {
                 )}
               />
               <PasteGoButton
-                onPaste={(text) => form.setValue("coords", text)}
+              // onPaste={(text) => form.setValue("coords", text)}
               />
             </form>
           </Form>

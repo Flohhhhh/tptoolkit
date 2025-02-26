@@ -11,7 +11,7 @@ interface PasteGoButtonProps {
   onPaste: (text: string) => void;
 }
 
-export function PasteGoButton({ onPaste }: PasteGoButtonProps) {
+export function PasteGoButton() {
   const { setEnteredCoords, searchCoords, enteredCoords } = useSearchStore();
 
   const handlePaste = async () => {
@@ -58,7 +58,7 @@ export function PasteGoButton({ onPaste }: PasteGoButtonProps) {
         return;
       }
 
-      onPaste(text);
+      // onPaste(text);
       setEnteredCoords(text);
       await searchCoords(parsedX, parsedY);
     } catch (error) {
