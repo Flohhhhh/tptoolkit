@@ -12,10 +12,9 @@ interface PasteGoButtonProps {
 }
 
 export function PasteGoButton({ onPaste }: PasteGoButtonProps) {
-  const { setEnteredCoords, startSearch, searchCoords, enteredCoords } =
-    useSearchStore();
+  const { setEnteredCoords, searchCoords, enteredCoords } = useSearchStore();
 
-  const handlePasteAndGo = async () => {
+  const handlePaste = async () => {
     try {
       const text = await navigator.clipboard.readText();
 
@@ -39,8 +38,11 @@ export function PasteGoButton({ onPaste }: PasteGoButtonProps) {
       }
 
       // Validate the numeric ranges
-      const [y, x] = text.split(",").map(Number);
-      if (isNaN(x) || isNaN(y)) {
+      const [y, x] = text.split(",").map((s) => s.trim());
+      const parsedY = parseFloat(y);
+      const parsedX = parseFloat(x);
+
+      if (isNaN(parsedX) || isNaN(parsedY)) {
         toast.error("Invalid numbers in coordinates", {
           description: "Coordinates must be valid numbers",
         });
@@ -48,7 +50,7 @@ export function PasteGoButton({ onPaste }: PasteGoButtonProps) {
       }
 
       // Basic coordinate range validation
-      if (y < -90 || y > 90 || x < -180 || x > 180) {
+      if (parsedY < -90 || parsedY > 90 || parsedX < -180 || parsedX > 180) {
         toast.error("Coordinates out of range", {
           description:
             "Latitude must be between -90 and 90, longitude between -180 and 180",
@@ -56,10 +58,9 @@ export function PasteGoButton({ onPaste }: PasteGoButtonProps) {
         return;
       }
 
-      startSearch();
       onPaste(text);
       setEnteredCoords(text);
-      await searchCoords(x, y);
+      await searchCoords(parsedX, parsedY);
     } catch (error) {
       toast.error("Error pasting: " + error);
     }
@@ -68,7 +69,7 @@ export function PasteGoButton({ onPaste }: PasteGoButtonProps) {
   return (
     <Button
       className="w-full"
-      onClick={handlePasteAndGo}
+      onClick={handlePaste}
       icon={<ClipboardPaste className="h-4 w-4" />}
       iconPosition="right"
     >

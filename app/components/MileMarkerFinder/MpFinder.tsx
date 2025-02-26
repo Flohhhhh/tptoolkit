@@ -37,7 +37,6 @@ const MpFinder = () => {
     searchError,
     setSearchError,
     searching,
-    startSearch,
     clearResults,
   } = useSearchStore();
 
@@ -49,7 +48,6 @@ const MpFinder = () => {
   });
 
   const handleSearch = async (values: CoordsForm) => {
-    startSearch();
     const [y, x] = values.coords.split(",").map(Number);
     if (isNaN(x) || isNaN(y)) {
       setSearchError("Invalid coordinates");
