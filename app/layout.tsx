@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import Providers from "../lib/providers";
+import Providers from "./../lib/providers";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -36,7 +36,7 @@ export default function RootLayout({
           <Toaster />
           <div className="bg-linear-to-b bg-background custom-animate-in">
             <Providers>
-              <Header />
+              {/* <Header /> */}
               {children}
               {/* <Footer /> */}
               <ModalProvider />

@@ -1,24 +1,27 @@
-import Map from "./components/Map/Map";
-import MpFinder from "./components/MileMarkerFinder/MpFinder";
-import DetailsPanel from "./components/DetailsPanel/DetailsPanel";
-import SaReference from "./components/ServiceAreaReference/SaReference";
-import PaletteHandler from "@/app/components/Modals/Palette/PaletteHandler";
-import Modal from "@/app/components/Modals/Modal";
+"use client";
+
+import Search from "./components/Search/Search";
+import ThemeSwitcher from "./components/ThemeSwitcher";
+import { useRef, useState } from "react";
+import MapLayerSwitcher from "./components/Map/MapLayerSwitcher";
 import { MapRenderer } from "./components/Map/MapRenderer";
 
 export default function Home() {
-  // https://dribbble.com/shots/3264304-Industrial-Analytics-Dashboard-Map-View-Interface-Animation
+  const [mapStyle, setMapStyle] = useState("streets");
+  const mapNode = useRef(null);
 
   return (
-    <div className="h-screen bg-background">
-      {/* <Modal /> */}
-      <MpFinder />
-      <PaletteHandler />
-      <DetailsPanel />
-      <div className="fixed top-10 left-[320px] right-0 bottom-1 rounded-l-3xl overflow-hidden ">
-        <SaReference />
-        <Map />
+    <div className="relative h-screen bg-background">
+      <div className="absolute z-10 top-0 left-0 right-0 p-4 w-full flex justify-between gap-2 items-center">
+        <div className="flex">
+          <Search />
+        </div>
+        <div className="flex-1 flex justify-end gap-2">
+          <ThemeSwitcher />
+          <MapLayerSwitcher mapStyle={mapStyle} setMapStyle={setMapStyle} />
+        </div>
       </div>
+      <MapRenderer mapStyle={mapStyle} mapNode={mapNode} />
     </div>
   );
 }
