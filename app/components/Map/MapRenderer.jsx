@@ -6,43 +6,17 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { CopyToClipboard } from "@/lib/CopyToClipboard";
 import { useMap } from "@/lib/context/mapContext";
-import { useSearchStore } from "@/lib/store/searchStore";
-
+import { searchCoords } from "@/lib/helpers/search";
 export function MapRenderer(props) {
   const { theme } = useTheme();
   const { onMapLoad, onMapRemoved, mapStyle } = props;
-  const { setEnteredCoords, currentCoords, searchCoords } = useSearchStore();
-  const { map, setMap } = useMap();
+  const { map, setMap, handleCoordinateUpdate } = useMap();
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [marker, setMarker] = useState(null);
 
   // React ref to store a reference to the DOM node that will be used
   // as a required parameter `container` when initializing the mapbox-gl
   // will contain `null` by default
   const mapNode = useRef(null);
-
-  // Effect to handle marker updates and flying to location
-  useEffect(() => {
-    if (!map || !currentCoords.lat || !currentCoords.lng) return;
-
-    // Remove existing marker if it exists
-    if (marker) {
-      marker.remove();
-    }
-
-    // Create new marker
-    const newMarker = new mapboxgl.Marker()
-      .setLngLat([currentCoords.lng, currentCoords.lat])
-      .addTo(map);
-    setMarker(newMarker);
-
-    // Fly to location
-    map.flyTo({
-      center: [currentCoords.lng, currentCoords.lat],
-      zoom: 15,
-      essential: true,
-    });
-  }, [currentCoords, map]);
 
   // Effect to handle style changes
   useEffect(() => {
@@ -122,14 +96,6 @@ export function MapRenderer(props) {
       CopyToClipboard(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`);
     });
 
-    mapboxMap.on("dblclick", (e) => {
-      e.preventDefault();
-      const lat = e.lngLat.lat;
-      const lng = e.lngLat.lng;
-      setEnteredCoords(`${lat.toFixed(6)}, ${lng.toFixed(6)}`);
-      searchCoords(lng, lat);
-    });
-
     setMap(mapboxMap);
     mapboxMap.getCanvas().style.cursor = "default";
 
@@ -140,6 +106,23 @@ export function MapRenderer(props) {
       if (onMapRemoved) onMapRemoved();
     };
   }, []);
+
+  // Register double-click handler only when map is available
+  useEffect(() => {
+    if (!map) return;
+    const handler = (e) => {
+      console.log("Double click detected", e.lngLat);
+      const lat = e.lngLat.lat;
+      const lng = e.lngLat.lng;
+      // console.log("Updating coordinates:", lat, lng);
+      searchCoords(lat, lng);
+      handleCoordinateUpdate(lat, lng);
+    };
+    map.on("dblclick", handler);
+    return () => {
+      map.off("dblclick", handler);
+    };
+  }, [map, handleCoordinateUpdate]);
 
   return <div ref={mapNode} className="w-full h-full relative" />;
 }

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { useMap } from "@/lib/context/mapContext";
 
 interface SearchState {
   enteredCoords: string;
@@ -9,7 +10,6 @@ interface SearchState {
   setEnteredCoords: (coords: string) => void;
   setSearchError: (error: string | null) => void;
   searchCoords: (x: number, y: number) => Promise<void>;
-  updateCoordsMarker: (lat: number, lng: number) => void;
   clearResults: () => void;
 }
 
@@ -25,10 +25,6 @@ export const useSearchStore = create<SearchState>((set) => ({
   clearResults: () => set({ results: null, searchError: null }),
 
   setSearchError: (error) => set({ searchError: error, searching: false }),
-
-  updateCoordsMarker: (lat, lng) => {
-    set({ currentCoords: { lat, lng } });
-  },
 
   searchCoords: async (x, y) => {
     console.log("[lib/store/searchStore] searchCoords", x, y);

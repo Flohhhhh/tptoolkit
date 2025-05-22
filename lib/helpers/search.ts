@@ -1,6 +1,7 @@
 import { useMainStore } from "../store/mainStore";
 import { useMap } from "../context/mapContext";
 import { validateCoords } from "./validation";
+
 export const parseInput = (searchInput: string) => {
   const store = useMainStore.getState();
   // check if input is valid coordinates
@@ -31,7 +32,8 @@ export const parseInput = (searchInput: string) => {
   return { type: "text" };
 };
 
-export const searchCoords = async () => {
+export const searchCoords = async (lat: number, lng: number) => {
+  console.log("searchCoords called");
   // const map = useMap();
   const store = useMainStore.getState();
   const searchInput = store.searchInput;
@@ -42,7 +44,6 @@ export const searchCoords = async () => {
     store.setCoordsResults([]);
     store.setSearchWindowState("closed");
     store.setSearchingCoords(true);
-    const [lat, lng] = searchInput.split(",");
     const res = await fetch(`/api/v2/search/coords?x=${lng}&y=${lat}`, {
       method: "GET",
     });

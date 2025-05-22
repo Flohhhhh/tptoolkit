@@ -21,6 +21,9 @@ export default function SearchPanel() {
   const [showCoordsActions, setShowCoordsActions] = useState(false);
   const map = useMap();
 
+  // Memoize parseInput result for current input
+  const parsedInput = useMemo(() => parseInput(input), [input]);
+
   const fetcher = (name: string) => searchLocationsByName(name, 10);
 
   const {
@@ -122,7 +125,7 @@ export default function SearchPanel() {
   // Determine panel height based on content and state
   const expandedHeight = useMemo(() => {
     let baseHeight = 0;
-    const inputType = parseInput(input).type;
+    const inputType = parsedInput.type;
     if (inputType === "coords" || inputType === "numeric") {
       baseHeight = 110;
     } else if (searchingByName) {
@@ -133,7 +136,7 @@ export default function SearchPanel() {
       baseHeight = 200;
     }
     return `h-[${baseHeight}px]`;
-  }, [input, searchingByName, nameSearchResults.length]);
+  }, [parsedInput.type, searchingByName, nameSearchResults.length]);
 
   return (
     <div
@@ -172,12 +175,17 @@ export default function SearchPanel() {
               icon={<SendHorizontal />}
               iconPosition="right"
               className="w-full"
-              onClick={searchCoords}
+              onClick={() => {
+                const [lat, lng] = input
+                  .split(",")
+                  .map((v) => parseFloat(v.trim()));
+                searchCoords(lat, lng);
+              }}
             >
               Search near coordinates
             </Button>
           </div>
-        ) : parseInput(input).type === "numeric" ? (
+        ) : parsedInput.type === "numeric" ? (
           <div className="flex items-center justify-center h-full">
             <Loader2 className="animate-spin" />
           </div>
