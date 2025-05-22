@@ -30,7 +30,7 @@ export default function LocationCard(props: {
   return (
     <div
       onClick={handleClick}
-      className={`${bg} border-accent border pl-3 pr-2 py-1.5 rounded-md flex justify-between gap-2 items-center w-full hover:cursor-pointer hover:brightness-95 dark:hover:brightness-125 transition animate-in`}
+      className={`${bg} border-accent border pl-3 pr-2 py-1.5 rounded-md flex justify-between gap-2 items-center w-full hover:cursor-pointer hover:bg-accent/75 transition animate-in`}
     >
       <div className="flex">
         <span className="w-6 opacity-50 mr-2 my-auto">
