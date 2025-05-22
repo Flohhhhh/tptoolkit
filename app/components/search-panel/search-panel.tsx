@@ -13,6 +13,7 @@ import { searchCoords } from "@/lib/helpers/search";
 import useSWR from "swr";
 import { searchLocationsByName } from "@/lib/actions/search";
 import { useMap } from "@/lib/context/mapContext";
+import SearchResultCard from "./search-result-card";
 
 export default function SearchPanel() {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,10 @@ export default function SearchPanel() {
   const map = useMap();
 
   // Memoize parseInput result for current input
-  const parsedInput = useMemo(() => parseInput(input), [input]);
+  const parsedInput = useMemo(() => {
+    // console.log("parsedInput", input);
+    return parseInput(input);
+  }, [input]);
 
   const fetcher = (name: string) => searchLocationsByName(name, 10);
 
@@ -39,8 +43,7 @@ export default function SearchPanel() {
     setSearchingByName,
   } = useMainStore();
 
-  const isTextSearch =
-    searchInput.length > 0 && parseInput(searchInput).type === "text";
+  const isTextSearch = searchInput.length > 0 && parsedInput.type === "text";
 
   const {
     data: swrNameSearchResults,
@@ -75,22 +78,30 @@ export default function SearchPanel() {
   const handleFocus = () => {
     if (searchInput.length > 0) {
       setSearchWindowState("open");
+      if (parsedInput.type === "coords") {
+        setShowCoordsActions(true);
+      } else {
+        setShowCoordsActions(false);
+      }
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
-    const { type } = parseInput(e.target.value);
-    if (type === "coords") {
+    // console.log("parsedInput", parsedInput);
+    if (parseInput(e.target.value).type === "coords") {
+      // console.log("coords");
       setSearchingByName(false);
       setNameSearchResults([]);
       setShowCoordsActions(true);
-    } else if (type === "numeric") {
+    } else if (parseInput(e.target.value).type === "numeric") {
+      // console.log("numeric");
       // If it's numeric, don't show coords actions or trigger text search
       setSearchingByName(false);
       setNameSearchResults([]);
       setShowCoordsActions(false);
     } else {
+      // console.log("text");
       // Only trigger text search for type 'text'
       setSearchingByName(true);
       setNameSearchResults([]);
@@ -124,25 +135,22 @@ export default function SearchPanel() {
 
   // Determine panel height based on content and state
   const expandedHeight = useMemo(() => {
-    let baseHeight = 0;
-    const inputType = parsedInput.type;
-    if (inputType === "coords" || inputType === "numeric") {
-      baseHeight = 110;
+    if (parsedInput.type === "coords" || parsedInput.type === "numeric") {
+      return "h-[110px]";
     } else if (searchingByName) {
-      baseHeight = 300;
+      return "h-[300px]";
     } else if (nameSearchResults.length > 0) {
-      baseHeight = Math.min(nameSearchResults.length * 60 + 100, 500);
+      return "min-h-[300px]";
     } else {
-      baseHeight = 200;
+      return "h-[200px]";
     }
-    return `h-[${baseHeight}px]`;
   }, [parsedInput.type, searchingByName, nameSearchResults.length]);
 
   return (
     <div
       ref={panelRef}
       className={cn(
-        "w-[400px] bg-background rounded-lg shadow-lg flex flex-col transition-all duration-200 ease-in-out",
+        "relative overflow-x-hidden overflow-y-hidden w-[400px] bg-background rounded-lg shadow-lg flex flex-col transition-all duration-200 ease-in-out",
         searchWindowState === "open" ? `${expandedHeight} p-2` : "h-[40px] p-0"
       )}
     >
@@ -198,9 +206,14 @@ export default function SearchPanel() {
             No results found
           </div>
         ) : (
-          <div className="h-full">
+          <div className="h-full space-y-1">
+            <div className="pointer-events-none absolute z-10 -bottom-2 w-full h-36 bg-gradient-to-t from-background to-transparent" />
             {nameSearchResults.map((result) => (
-              <div key={result.id}>{result.name}</div>
+              <SearchResultCard
+                key={result.id}
+                inputText={searchInput.toUpperCase()}
+                location={result}
+              />
             ))}
           </div>
         )}

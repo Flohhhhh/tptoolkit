@@ -112,8 +112,8 @@ export function MapRenderer(props) {
     if (!map) return;
     const handler = (e) => {
       console.log("Double click detected", e.lngLat);
-      const lat = e.lngLat.lat;
-      const lng = e.lngLat.lng;
+      const lat = e.lngLat.lat.toFixed(6);
+      const lng = e.lngLat.lng.toFixed(6);
       // console.log("Updating coordinates:", lat, lng);
       searchCoords(lat, lng);
       handleCoordinateUpdate(lat, lng);

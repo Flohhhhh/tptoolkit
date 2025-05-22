@@ -1,4 +1,4 @@
 export const validateCoords = (coords: string) => {
-  const regex = /^-?\d{1,3}\.\d{6}, ?-?\d{1,3}\.\d{6}$/;
+  const regex = /^-?\d{1,3}\.\d+, ?-?\d{1,3}\.\d+$/;
   return regex.test(coords);
 };

@@ -1,16 +1,17 @@
 import { useMainStore } from "../store/mainStore";
-import { useMap } from "../context/mapContext";
+import { useHistoryStore } from "../store/historyStore";
 import { validateCoords } from "./validation";
 
 export const parseInput = (searchInput: string) => {
   const store = useMainStore.getState();
+  // console.log("parseInput", searchInput);
   // check if input is valid coordinates
   const isCoords = validateCoords(searchInput);
   if (isCoords) {
     // console.log("isCoords", isCoords);
     const [lat, lng] = searchInput.split(",");
-    console.log("lat", lat);
-    console.log("lng", lng);
+    // console.log("lat", lat);
+    // console.log("lng", lng);
     // check if coords are within bounds
     if (
       Number(lat) < 38 ||
@@ -32,26 +33,35 @@ export const parseInput = (searchInput: string) => {
   return { type: "text" };
 };
 
-export const searchCoords = async (lat: number, lng: number) => {
-  console.log("searchCoords called");
-  // const map = useMap();
+export const searchCoords = async (
+  lat: number,
+  lng: number,
+  addHistory = true
+) => {
+  const historyStore = useHistoryStore.getState();
+  console.log("searchCoords called", lat, lng);
   const store = useMainStore.getState();
-  const searchInput = store.searchInput;
-  const { type } = parseInput(searchInput);
-  if (type === "error") {
-    return;
-  } else if (type === "coords") {
-    store.setCoordsResults([]);
-    store.setSearchWindowState("closed");
-    store.setSearchingCoords(true);
-    const res = await fetch(`/api/v2/search/coords?x=${lng}&y=${lat}`, {
-      method: "GET",
+  store.setCoordsResults([]);
+  store.setSearchWindowState("closed");
+  store.setSearchingCoords(true);
+  console.log("fetching coords", lat, lng);
+  const res = await fetch(`/api/v2/search/coords?x=${lng}&y=${lat}`, {
+    method: "GET",
+  });
+  const data = await res.json();
+  console.log("data", data);
+  store.setCoordsResults(data);
+  store.setSearchingCoords(false);
+
+  if (addHistory) {
+    historyStore.addHistoryItem({
+      id: crypto.randomUUID(),
+      inputContent: `${lat},${lng}`,
+      resultText: data[0].name,
+      lat: Number(lat),
+      lng: Number(lng),
+      timestamp: Date.now(),
     });
-    const data = await res.json();
-    console.log("data", data);
-    store.setCoordsResults(data);
-    store.setSearchingCoords(false);
-    // map.flyTo(lat, lng);
   }
 };
 

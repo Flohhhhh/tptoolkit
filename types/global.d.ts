@@ -7,7 +7,9 @@ declare global {
   type HistoryItem = {
     id: string;
     inputContent: string;
-    results: TPLocation[];
+    resultText: string;
+    lat: number;
+    lng: number;
     timestamp: number;
   };
 }

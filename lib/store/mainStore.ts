@@ -11,13 +11,13 @@ interface MainState {
   setSearchError: (error: string | null) => void;
   coordsResults: TPLocation[];
   setCoordsResults: (results: TPLocation[]) => void;
+  clearCoordsResults: () => void;
   nameSearchResults: TPLocation[];
   setNameSearchResults: (results: TPLocation[]) => void;
   searchingByName: boolean;
   setSearchingByName: (searching: boolean) => void;
-  // history: HistoryItem[];
-  // clearHistory: () => void;
-  // addHistoryItem: (item: HistoryItem) => void;
+  historyPanelOpen: boolean;
+  setHistoryPanelOpen: (open: boolean) => void;
 }
 
 export const useMainStore = create<MainState>((set) => ({
@@ -31,12 +31,11 @@ export const useMainStore = create<MainState>((set) => ({
   setSearchError: (error) => set({ searchError: error }),
   coordsResults: [],
   setCoordsResults: (results) => set({ coordsResults: results }),
+  clearCoordsResults: () => set({ coordsResults: [] }),
   nameSearchResults: [],
   setNameSearchResults: (results) => set({ nameSearchResults: results }),
   searchingByName: false,
   setSearchingByName: (searching) => set({ searchingByName: searching }),
-  // history: [],
-  // clearHistory: () => set({ history: [] }),
-  // addHistoryItem: (item) =>
-  //   set((state) => ({ history: [...state.history, item] })),
+  historyPanelOpen: false,
+  setHistoryPanelOpen: (open) => set({ historyPanelOpen: open }),
 }));

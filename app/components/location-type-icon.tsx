@@ -15,24 +15,24 @@ const LocationTypeIcon = (props: { type: TPLocation["type"] }) => {
   const { type } = props;
   switch (type) {
     case "exit":
-      return <ArrowUpRightSquare size={20} />;
+      return <ArrowUpRightSquare className="size-4" />;
     case "ramp":
-      return <Merge size={20} />;
+      return <Merge className="size-4" />;
     case "entrance":
-      return <ArrowUpLeftSquare size={20} />;
+      return <ArrowUpLeftSquare className="size-4" />;
     case "milepost":
-      return <GitCommitVertical size={20} />;
+      return <GitCommitVertical className="size-4" />;
     case "service_plaza":
-      return <Fuel size={20} />;
+      return <Fuel className="size-4" />;
     case "toll_plaza":
-      return <Receipt size={20} />;
+      return <Receipt className="size-4" />;
     case "cut":
     case "u_turn":
-      return <UndoDot size={20} />;
+      return <UndoDot className="size-4" />;
     case "parking":
-      return <ParkingSquare size={20} />;
+      return <ParkingSquare className="size-4" />;
     default:
-      return <HelpCircle size={20} />;
+      return <HelpCircle className="size-4" />;
   }
 };
 
