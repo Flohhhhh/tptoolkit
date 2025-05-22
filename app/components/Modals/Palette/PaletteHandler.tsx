@@ -4,10 +4,10 @@ import { replaceWithModal } from "@/components/dialogs";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 
 export default function PaletteHandler() {
-  useHotkeys(
-    "k",
-    () => replaceWithModal("PaletteDialog", { foo: "bar" }),
-    true
-  );
+  // useHotkeys(
+  //   "k",
+  //   () => replaceWithModal("PaletteDialog", { foo: "bar" }),
+  //   true
+  // );
   return null;
 }
