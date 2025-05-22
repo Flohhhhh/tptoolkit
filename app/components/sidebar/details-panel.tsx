@@ -89,8 +89,6 @@ export default function DetailsPanel({ location }: { location?: TPLocation }) {
     );
   }
 
-  console.log("Details Panel location", location);
-
   return (
     <div className="w-full rounded-xl bg-background">
       <h1 className="text-muted-foreground font-semibold">Location Details</h1>
