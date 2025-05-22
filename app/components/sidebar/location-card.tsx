@@ -18,7 +18,6 @@ export default function LocationCard(props: {
 
   const handleClick = () => {
     if (isSelected) {
-      console.log("isSelected", isSelected);
       setTab("details");
     } else {
       setSelected(location);
