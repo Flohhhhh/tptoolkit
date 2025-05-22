@@ -36,7 +36,7 @@ export function MapSnip({
     return null;
   }
 
-  const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/${longitude},${latitude},${zoom}/600x400?access_token=${mapboxToken}`;
+  const imageUrl = `https://api.mapbox.com/styles/v1/flohh/cmazsepqz002e01qv4kamdpmt/static/${longitude},${latitude},${zoom}/600x400?access_token=${mapboxToken}`;
 
   return (
     <div className={cn("relative w-full h-full", className)}>
