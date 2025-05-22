@@ -95,7 +95,7 @@ export default function HistoryPanel() {
           "absolute inset-0 w-full px-2 transition-all duration-300 ease-in-out",
           "flex items-center gap-1",
           "overflow-x-auto overflow-y-hidden whitespace-nowrap",
-          "scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent",
+          // "scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent",
           historyPanelOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         )}
       >

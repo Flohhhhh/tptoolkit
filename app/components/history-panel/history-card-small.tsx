@@ -48,7 +48,7 @@ export default function HistoryCardSmall({ item }: { item: HistoryItem }) {
       <span className="text-xs text-foreground transition-all duration-300">
         {trimmedInputContent}
       </span>
-      <span className="mt-[2px] text-xs text-muted-foreground line-clamp-1 transition-all duration-300">
+      <span className="mt-[1px] text-xs text-muted-foreground line-clamp-1 transition-all duration-300">
         {trimmedResultText}
       </span>
       <span className="mt-1 text-xs text-muted-foreground/50 transition-all duration-300">
