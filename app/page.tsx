@@ -1,23 +1,37 @@
-import Map from "./components/Map/Map";
-import MpFinder from "./components/MileMarkerFinder/MpFinder";
-import DetailsPanel from "./components/DetailsPanel/DetailsPanel";
-import SaReference from "./components/ServiceAreaReference/SaReference";
-import PaletteHandler from "@/app/components/Modals/Palette/PaletteHandler";
-import Modal from "@/app/components/Modals/Modal";
-import { MapRenderer } from "./components/Map/MapRenderer";
+"use client";
 
+import ThemeSwitcher from "./components/ThemeSwitcher";
+import { useRef, useState } from "react";
+import MapLayerSwitcher from "./components/Map/MapLayerSwitcher";
+import { MapRenderer } from "./components/Map/MapRenderer";
+import SearchPanel from "./components/search-panel/search-panel";
+import HistoryPanel from "./components/history-panel/history-panel";
+import Sidebar from "./components/sidebar/sidebar";
+import MagicButton from "./components/search-panel/magic-button";
 export default function Home() {
-  // https://dribbble.com/shots/3264304-Industrial-Analytics-Dashboard-Map-View-Interface-Animation
+  const [mapStyle, setMapStyle] = useState("streets");
+  const mapNode = useRef(null);
 
   return (
-    <div className="h-screen bg-background">
-      {/* <Modal /> */}
-      <MpFinder />
-      <PaletteHandler />
-      <DetailsPanel />
-      <div className="fixed top-10 left-[320px] right-0 bottom-1 rounded-l-3xl overflow-hidden ">
-        <SaReference />
-        <Map />
+    <div className="relative h-screen bg-background">
+      <div className="fixed top-0 h-screen w-[300px]">
+        <Sidebar />
+      </div>
+      <div className="fixed top-0 left-[300px] right-0 bottom-[80px]">
+        <div className="z-10 top-0 absolute w-full flex justify-between p-2">
+          <div className="flex gap-1 items-start">
+            <SearchPanel />
+            <MagicButton />
+          </div>
+          <div className="flex gap-1 items-start">
+            {/* <ThemeSwitcher /> */}
+            <MapLayerSwitcher mapStyle={mapStyle} setMapStyle={setMapStyle} />
+          </div>
+        </div>
+        <MapRenderer mapStyle={mapStyle} mapNode={mapNode} />
+      </div>
+      <div className="z-10 absolute bottom-0 left-[300px] right-0 min-h-[80px] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <HistoryPanel />
       </div>
     </div>
   );

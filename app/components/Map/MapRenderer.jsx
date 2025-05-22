@@ -6,52 +6,65 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { CopyToClipboard } from "@/lib/CopyToClipboard";
 import { useMap } from "@/lib/context/mapContext";
-import { useSearchStore } from "@/lib/store/searchStore";
-
+import { searchCoords } from "@/lib/helpers/search";
 export function MapRenderer(props) {
   const { theme } = useTheme();
-  const { onMapLoad, onMapRemoved } = props;
-  const { setEnteredCoords, currentCoords, searchCoords } = useSearchStore();
-  const { map, setMap } = useMap();
+  const { onMapLoad, onMapRemoved, mapStyle } = props;
+  const { map, setMap, handleCoordinateUpdate } = useMap();
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [marker, setMarker] = useState(null);
 
   // React ref to store a reference to the DOM node that will be used
   // as a required parameter `container` when initializing the mapbox-gl
   // will contain `null` by default
   const mapNode = useRef(null);
 
-  // Effect to handle marker updates and flying to location
+  // Effect to handle style changes
   useEffect(() => {
-    if (!map || !currentCoords.lat || !currentCoords.lng) return;
+    if (!map) return;
 
-    // Remove existing marker if it exists
-    if (marker) {
-      marker.remove();
+    if (mapStyle === "satellite") {
+      map.setStyle("mapbox://styles/mapbox/standard-satellite");
+    } else {
+      map.setStyle("mapbox://styles/flohh/cmazrxlzp00bk01sdfh4u8uyq");
+      map.once("style.load", () => {
+        map.setConfigProperty(
+          "basemap",
+          "lightPreset",
+          theme === "dark" ? "night" : "day"
+        );
+      });
+    }
+  }, [mapStyle, theme, map]);
+
+  // Effect to handle theme changes
+  useEffect(() => {
+    if (!map || mapStyle === "satellite") return;
+
+    const handleStyleLoad = () => {
+      map.setConfigProperty(
+        "basemap",
+        "lightPreset",
+        theme === "dark" ? "night" : "day"
+      );
+    };
+
+    map.on("style.load", handleStyleLoad);
+
+    // If the style is already loaded, apply immediately
+    if (map.isStyleLoaded()) {
+      handleStyleLoad();
     }
 
-    // Create new marker
-    const newMarker = new mapboxgl.Marker()
-      .setLngLat([currentCoords.lng, currentCoords.lat])
-      .addTo(map);
-    setMarker(newMarker);
-
-    // Fly to location
-    map.flyTo({
-      center: [currentCoords.lng, currentCoords.lat],
-      zoom: 15,
-      essential: true,
-    });
-  }, [currentCoords, map]);
+    // Cleanup
+    return () => {
+      map.off("style.load", handleStyleLoad);
+    };
+  }, [theme, map, mapStyle]);
 
   useEffect(() => {
     const node = mapNode.current;
-    // if the window object is not found, that means
-    // the component is rendered on the server
-    // or the dom node is not initialized, then return early
     if (typeof window === "undefined" || node === null) return;
 
-    // otherwise, create a map instance
     const mapboxMap = new mapboxgl.Map({
       container: node,
       projection: "globe",
@@ -59,52 +72,31 @@ export function MapRenderer(props) {
       center: [-74.2986829372431, 40.53355347618958],
       zoom: 15,
       doubleClickZoom: false,
-      hash: false, //syncs map location with url
+      hash: false,
+      style: "mapbox://styles/flohh/cmazrxlzp00bk01sdfh4u8uyq",
     });
 
-    mapboxMap.on("style.load", () => {
-      console.log("Map reading theme", theme);
-      if (theme === "dark") {
-        mapboxMap.setConfigProperty("basemap", "lightPreset", "night");
-      } else {
-        mapboxMap.setConfigProperty("basemap", "lightPreset", "day");
-      }
+    // Apply initial theme
+    mapboxMap.once("style.load", () => {
+      mapboxMap.setConfigProperty(
+        "basemap",
+        "lightPreset",
+        theme === "dark" ? "night" : "day"
+      );
     });
 
-    // add navigation control (the +/- zoom buttons)
+    // Add navigation control
     mapboxMap.addControl(new mapboxgl.NavigationControl(), "bottom-left");
-    // add scale control
+
+    // Add scale control
     mapboxMap.addControl(new mapboxgl.ScaleControl(), "bottom-right");
 
-    // // add attribution control
-    // mapboxMap.addControl(
-    //   new mapboxgl.AttributionControl({
-    //     compact: true
-    //   }),
-    //   'bottom-right'
-    // )
-
-    // add click event listener
-    // https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/
+    // Add click event listener
     mapboxMap.on("contextmenu", (e) => {
-      // console.log(e);
-      // log lat long
-      // console.log("Lat:", e.lngLat.lat, "Long:", e.lngLat.lng);
       CopyToClipboard(`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`);
     });
 
-    mapboxMap.on("dblclick", (e) => {
-      e.preventDefault();
-      const lat = e.lngLat.lat;
-      const lng = e.lngLat.lng;
-      setEnteredCoords(`${lat.toFixed(6)}, ${lng.toFixed(6)}`);
-      searchCoords(lng, lat);
-    });
-
-    // save the map object to useState
     setMap(mapboxMap);
-
-    // set cursor to default
     mapboxMap.getCanvas().style.cursor = "default";
 
     if (onMapLoad) mapboxMap.once("load", onMapLoad);
@@ -115,17 +107,22 @@ export function MapRenderer(props) {
     };
   }, []);
 
+  // Register double-click handler only when map is available
   useEffect(() => {
-    // console.log(map);
     if (!map) return;
-    // console.log();
-    console.log("Map reading theme", theme);
-    if (theme === "dark") {
-      map.setConfigProperty("basemap", "lightPreset", "night");
-    } else {
-      map.setConfigProperty("basemap", "lightPreset", "day");
-    }
-  }, [theme]);
+    const handler = (e) => {
+      console.log("Double click detected", e.lngLat);
+      const lat = e.lngLat.lat.toFixed(6);
+      const lng = e.lngLat.lng.toFixed(6);
+      // console.log("Updating coordinates:", lat, lng);
+      searchCoords(lat, lng);
+      handleCoordinateUpdate(lat, lng);
+    };
+    map.on("dblclick", handler);
+    return () => {
+      map.off("dblclick", handler);
+    };
+  }, [map, handleCoordinateUpdate]);
 
-  return <div ref={mapNode} className="w-full h-full" />;
+  return <div ref={mapNode} className="w-full h-full relative" />;
 }
