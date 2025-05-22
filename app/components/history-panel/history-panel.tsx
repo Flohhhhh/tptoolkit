@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { ChevronUp, History } from "lucide-react";
+import { ChevronUp, History, Trash, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/lib/hooks/useClickOutside";
@@ -13,7 +13,7 @@ import { useMainStore } from "@/lib/store/mainStore";
 export default function HistoryPanel() {
   const { historyPanelOpen, setHistoryPanelOpen } = useMainStore();
   const panelRef = useRef<HTMLDivElement>(null);
-  const { history } = useHistoryStore();
+  const { history, clearHistory } = useHistoryStore();
 
   useClickOutside(
     panelRef,
@@ -57,11 +57,24 @@ export default function HistoryPanel() {
           historyPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
       >
-        <div className="flex-none p-4 border-b border-border">
-          <h2 className="text-lg font-semibold">Search History</h2>
-          <p className="text-sm text-muted-foreground">
-            Click an item to search again.
-          </p>
+        <div className="flex justify-between items-center p-4 border-b border-border">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-lg font-semibold">Search History</h2>
+            <p className="text-sm text-muted-foreground">
+              Click an item to search again.
+            </p>
+          </div>
+          <Button
+            onClick={() => {
+              clearHistory();
+            }}
+            variant="outline"
+            size="sm"
+            className="text-muted-foreground"
+            icon={<Trash className="size-4" />}
+          >
+            Clear History
+          </Button>
         </div>
         <div className="flex-1 p-4 overflow-y-auto h-[calc(65vh-4rem)]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
