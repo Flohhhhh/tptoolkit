@@ -41,15 +41,15 @@ export default function HistoryCardLarge({ item }: { item: HistoryItem }) {
       <div className="space-y-2">
         <div>
           <div className="flex justify-between items-start">
-            <h3 className="font-medium text-sm">{item.inputContent}</h3>
+            <h3 className="text-sm">{item.inputContent}</h3>
             <span className="text-xs text-muted-foreground/50">
               {relativeTime}
             </span>
           </div>
-          <p className="text-sm text-muted-foreground">{item.resultText}</p>
+          <p className="text-xs text-muted-foreground">{item.resultText}</p>
         </div>
         <div className="rounded-md overflow-hidden">
-          <MapSnip latitude={item.lat} longitude={item.lng} zoom={14} />
+          <MapSnip latitude={item.lat} longitude={item.lng} />
         </div>
       </div>
     </button>

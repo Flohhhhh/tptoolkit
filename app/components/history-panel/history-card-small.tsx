@@ -31,18 +31,27 @@ export default function HistoryCardSmall({ item }: { item: HistoryItem }) {
     searchCoords(item.lat, item.lng, false);
   };
 
+  const trimmedInputContent =
+    item.inputContent.length > 22
+      ? item.inputContent.slice(0, 22) + "..."
+      : item.inputContent;
+  const trimmedResultText =
+    item.resultText.length > 22
+      ? item.resultText.slice(0, 22) + "..."
+      : item.resultText;
+
   return (
     <button
       onClick={handleClick}
       className="w-[200px] text-left motion-preset-slide-down hover:cursor-pointer hover:bg-accent/50 flex flex-col items-start justify-between rounded-sm border border-accent px-2 py-1 transition-all duration-300 ease-in-out"
     >
-      <span className="text-xs text-muted-foreground transition-all duration-300">
-        {item.inputContent}
+      <span className="text-xs text-foreground transition-all duration-300">
+        {trimmedInputContent}
       </span>
-      <span className="text-xs text-muted-foreground/50 line-clamp-1 transition-all duration-300">
-        {item.resultText}
+      <span className="mt-[2px] text-xs text-muted-foreground line-clamp-1 transition-all duration-300">
+        {trimmedResultText}
       </span>
-      <span className="text-xs text-muted-foreground/50 transition-all duration-300">
+      <span className="mt-1 text-xs text-muted-foreground/50 transition-all duration-300">
         {relativeTime}
       </span>
     </button>

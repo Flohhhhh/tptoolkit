@@ -13,7 +13,7 @@ interface MapSnipProps {
 export function MapSnip({
   latitude,
   longitude,
-  zoom = 14,
+  zoom = 16,
   className,
 }: MapSnipProps) {
   // Validate coordinates

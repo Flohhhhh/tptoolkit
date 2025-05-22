@@ -61,8 +61,8 @@ export default function HistoryPanel() {
           <h2 className="text-lg font-semibold">Search History</h2>
         </div>
         <div className="flex-1 p-4 overflow-y-auto h-[calc(65vh-4rem)]">
-          <div className="grid grid-cols-3 gap-2">
-            {history.map((item) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+            {[...history].reverse().map((item) => {
               return (
                 <div key={item.id}>
                   <HistoryCardLarge item={item} />
