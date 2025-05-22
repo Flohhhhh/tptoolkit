@@ -36,7 +36,7 @@ export default function Sidebar() {
                 <Loader2 className="size-6 animate-spin text-muted-foreground" />
               </div>
             ) : coordsResults.length > 0 ? (
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 {coordsResults.map((result) => (
                   <LocationCard
                     key={result.id}
