@@ -61,7 +61,7 @@ export default function Sidebar() {
                 </Button>
                 <p className="text-xs text-muted-foreground mt-2 px-2">
                   Results are only approximate suggestions. Always verify the
-                  roadway and location with your caller. The first result isn't
+                  roadway and location with your caller. The first result is not
                   always the correct choice!
                 </p>
               </div>

@@ -25,7 +25,7 @@ export function MapRenderer(props) {
     if (mapStyle === "satellite") {
       map.setStyle("mapbox://styles/mapbox/standard-satellite");
     } else {
-      map.setStyle("mapbox://styles/mapbox/standard");
+      map.setStyle("mapbox://styles/flohh/cmazrxlzp00bk01sdfh4u8uyq");
       map.once("style.load", () => {
         map.setConfigProperty(
           "basemap",
@@ -73,7 +73,7 @@ export function MapRenderer(props) {
       zoom: 15,
       doubleClickZoom: false,
       hash: false,
-      style: "mapbox://styles/mapbox/standard",
+      style: "mapbox://styles/flohh/cmazrxlzp00bk01sdfh4u8uyq",
     });
 
     // Apply initial theme
