@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { ChevronUp } from "lucide-react";
+import { ChevronUp, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/lib/hooks/useClickOutside";
@@ -59,6 +59,9 @@ export default function HistoryPanel() {
       >
         <div className="flex-none p-4 border-b border-border">
           <h2 className="text-lg font-semibold">Search History</h2>
+          <p className="text-sm text-muted-foreground">
+            Click an item to search again.
+          </p>
         </div>
         <div className="flex-1 p-4 overflow-y-auto h-[calc(65vh-4rem)]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -76,7 +79,7 @@ export default function HistoryPanel() {
       {/* Collapsed State Content */}
       <div
         className={cn(
-          "absolute inset-0 w-full p-4 transition-all duration-300 ease-in-out",
+          "absolute inset-0 w-full px-2 transition-all duration-300 ease-in-out",
           "flex items-center gap-1",
           "overflow-x-auto overflow-y-hidden whitespace-nowrap",
           "scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent",
@@ -84,6 +87,7 @@ export default function HistoryPanel() {
         )}
       >
         <div className="flex flex-1 items-center gap-1">
+          <History className="size-4 text-muted-foreground w-12" />
           {history.length > 0 ? (
             [...history]
               .reverse()

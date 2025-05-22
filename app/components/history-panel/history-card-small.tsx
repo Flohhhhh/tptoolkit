@@ -43,7 +43,7 @@ export default function HistoryCardSmall({ item }: { item: HistoryItem }) {
   return (
     <button
       onClick={handleClick}
-      className="w-[200px] text-left motion-preset-slide-down hover:cursor-pointer hover:bg-accent/50 flex flex-col items-start justify-between rounded-sm border border-accent px-2 py-1 transition-all duration-300 ease-in-out"
+      className="bg-accent/25 w-[200px] text-left motion-preset-slide-down hover:cursor-pointer hover:bg-accent/50 flex flex-col items-start justify-between rounded-sm border border-accent px-2 py-1 transition-all duration-300 ease-in-out"
     >
       <span className="text-xs text-foreground transition-all duration-300">
         {trimmedInputContent}

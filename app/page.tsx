@@ -24,7 +24,7 @@ export default function Home() {
             <MagicButton />
           </div>
           <div className="flex gap-1 items-start">
-            <ThemeSwitcher />
+            {/* <ThemeSwitcher /> */}
             <MapLayerSwitcher mapStyle={mapStyle} setMapStyle={setMapStyle} />
           </div>
         </div>

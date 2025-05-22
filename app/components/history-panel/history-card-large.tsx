@@ -36,7 +36,7 @@ export default function HistoryCardLarge({ item }: { item: HistoryItem }) {
   return (
     <button
       onClick={handleClick}
-      className="w-full text-left bg-background hover:brightness-95 border border-accent rounded-lg p-3 hover:cursor-pointer transition-all"
+      className="bg-accent/25 w-full text-left hover:bg-accent/50 border border-accent rounded-lg p-3 hover:cursor-pointer transition-all"
     >
       <div className="space-y-2">
         <div>
