@@ -20,7 +20,7 @@ export default function SearchPanel() {
   const [input, setInput] = useState("");
   const debouncedInput = useDebounce(input, 750);
   const [showCoordsActions, setShowCoordsActions] = useState(false);
-  const map = useMap();
+  const { handleCoordinateUpdate } = useMap();
 
   // Memoize parseInput result for current input
   const parsedInput = useMemo(() => {
@@ -188,6 +188,7 @@ export default function SearchPanel() {
                   .split(",")
                   .map((v) => parseFloat(v.trim()));
                 searchCoords(lat, lng);
+                handleCoordinateUpdate(lat, lng);
               }}
             >
               Search near coordinates
