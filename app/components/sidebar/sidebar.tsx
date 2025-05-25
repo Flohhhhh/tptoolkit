@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useMap } from "@/lib/context/mapContext";
 import { SettingsMenu } from "./settings-menu";
+import ServiceAreaButton from "./service-area-button";
 
 export default function Sidebar() {
   const [tab, setTab] = useState<"results" | "details">("results");
@@ -86,6 +87,7 @@ export default function Sidebar() {
       </div>
       <div className="flex flex-col gap-1">
         <SettingsMenu />
+        <ServiceAreaButton />
         <Button
           disabled
           variant="outline"
