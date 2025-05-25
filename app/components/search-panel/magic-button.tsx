@@ -35,8 +35,9 @@ export default function PasteGoButton() {
       title="Paste & Go"
       icon={<Clipboard className="w-4 h-4" />}
       iconPosition="right"
+      className="h-9.5 mt-[1px] bg-blue-500"
     >
-      <span>Paste & Go</span>
+      <span className="px-2">Paste & Go</span>
     </Button>
   );
 }
