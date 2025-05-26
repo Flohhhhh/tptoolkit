@@ -11,9 +11,16 @@ import { SettingsMenu } from "./settings-menu";
 import ServiceAreaButton from "./service-area-button";
 
 export default function Sidebar() {
-  const [tab, setTab] = useState<"results" | "details">("results");
-  const { searchingCoords, coordsResults, clearCoordsResults } = useMainStore();
-  const [selected, setSelected] = useState<TPLocation | null>(null);
+  const {
+    searchingCoords,
+    coordsResults,
+    clearCoordsResults,
+    sidebarTab,
+    setSidebarTab,
+    selectedLocation,
+    setSelectedLocation,
+  } = useMainStore();
+
   const { updateSelected, handleCoordinateUpdate } = useMap();
 
   return (
@@ -22,12 +29,14 @@ export default function Sidebar() {
         <h1 className="text-lg font-bold px-1 pb-2">TP Toolkit</h1>
         <Tabs
           defaultValue="results"
-          value={tab}
-          onValueChange={(value) => setTab(value as "results" | "details")}
+          value={sidebarTab}
+          onValueChange={(value) =>
+            setSidebarTab(value as "results" | "details")
+          }
         >
           <TabsList className="w-full dark:bg-black/50">
             <TabsTrigger value="results">Results</TabsTrigger>
-            <TabsTrigger value="details" disabled={!selected}>
+            <TabsTrigger value="details" disabled={!selectedLocation}>
               Details
             </TabsTrigger>
           </TabsList>
@@ -42,9 +51,9 @@ export default function Sidebar() {
                   <LocationCard
                     key={result.id}
                     location={result}
-                    selected={selected}
-                    setSelected={setSelected}
-                    setTab={setTab}
+                    selected={selectedLocation}
+                    setSelected={setSelectedLocation}
+                    setTab={setSidebarTab}
                   />
                 ))}
                 <Button
@@ -55,7 +64,7 @@ export default function Sidebar() {
                     handleCoordinateUpdate(null, null);
                     updateSelected(null);
                     clearCoordsResults();
-                    setSelected(null);
+                    setSelectedLocation(null);
                   }}
                 >
                   Clear Results
@@ -81,7 +90,7 @@ export default function Sidebar() {
             )}
           </TabsContent>
           <TabsContent value="details">
-            <DetailsPanel location={selected || undefined} />
+            <DetailsPanel location={selectedLocation || undefined} />
           </TabsContent>
         </Tabs>
       </div>

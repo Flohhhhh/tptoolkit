@@ -3,6 +3,9 @@
 import { directionToRoadDirection } from "@/lib/helpers/conversions";
 import { CopyToClipboard } from "@/lib/CopyToClipboard";
 import { useMemo } from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { MapPin } from "lucide-react";
 
 // Define field display configuration
 const FIELD_CONFIG: Record<string, { label: string; show: boolean }> = {
@@ -90,7 +93,7 @@ export default function DetailsPanel({ location }: { location?: TPLocation }) {
   }
 
   return (
-    <div className="w-full rounded-xl bg-background">
+    <div className="w-full rounded-xl bg-background animate-in space-y-2">
       <h1 className="text-muted-foreground font-semibold">Location Details</h1>
       <div className="flex flex-col my-2 py-1 rounded">
         {Object.entries(location).map(([key, value]) =>
@@ -106,6 +109,35 @@ export default function DetailsPanel({ location }: { location?: TPLocation }) {
           </button>
         )}
       </div>
+      <Button
+        asChild
+        variant="outline"
+        className="w-full justify-start"
+        iconPosition="left"
+        icon={<MapPin className="size-4 text-muted-foreground" />}
+      >
+        <Link
+          href={`https://www.google.com/maps/search/?api=1&query=${location.y_old},${location.x_old}`}
+          target="_blank"
+        >
+          Open in Google Maps
+        </Link>
+      </Button>
+      {/* what 3 words button */}
+      <Button
+        asChild
+        variant="outline"
+        className="w-full justify-start"
+        iconPosition="left"
+        icon={<span className="text-muted-foreground italic">///</span>}
+      >
+        <Link
+          href={`https://what3words.com/${location.y_old},${location.x_old}`}
+          target="_blank"
+        >
+          Open in what3words
+        </Link>
+      </Button>
     </div>
   );
 }

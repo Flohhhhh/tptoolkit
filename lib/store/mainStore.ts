@@ -3,6 +3,10 @@ import { create } from "zustand";
 interface MainState {
   searchWindowState: "open" | "closed" | "clipboard";
   setSearchWindowState: (state: "open" | "closed" | "clipboard") => void;
+  sidebarTab: "results" | "details";
+  setSidebarTab: (tab: "results" | "details") => void;
+  selectedLocation: TPLocation | null;
+  setSelectedLocation: (location: TPLocation | null) => void;
   searchInput: string;
   setSearchInput: (input: string) => void;
   searchingCoords: boolean;
@@ -23,6 +27,10 @@ interface MainState {
 export const useMainStore = create<MainState>((set) => ({
   searchWindowState: "closed",
   setSearchWindowState: (state) => set({ searchWindowState: state }),
+  sidebarTab: "results",
+  setSidebarTab: (tab) => set({ sidebarTab: tab }),
+  selectedLocation: null,
+  setSelectedLocation: (location) => set({ selectedLocation: location }),
   searchInput: "",
   setSearchInput: (input) => set({ searchInput: input }),
   searchingCoords: false,

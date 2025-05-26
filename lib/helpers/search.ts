@@ -52,6 +52,8 @@ export const searchCoords = async (
   console.log("data", data);
   store.setCoordsResults(data);
   store.setSearchingCoords(false);
+  store.setSidebarTab("results");
+  store.setSelectedLocation(null);
 
   if (addHistory) {
     historyStore.addHistoryItem({
