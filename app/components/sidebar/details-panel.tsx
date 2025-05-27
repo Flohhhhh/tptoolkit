@@ -129,7 +129,7 @@ export default function DetailsPanel({ location }: { location?: TPLocation }) {
         variant="outline"
         className="w-full justify-start"
         iconPosition="left"
-        icon={<span className="text-muted-foreground italic">///</span>}
+        icon={<span className="text-muted-foreground italic">{`///`}</span>}
       >
         <Link
           href={`https://what3words.com/${location.y_old},${location.x_old}`}
