@@ -102,9 +102,24 @@ export default function HistoryPanel() {
         <div className="flex flex-1 items-center gap-1">
           <History className="size-4 text-muted-foreground w-12" />
           {history.length > 0 ? (
-            [...history]
-              .reverse()
-              .map((item) => <HistoryCardSmall key={item.id} item={item} />)
+            <>
+              {[...history]
+                .reverse()
+                .slice(0, 6)
+                .map((item) => (
+                  <HistoryCardSmall key={item.id} item={item} />
+                ))}
+              {history.length > 6 && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className=" p-8 flex-1 px-3 text-sm text-muted-foreground hover:text-foreground hover:cursor-pointer hover:bg-accent/25"
+                  onClick={() => setHistoryPanelOpen(true)}
+                >
+                  {history.length - 6} more items
+                </Button>
+              )}
+            </>
           ) : (
             <div className="text-sm text-muted-foreground">
               No recent searches
