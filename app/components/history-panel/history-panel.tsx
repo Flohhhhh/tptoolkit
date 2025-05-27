@@ -113,7 +113,7 @@ export default function HistoryPanel() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className=" p-8 flex-1 px-3 text-sm text-muted-foreground hover:text-foreground hover:cursor-pointer hover:bg-accent/25"
+                  className=" p-8 flex-1 px-6 text-sm text-muted-foreground hover:text-foreground hover:cursor-pointer hover:bg-accent/25"
                   onClick={() => setHistoryPanelOpen(true)}
                 >
                   {history.length - 6} more items
