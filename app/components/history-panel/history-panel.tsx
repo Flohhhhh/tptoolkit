@@ -111,9 +111,9 @@ export default function HistoryPanel() {
                 ))}
               {history.length > 6 && (
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
-                  className=" p-8 flex-1 px-6 text-sm text-muted-foreground hover:text-foreground hover:cursor-pointer hover:bg-accent/25"
+                  className="flex-1 px-10 text-sm text-muted-foreground hover:text-foreground hover:cursor-pointer hover:bg-accent/25"
                   onClick={() => setHistoryPanelOpen(true)}
                 >
                   {history.length - 6} more items
