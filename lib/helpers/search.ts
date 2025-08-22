@@ -45,25 +45,47 @@ export const searchCoords = async (
   store.setSearchWindowState("closed");
   store.setSearchingCoords(true);
   console.log("fetching coords", lat, lng);
-  const res = await fetch(`/api/v2/search/coords?x=${lng}&y=${lat}`, {
-    method: "GET",
-  });
-  const data = await res.json();
-  console.log("data", data);
-  store.setCoordsResults(data);
-  store.setSearchingCoords(false);
-  store.setSidebarTab("results");
-  store.setSelectedLocation(null);
-
-  if (addHistory) {
-    historyStore.addHistoryItem({
-      id: crypto.randomUUID(),
-      inputContent: `${lat},${lng}`,
-      resultText: data[0].name,
-      lat: Number(lat),
-      lng: Number(lng),
-      timestamp: Date.now(),
+  try {
+    const res = await fetch(`/api/v2/search/coords?x=${lng}&y=${lat}`, {
+      method: "GET",
     });
+    // If parsing fails, treat as no results
+    const data = await res.json().catch(() => null);
+    console.log("data", data);
+
+    if (res.ok && Array.isArray(data)) {
+      store.setCoordsResults(data);
+    } else {
+      store.setCoordsResults([]);
+      // capture an error message for UI, but keep results empty
+      const message = typeof data === "string" ? data : "No results";
+      store.setSearchError(message);
+    }
+
+    if (addHistory) {
+      const resultText =
+        Array.isArray(data) && data.length > 0 && data[0]?.name
+          ? data[0].name
+          : "No results";
+      historyStore.addHistoryItem({
+        id: crypto.randomUUID(),
+        inputContent: `${lat},${lng}`,
+        resultText,
+        lat: Number(lat),
+        lng: Number(lng),
+        timestamp: Date.now(),
+      });
+    }
+  } catch (error) {
+    console.error("searchCoords error", error);
+    store.setCoordsResults([]);
+    store.setSearchError(
+      error instanceof Error ? error.message : "An error occurred"
+    );
+  } finally {
+    store.setSearchingCoords(false);
+    store.setSidebarTab("results");
+    store.setSelectedLocation(null);
   }
 };
 
