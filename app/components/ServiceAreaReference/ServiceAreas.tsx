@@ -130,7 +130,7 @@ export const data = [
         name: "Molly Pitcher",
         id: "7S",
         mp: "71.7",
-        station: "D020",
+        station: "D010",
         coords: [40.321127885, -74.488271382],
       },
       // {
