@@ -2,12 +2,12 @@ import { timestampToRelativeTime } from "@/lib/helpers/conversions";
 import { useEffect, useState } from "react";
 import { useMap } from "@/lib/context/mapContext";
 import { useMainStore } from "@/lib/store/mainStore";
-import { parseInput } from "@/lib/helpers/search";
 import { searchCoords } from "@/lib/helpers/search";
+import { trackHistoryReplayUsed } from "@/lib/analytics/events";
 
 export default function HistoryCardSmall({ item }: { item: HistoryItem }) {
   const { handleCoordinateUpdate } = useMap();
-  const { setSearchInput, clearCoordsResults } = useMainStore();
+  const { clearCoordsResults } = useMainStore();
   const [relativeTime, setRelativeTime] = useState(
     timestampToRelativeTime(item.timestamp)
   );
@@ -28,7 +28,11 @@ export default function HistoryCardSmall({ item }: { item: HistoryItem }) {
   const handleClick = () => {
     clearCoordsResults();
     handleCoordinateUpdate(item.lat, item.lng);
-    searchCoords(item.lat, item.lng, false);
+    trackHistoryReplayUsed({ card_size: "small" });
+    searchCoords(item.lat, item.lng, {
+      addHistory: false,
+      source: "history_replay",
+    });
   };
 
   const trimmedInputContent =

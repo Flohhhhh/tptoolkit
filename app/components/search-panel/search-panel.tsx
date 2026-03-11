@@ -13,6 +13,7 @@ import { searchCoords } from "@/lib/helpers/search";
 import useSWR from "swr";
 import { searchLocationsByName } from "@/lib/actions/search";
 import { useMap } from "@/lib/context/mapContext";
+import { trackSearchName } from "@/lib/analytics/events";
 import SearchResultCard from "./search-result-card";
 
 export default function SearchPanel() {
@@ -28,7 +29,39 @@ export default function SearchPanel() {
     return parseInput(input);
   }, [input]);
 
-  const fetcher = (name: string) => searchLocationsByName(name, 10);
+  const fetcher = async (name: string) => {
+    const queryLength = name.trim().length;
+    let response: Awaited<ReturnType<typeof searchLocationsByName>>;
+
+    try {
+      response = await searchLocationsByName(name, 10);
+    } catch (error) {
+      trackSearchName({
+        query_length: queryLength,
+        success: false,
+        result_count: 0,
+      });
+      throw error;
+    }
+
+    if (response.error) {
+      trackSearchName({
+        query_length: queryLength,
+        success: false,
+        result_count: 0,
+      });
+      throw response.error;
+    }
+
+    const normalizedData = Array.isArray(response.data) ? response.data : [];
+    trackSearchName({
+      query_length: queryLength,
+      success: true,
+      result_count: normalizedData.length,
+    });
+
+    return { data: normalizedData, error: null };
+  };
 
   const {
     searchWindowState,
@@ -187,7 +220,7 @@ export default function SearchPanel() {
                 const [lat, lng] = input
                   .split(",")
                   .map((v) => parseFloat(v.trim()));
-                searchCoords(lat, lng);
+                searchCoords(lat, lng, { source: "search_panel" });
                 handleCoordinateUpdate(lat, lng);
               }}
             >
