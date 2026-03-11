@@ -30,25 +30,37 @@ export default function SearchPanel() {
   }, [input]);
 
   const fetcher = async (name: string) => {
+    const queryLength = name.trim().length;
+    let response: Awaited<ReturnType<typeof searchLocationsByName>>;
+
     try {
-      const response = await searchLocationsByName(name, 10);
-      const success = Array.isArray(response?.data);
-
-      trackSearchName({
-        query_length: name.trim().length,
-        success,
-        result_count: success ? response.data.length : 0,
-      });
-
-      return response;
+      response = await searchLocationsByName(name, 10);
     } catch (error) {
       trackSearchName({
-        query_length: name.trim().length,
+        query_length: queryLength,
         success: false,
         result_count: 0,
       });
       throw error;
     }
+
+    if (response.error) {
+      trackSearchName({
+        query_length: queryLength,
+        success: false,
+        result_count: 0,
+      });
+      throw response.error;
+    }
+
+    const normalizedData = Array.isArray(response.data) ? response.data : [];
+    trackSearchName({
+      query_length: queryLength,
+      success: true,
+      result_count: normalizedData.length,
+    });
+
+    return { data: normalizedData, error: null };
   };
 
   const {
