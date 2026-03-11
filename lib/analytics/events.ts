@@ -2,7 +2,7 @@ import { track } from "@vercel/analytics/react";
 
 type TrackableProperties = Record<
   string,
-  string | number | boolean | null | undefined
+  string | number | boolean | null
 >;
 
 type AnalyticsEventName =
