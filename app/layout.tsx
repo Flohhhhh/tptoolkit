@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Providers from "./../lib/providers";
 import { Toaster } from "@/components/ui/sonner";
+import DisclaimerToast from "./components/disclaimer-toast";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { ModalProvider } from "@/components/dialogs";
@@ -34,6 +35,7 @@ export default function RootLayout({
         >
           <Analytics />
           <Toaster />
+          <DisclaimerToast />
           <div className="bg-linear-to-b bg-background custom-animate-in">
             <Providers>
               {/* <Header /> */}
