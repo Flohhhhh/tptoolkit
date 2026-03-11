@@ -1,6 +1,11 @@
 import { useMainStore } from "../store/mainStore";
 import { useHistoryStore } from "../store/historyStore";
 import { validateCoords } from "./validation";
+import {
+  type CoordinateSearchErrorType,
+  type CoordinateSearchSource,
+  trackSearchCoordinates,
+} from "../analytics/events";
 
 export const parseInput = (searchInput: string) => {
   const store = useMainStore.getState();
@@ -36,8 +41,12 @@ export const parseInput = (searchInput: string) => {
 export const searchCoords = async (
   lat: number,
   lng: number,
-  addHistory = true
+  options: {
+    addHistory?: boolean;
+    source?: CoordinateSearchSource;
+  } = {}
 ) => {
+  const { addHistory = true, source = "search_panel" } = options;
   const historyStore = useHistoryStore.getState();
   console.log("searchCoords called", lat, lng);
   const store = useMainStore.getState();
@@ -53,14 +62,26 @@ export const searchCoords = async (
     const data = await res.json().catch(() => null);
     console.log("data", data);
 
-    if (res.ok && Array.isArray(data)) {
+    const success = res.ok && Array.isArray(data);
+    const resultCount = success ? data.length : 0;
+    let errorType: CoordinateSearchErrorType = "none";
+
+    if (success) {
       store.setCoordsResults(data);
     } else {
       store.setCoordsResults([]);
       // capture an error message for UI, but keep results empty
       const message = typeof data === "string" ? data : "No results";
       store.setSearchError(message);
+      errorType = res.status === 404 ? "no_results" : "request_failed";
     }
+
+    trackSearchCoordinates({
+      source,
+      success,
+      result_count: resultCount,
+      error_type: errorType,
+    });
 
     if (addHistory) {
       const resultText =
@@ -82,6 +103,12 @@ export const searchCoords = async (
     store.setSearchError(
       error instanceof Error ? error.message : "An error occurred"
     );
+    trackSearchCoordinates({
+      source,
+      success: false,
+      result_count: 0,
+      error_type: "request_failed",
+    });
   } finally {
     store.setSearchingCoords(false);
     store.setSidebarTab("results");

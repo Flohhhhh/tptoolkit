@@ -115,7 +115,7 @@ export function MapRenderer(props) {
       const lat = e.lngLat.lat.toFixed(6);
       const lng = e.lngLat.lng.toFixed(6);
       // console.log("Updating coordinates:", lat, lng);
-      searchCoords(lat, lng);
+      searchCoords(lat, lng, { source: "map_double_click" });
       handleCoordinateUpdate(lat, lng);
     };
     map.on("dblclick", handler);

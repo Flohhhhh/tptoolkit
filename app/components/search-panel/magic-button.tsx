@@ -3,6 +3,7 @@ import { Clipboard } from "lucide-react";
 import { useMainStore } from "@/lib/store/mainStore";
 import { searchCoords } from "@/lib/helpers/search";
 import { useMap } from "@/lib/context/mapContext";
+import { trackPasteGoUsed } from "@/lib/analytics/events";
 import { toast } from "sonner";
 
 export default function PasteGoButton() {
@@ -15,14 +16,17 @@ export default function PasteGoButton() {
       console.log("paste & go", text);
       const [lat, lng] = text.split(",").map((v) => parseFloat(v.trim()));
       if (!isNaN(lat) && !isNaN(lng)) {
+        trackPasteGoUsed({ status: "success" });
         setSearchInput(text);
         handleCoordinateUpdate(lat, lng);
-        await searchCoords(lat, lng);
+        await searchCoords(lat, lng, { source: "paste_go" });
       } else {
+        trackPasteGoUsed({ status: "invalid_clipboard" });
         // Optionally show error/feedback
         toast.error("Clipboard does not contain valid coordinates.");
       }
     } catch (err) {
+      trackPasteGoUsed({ status: "clipboard_error" });
       toast.error("Error: " + err);
     }
   };
